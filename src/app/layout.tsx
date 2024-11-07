@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import { Provider } from  "./session-provider";
+
 // Layout components
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -17,11 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <Provider>
+        <body>
+          <Header />
+            {children}
+          <Footer />
+        </body>
+      </Provider>
     </html>
   );
 }
