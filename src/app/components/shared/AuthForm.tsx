@@ -1,56 +1,26 @@
 "use client";
 
-import { FormEvent, useRef, useState  } from 'react'
-import { register, login } from "@/actions/auth-actions"
+import { useActionState } from "react";
 import SubmitButton from "./SubmitButton";
-import ZodErrors from "./ZodErrors"
-import { redirect } from 'next/navigation';
+import ZodErrors from "./ZodErrors";
 
-type Props = {
+const initForm = {
+  password: [],
+  email: [],
+  form: []
+}
+
+interface Props {
   btnText: string,
   headerText: string,
-  type: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  authAction: (prevState: any, formData: FormData) => Promise<any>
 }
 
-type zodType = {
-  email: string[] | undefined,
-  password: string[] | undefined
-}
+export default function AuthForm({ btnText, headerText, authAction }: Props) {
 
-export default function AuthForm({ btnText, headerText, type }: Props) {
+  const [state, formAction, isPending] = useActionState(authAction, { errors: initForm })
 
-  const [error, setError] = useState("");
-  const [zodErrors, setZodErrors] = useState({} as zodType);
-  const ref = useRef<HTMLFormElement>(null);
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    if (type === "login") {
-      const res = await login(formData);
-      if (res?.zodErrors) {
-        const errors = {
-          email: res.zodErrors.email,
-          password: res.zodErrors.password
-        }
-        return setZodErrors(errors)
-      } else {
-        redirect("/");
-      }
-    } else {
-      const res = await register(formData);
-       if (res?.zodErrors) {
-        const errors = {
-          email: res.zodErrors.email,
-          password: res.zodErrors.password
-        }
-        return setZodErrors(errors)
-      } else {
-        ref.current?.reset()
-        redirect("/signin");
-      }
-    }
-  }
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -59,7 +29,7 @@ export default function AuthForm({ btnText, headerText, type }: Props) {
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form onSubmit={handleSubmit} ref = {ref} className="space-y-6">
+        <form action={ formAction } className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
               Email address
@@ -72,7 +42,7 @@ export default function AuthForm({ btnText, headerText, type }: Props) {
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
               />
-              <ZodErrors error={zodErrors?.email || error} />
+               <ZodErrors error={state?.errors.email} />
             </div>
           </div>
 
@@ -90,11 +60,14 @@ export default function AuthForm({ btnText, headerText, type }: Props) {
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
               />
-              <ZodErrors error={zodErrors?.password || error} />
+              <ZodErrors error={state?.errors.password} />
             </div>
           </div>
           <div>
-            <SubmitButton text={ btnText } />
+            <ZodErrors error={state?.message} />
+          </div>
+          <div>
+            <SubmitButton disabled={ isPending } text={ btnText } />
           </div>
         </form>
       </div>

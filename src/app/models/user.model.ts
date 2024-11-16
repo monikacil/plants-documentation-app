@@ -1,13 +1,6 @@
 import  mongoose, { Schema, model } from  "mongoose";
-import validateEmail from "@/utils/validators";
-
-interface UserDocument {
-  _id: string;
-  email: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import validateEmail from "@/app/utils/validators";
+import { UserDocument } from "../types/userTypes";
 
 const UserSchema = new Schema<UserDocument>(
   {
