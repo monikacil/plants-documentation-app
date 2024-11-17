@@ -11,6 +11,8 @@ import { getUserByEmail } from "./userActions";
 import { createSession } from "../lib/joseSession";
 import { cookies } from "next/headers";
 
+const VALIDATION_ERROR = { message: "Invalid email or password." }
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const register = async (prevState: any, formData: FormData) => {
@@ -34,7 +36,7 @@ export const register = async (prevState: any, formData: FormData) => {
   // check if user already exist
   const userFound = await User.findOne({ email });
   if (userFound) {
-    return { message: "Email already exists, please use a different email." }
+    return { errors: { message: "Email already exists, please use a different email." } }
   }
   // create new user & save in db
   const hashedPassword = await HashPassword(password);
@@ -42,9 +44,7 @@ export const register = async (prevState: any, formData: FormData) => {
   const savedUser = await newUser.save();
 
   if (!savedUser) {
-    return {
-      message: 'An error occurred while creating your account.',
-    };
+    return { errors: {message: 'An error occurred while creating your account.'} };
   }
   // redirect to signin page
   redirect("/signin")
@@ -52,7 +52,6 @@ export const register = async (prevState: any, formData: FormData) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function login(prevState: any, formData: FormData) {
   const data = { email: formData.get("email"), password: formData.get("password") };
-
    // zod validation
   const validation = zodSchema.safeParse({
     email: data.email,
@@ -60,31 +59,30 @@ export async function login(prevState: any, formData: FormData) {
   });
 
   if (!validation.success) {
-    console.log(1111)
     return {
       errors: validation.error.flatten().fieldErrors,
     };
   }
-
-  console.log(222)
 
   const { email, password } = validation.data;
 
   // db connection
   await connectDB();
   // check if user is registered
-  const userFound: UserDocument = await getUserByEmail({ email, password });
-  if (!userFound) {
-    return { message: "Invalid email or password." }
+  const user: UserDocument = await getUserByEmail(email);
+  if (!user) {
+    return {errors: VALIDATION_ERROR}
   }
 
-  // check if user set valid password
-  const isValid = await ComparePassword(userFound.password, password)
+  // password validation
+  const isValid = await ComparePassword(user.password, password)
+
   if (!isValid) {
-    return { message: "Invalid email or password." }
-  };
+    return {errors: VALIDATION_ERROR}
+  }
+
   // Create the session
-  const userId = userFound._id.toString();
+  const userId = user._id;
   await createSession(userId);
 }
 

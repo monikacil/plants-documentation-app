@@ -1,10 +1,13 @@
 import { object, string } from "zod"
 
 export const zodSchema = object({
-  email: string({ required_error: "Email is required" })
+  email: string()
     .email("Invalid email address format")
-    .trim(),
-  password: string({ required_error: "Password is required" })
+    .trim()
+    .refine((val) => val.length > 1, {
+      message: "Email required",
+    }),
+  password: string()
     .min(8, "Password must be longer than 8 characters")
     .max(32, "Password must be less than 32 characters")
     .trim(),
@@ -15,13 +18,12 @@ export type FormState =
       errors?: {
         email?: string[]
         password?: string[]
-        form?: string[]
+        message?: string
       }
-      message?: string
     }
   | undefined
 
-  export type SessionPayload = {
+export type SessionPayload = {
   userId: string | number;
   expiresAt: Date;
 };

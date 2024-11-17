@@ -1,14 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import SubmitButton from "./SubmitButton";
 import ZodErrors from "./ZodErrors";
-
-const initForm = {
-  password: [],
-  email: [],
-  form: []
-}
+import { FormState } from "@/app/lib/zod"
 
 interface Props {
   btnText: string,
@@ -19,7 +14,9 @@ interface Props {
 
 export default function AuthForm({ btnText, headerText, authAction }: Props) {
 
-  const [state, formAction, isPending] = useActionState(authAction, { errors: initForm })
+  const [state, formAction, isPending] = useActionState(authAction, { errors: {} as FormState })
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <div className="flex max-w-144 m-auto flex-1 flex-col lg:my-48 px-6 py-8 lg:py-12 lg:px-8 rounded-md bg-primary-green-50/30 shadow-md shadow-primary-green-50/50">
@@ -41,8 +38,10 @@ export default function AuthForm({ btnText, headerText, authAction }: Props) {
                 type="email"
                 autoComplete="email"
                 className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-               <ZodErrors error={state?.errors.email} />
+              { !email ? <ZodErrors error={state?.errors.email} />: '' }
             </div>
           </div>
 
@@ -59,15 +58,17 @@ export default function AuthForm({ btnText, headerText, authAction }: Props) {
                 type="password"
                 autoComplete="current-password"
                 className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <ZodErrors error={state?.errors.password} />
+              { !password || password.length < 8 ? <ZodErrors error={state?.errors.password} />: '' }
             </div>
           </div>
           <div>
-            <ZodErrors error={state?.message} />
+            <ZodErrors error={state?.errors.message} />
           </div>
           <div className="mt-8">
-            <SubmitButton disabled={ isPending } text={ btnText } />
+            <SubmitButton disabled={isPending} text={btnText} />
           </div>
         </form>
       </div>
