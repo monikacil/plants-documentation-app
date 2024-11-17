@@ -23,7 +23,8 @@ export default async function middleware(req: NextRequest) {
 
   if (
     !session?.userId &&
-    req.nextUrl.pathname.startsWith('/user/')
+    req.nextUrl.pathname.startsWith('/user/') ||
+    req.nextUrl.pathname.startsWith('/plants/')
   ) {
     return NextResponse.redirect(new URL('/signin', req.nextUrl));
   }
