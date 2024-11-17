@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="w-full flex-none py-3 flex flex-col text-xs text-center border border-t-1 border-x-0 border-b-0 ">
+    <footer className="bg-transparent w-full flex-none py-3 flex flex-col text-xs text-center border border-t-1 border-x-0 border-b-0 ">
       <Image
         className="self-center"
         src="/images/logo.png"

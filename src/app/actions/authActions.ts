@@ -8,7 +8,8 @@ import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
 import { zodSchema } from "../lib/zod";
 import { UserDocument } from "../types/userTypes";
 import { getUserByEmail } from "./userActions";
-import { createSession, deleteSession } from "../lib/joseSession";
+import { createSession } from "../lib/joseSession";
+import { cookies } from "next/headers";
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,5 +87,6 @@ export async function login(prevState: any, formData: FormData) {
 
 export async function logout() {
   // Destroy the session
-  deleteSession()
+  (await cookies()).delete({name: 'plant-doc-session'});
+  redirect('/signin');
 }

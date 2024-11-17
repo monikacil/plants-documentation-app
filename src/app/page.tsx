@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div className="grow p-8">
-      <h1>Empty Page</h1>
-    </div>
+    <section id="home-page" className="min-h-full lg:p-16 rounded-md bg-primary-green-0/85">
+
+    </section>
   );
 }

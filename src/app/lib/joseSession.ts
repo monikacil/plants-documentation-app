@@ -71,8 +71,3 @@ export async function updateSession() {
     path: '/',
   });
 }
-
-export async function deleteSession() {
-  (await cookies()).delete('plant-doc-session');
-  redirect('/signin');
-}
