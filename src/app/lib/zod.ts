@@ -5,13 +5,8 @@ export const zodSchema = object({
     .email("Invalid email address format")
     .trim(),
   password: string({ required_error: "Password is required" })
-    // .min(8, "Password must be longer than 8 characters")
-    // .max(32, "Password must be less than 32 characters")
-    // .regex(/[a-zA-Z]/, { message: 'Contain at least one letter.' })
-    // .regex(/[0-9]/, { message: 'Contain at least one number.' })
-    // .regex(/[^a-zA-Z0-9]/, {
-    //   message: 'Contain at least one special character.',
-    // })
+    .min(8, "Password must be longer than 8 characters")
+    .max(32, "Password must be less than 32 characters")
     .trim(),
 })
 

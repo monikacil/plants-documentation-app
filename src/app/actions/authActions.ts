@@ -60,10 +60,13 @@ export async function login(prevState: any, formData: FormData) {
   });
 
   if (!validation.success) {
+    console.log(1111)
     return {
       errors: validation.error.flatten().fieldErrors,
     };
   }
+
+  console.log(222)
 
   const { email, password } = validation.data;
 

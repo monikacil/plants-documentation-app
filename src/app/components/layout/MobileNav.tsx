@@ -95,10 +95,10 @@ export function NavMobile ({isAuth}: {isAuth: boolean}) {
                       damping: 20,
                       delay: 0.1 + 2 / 15,
                   }}>
-                  <button className="pl-5 w-full block" onClick={logout}>
-                    Logout
-                  </button>
-                </motion.li>
+                    <button className="pl-5 w-full block" onClick={logout}>
+                      Logout
+                    </button>
+                  </motion.li>
                </>
               }
             </ul>
