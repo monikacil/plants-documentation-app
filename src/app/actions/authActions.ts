@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import User from "@/app/models/user.model";
 import { connectDB } from "@/app/lib/connectDB";
 import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
-import { zodSchema } from "../lib/zod";
+import { zodUserSchema } from "../lib/zod/zod-user";
 import { UserDocument } from "../types/userTypes";
 import { getUserByEmail } from "./userActions";
 import { createSession } from "../lib/joseSession";
@@ -19,7 +19,7 @@ export const register = async (prevState: any, formData: FormData) => {
   const data = { email: formData.get("email"), password: formData.get("password") };
 
    // zod validation
-  const validation = zodSchema.safeParse({
+  const validation = zodUserSchema.safeParse({
     email: data.email,
     password: data.password,
   });
@@ -53,7 +53,7 @@ export const register = async (prevState: any, formData: FormData) => {
 export async function login(prevState: any, formData: FormData) {
   const data = { email: formData.get("email"), password: formData.get("password") };
    // zod validation
-  const validation = zodSchema.safeParse({
+  const validation = zodUserSchema.safeParse({
     email: data.email,
     password: data.password,
   });

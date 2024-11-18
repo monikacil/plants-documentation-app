@@ -56,8 +56,8 @@ const nextConfig: NextConfig = {
 };
 
 const withSerwist = withSerwistInit({
-  swSrc: "/src/app-worker.ts",
-  swDest: "/public/sw.js",
+  swSrc: "src/app-worker.ts",
+  swDest: "public/sw.js",
 });
 
 export default withSerwist(

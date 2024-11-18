@@ -1,4 +1,4 @@
-export default function Collection() {
+export default function CollectedPlants() {
   return (
     <div>
       <h1>Collection</h1>

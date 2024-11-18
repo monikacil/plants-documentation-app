@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import SubmitButton from "./SubmitButton";
 import ZodErrors from "./ZodErrors";
-import { FormState } from "@/app/lib/zod"
+import { AuthFormState } from "@/app/lib/zod/zod-user"
 
 interface Props {
   btnText: string,
@@ -14,7 +14,7 @@ interface Props {
 
 export default function AuthForm({ btnText, headerText, authAction }: Props) {
 
-  const [state, formAction, isPending] = useActionState(authAction, { errors: {} as FormState })
+  const [state, formAction, isPending] = useActionState(authAction, { errors: {} as AuthFormState })
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

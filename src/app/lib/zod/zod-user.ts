@@ -1,6 +1,6 @@
 import { object, string } from "zod"
 
-export const zodSchema = object({
+export const zodUserSchema = object({
   email: string()
     .email("Invalid email address format")
     .trim()
@@ -13,7 +13,7 @@ export const zodSchema = object({
     .trim(),
 })
 
-export type FormState =
+export type AuthFormState =
   | {
       errors?: {
         email?: string[]

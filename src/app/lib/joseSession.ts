@@ -1,4 +1,4 @@
-import 'server-only';
+"use server"
 
 import type { SessionPayload } from '@/app/types/sessionType';
 import { SignJWT, jwtVerify } from 'jose';
