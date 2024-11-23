@@ -1,5 +1,5 @@
-import { login } from "@/app/actions/authActions";
-import AuthForm from "@/app/components/shared/AuthForm";
+import { login } from "@/app/actions/auth.actions";
+import AuthForm from "@/app/components/user/AuthForm";
 
 export default function SignIn() {
   return (

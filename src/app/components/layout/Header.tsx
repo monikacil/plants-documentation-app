@@ -4,10 +4,11 @@ import { cookies } from 'next/headers'
 import DesktopNav from "./DesktopNav";
 import { NavMobile } from "./MobileNav";
 
+const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 export default async function Header() {
   const cookieStore = await cookies()
-  const session = cookieStore.get('plant-doc-session')
+  const session = cookieStore.get(COOKIE_NAME)
 
   const isAuth = session ? true : false
 

@@ -1,5 +1,4 @@
 import  mongoose, { Schema, model } from  "mongoose";
-import validateEmail from "@/app/utils/validators";
 import { UserDocument } from "../types/userTypes";
 
 const UserSchema = new Schema<UserDocument>(
@@ -9,8 +8,7 @@ const UserSchema = new Schema<UserDocument>(
       unique: true,
       required: [true, "Email is required"],
       lowercase: true,
-      trim: true,
-      validate: [validateEmail, "Incorrect email address"],
+      trim: true
     },
     password: {
       type: String,
@@ -18,9 +16,9 @@ const UserSchema = new Schema<UserDocument>(
     },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-const  User  =  mongoose.models?.User  ||  model<UserDocument>('User', UserSchema);
+const User = mongoose.models?.User || model<UserDocument>('User', UserSchema);
 export default User;

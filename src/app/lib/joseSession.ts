@@ -1,9 +1,11 @@
 "use server"
 
-import type { SessionPayload } from '@/app/types/sessionType';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { SessionPayload } from '../helpers/session.helpers';
+
+const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 const secretKey = process.env.AUTH_SECRET;
 const key = new TextEncoder().encode(secretKey);
@@ -32,7 +34,7 @@ export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
   const session = await encrypt({ userId, expiresAt });
 
-  (await cookies()).set('plant-doc-session', session, {
+  (await cookies()).set(COOKIE_NAME, session, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
@@ -44,7 +46,7 @@ export async function createSession(userId: string) {
 }
 
 export async function verifySession() {
-  const cookie = (await cookies()).get('plant-doc-session')?.value;
+  const cookie = (await cookies()).get(COOKIE_NAME)?.value;
   const session = await decrypt(cookie);
 
   if (!session?.userId) {
@@ -55,7 +57,7 @@ export async function verifySession() {
 }
 
 export async function updateSession() {
-  const session = (await cookies()).get('plant-doc-session')?.value;
+  const session = (await cookies()).get(COOKIE_NAME)?.value;
   const payload = await decrypt(session);
 
   if (!session || !payload) {
@@ -63,7 +65,7 @@ export async function updateSession() {
   }
 
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  (await cookies()).set('plant-doc-session', session, {
+  (await cookies()).set(COOKIE_NAME, session, {
     httpOnly: true,
     secure: true,
     expires: expires,

@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { logout } from "@/app/actions/authActions";
+import { logout } from "@/app/actions/auth.actions";
 import { cookies } from "next/headers";
 
+const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 export default async function DesktopNav() {
   const cookieStore = await cookies()
-  const session = cookieStore.get('plant-doc-session')
+  const session = cookieStore.get(COOKIE_NAME)
   return (
       <nav className="hidden sm:block">
        {!session

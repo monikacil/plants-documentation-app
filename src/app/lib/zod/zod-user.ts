@@ -22,8 +22,3 @@ export type AuthFormState =
       }
     }
   | undefined
-
-export type SessionPayload = {
-  userId: string | number;
-  expiresAt: Date;
-};

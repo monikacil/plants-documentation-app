@@ -1,22 +1,19 @@
 'use server';
 
-import { cookies } from 'next/headers';
-import { getCookie } from 'cookies-next/server';
-
 import SoldPlant from "../models/plants/soldPlant.model";
 import PurchasedPlant from "../models/plants/purchasedPlant.model"
 import CollectedPlant from "../models/plants/collectedPlant.model"
 
 import { connectDB } from "../lib/connectDB";
-import { decrypt } from "../lib/joseSession";
+import { getSessionUserId } from "../helpers/session.helpers";
+import { Collections } from "../types/plantTypes";
+
+const userId = await getSessionUserId();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addSoldPlant = async (prevState: any, formData: FormData) => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
-
   const data = {
-    _userId: session?.userId,
+    _userId: userId,
     species: formData.get("species"),
     variety: formData.get("variety"),
     price: formData.get("price"),
@@ -35,7 +32,7 @@ export const addSoldPlant = async (prevState: any, formData: FormData) => {
 
   await connectDB();
 
-  const newPlant = new SoldPlant(data)
+  const newPlant = new SoldPlant(data);
   const savedPlant = await newPlant.save();
 
   return savedPlant
@@ -43,11 +40,8 @@ export const addSoldPlant = async (prevState: any, formData: FormData) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addPurchasedPlant = async (prevState: any, formData: FormData) => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
-
   const data = {
-     _userId: session?.userId,
+    _userId: userId,
     species: formData.get("species"),
     variety: formData.get("variety"),
     price: formData.get("price"),
@@ -74,11 +68,8 @@ export const addPurchasedPlant = async (prevState: any, formData: FormData) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addCollectedPlant = async (prevState: any, formData: FormData) => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
-
   const data = {
-     _userId: session?.userId,
+    _userId: userId,
     species: formData.get("species"),
     variety: formData.get("variety"),
     images: []
@@ -92,32 +83,20 @@ export const addCollectedPlant = async (prevState: any, formData: FormData) => {
   return savedPlant
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getCollectedPlant = async () => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
+export async function getPlants(collection: Collections = 'collected') {
   await connectDB();
-  const plants = await CollectedPlant.find({_userId: session?.userId});
-
-  return plants
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getPurchasedPlant = async () => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
-  await connectDB();
-  const plants = await PurchasedPlant.find({_userId: session?.userId});
-
-  return plants
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getSoldPlant = async () => {
-  const cookie =  await getCookie('plant-doc-session', { cookies });
-  const session = await decrypt(cookie)
-  await connectDB();
-  const plants = await SoldPlant.find({_userId: session?.userId});
-
+  // eslint-disable-next-line no-var
+  var plants;
+  switch (collection) {
+    case 'purchased':
+        plants = await PurchasedPlant.find({_userId: userId});
+        break;
+    case 'sold':
+        plants = await SoldPlant.find({_userId: userId});
+        break;
+    default:
+        plants = await CollectedPlant.find({_userId: userId});
+        break;
+  }
   return plants
 }

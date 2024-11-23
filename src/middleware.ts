@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { decrypt } from './app/lib/joseSession'
 
 // 1. Specify protected and public routes
-const protectedRoutes = ['/plants', '/plants/collection', '/user/']
+const protectedRoutes = ['/plants', '/plants/collection', '/plants/sold', '/plants/purchased', '/user/']
 const publicRoutes = ['/signin', '/signup', '/']
+
+const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 export default async function middleware(req: NextRequest) {
   // 2. Check if the current route is protected or public
@@ -13,7 +15,7 @@ export default async function middleware(req: NextRequest) {
   const isPublicRoute = publicRoutes.includes(path);
 
   // 3. Decrypt the session from the cookie
-  const cookie = req.cookies.get('plant-doc-session')?.value;
+  const cookie = req.cookies.get(COOKIE_NAME)?.value;
   const session = await decrypt(cookie);
 
   // 4. Redirect

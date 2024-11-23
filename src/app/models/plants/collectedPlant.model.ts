@@ -30,5 +30,5 @@ const CollectedPlantSchema = new Schema<PlantDocument>({
   },
 });
 
-const CollectedPlant  =  mongoose.models?.User  ||  model<PlantDocument>('CollectedPlant', CollectedPlantSchema);
+const CollectedPlant = model<PlantDocument>('CollectedPlant', CollectedPlantSchema);
 export default CollectedPlant;

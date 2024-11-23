@@ -1,6 +1,7 @@
+'use server';
+
 import User from "../models/user.model";
 import { connectDB } from "../lib/connectDB";
-
 
 export const getUserByEmail = async (email: string) => {
   await connectDB();

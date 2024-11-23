@@ -1,12 +1,11 @@
 "use client"
+import Link from "next/link";
 import { useClickAway } from "react-use";
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Squash as Hamburger } from "hamburger-react";
-import Link from "next/link";
-import { logout } from "@/app/actions/authActions";
 
+import { logout } from "@/app/actions/auth.actions";
 
 export function NavMobile ({isAuth}: {isAuth: boolean}) {
   const [isOpen, setOpen] = useState(false);

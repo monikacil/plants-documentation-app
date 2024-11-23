@@ -1,8 +1,8 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import SubmitButton from "./SubmitButton";
-import ZodErrors from "./ZodErrors";
+import SubmitButton from "./../common/SubmitButton";
+import ZodErrors from "./../common/ZodErrors";
 import { AuthFormState } from "@/app/lib/zod/zod-user"
 
 interface Props {

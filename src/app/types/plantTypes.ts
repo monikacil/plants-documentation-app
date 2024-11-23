@@ -6,17 +6,17 @@ export type SourceDocument = {
   phone: number;
   email: string;
   country: string;
-} | null
+} | null;
 
 export type ImagesDocument = {
   originalname: string;
   filename: string,
   createdAt: Date;
   updatedAt: Date;
-} | null
+} | null;
 
-export type PlantDocument  = {
-  _ownerId:  mongoose.Types.ObjectId;
+export type PlantDocument = {
+  _ownerId: mongoose.Types.ObjectId;
   species: string;
   variety: string;
   price: string | undefined;
@@ -27,4 +27,6 @@ export type PlantDocument  = {
   images: ImagesDocument;
   createdAt: Date;
   updatedAt: Date;
-} | null
+} | null;
+
+export type Collections = "collected" | "purchased" | "sold";

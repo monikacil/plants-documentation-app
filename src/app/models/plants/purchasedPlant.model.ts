@@ -67,5 +67,5 @@ const PurchasedPlantSchema = new Schema<PlantDocument>({
   },
 });
 
-const  PurchasedPlant  =  mongoose.models?.User  ||  model<PlantDocument>('PurchasedPlant', PurchasedPlantSchema);
+const PurchasedPlant = model<PlantDocument>('PurchasedPlant', PurchasedPlantSchema);
 export default PurchasedPlant;

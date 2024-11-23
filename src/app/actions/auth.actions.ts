@@ -1,86 +1,77 @@
 "use server"
 
 import { redirect } from "next/navigation";
-
-import User from "@/app/models/user.model";
-import { connectDB } from "@/app/lib/connectDB";
-import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
-import { zodUserSchema } from "../lib/zod/zod-user";
-import { UserDocument } from "../types/userTypes";
-import { getUserByEmail } from "./userActions";
-import { createSession } from "../lib/joseSession";
 import { cookies } from "next/headers";
 
-const VALIDATION_ERROR = { message: "Invalid email or password." }
+import User from "@/app/models/user.model";
+import { getUserByEmail } from "./user.actions";
+import { connectDB } from "@/app/lib/connectDB";
+import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
+import { createSession } from "../lib/joseSession";
+import { UserDocument } from "../types/userTypes";
+import { AuthErrors } from "../lib/zod/errors";
+import { zodValidation } from "../utils/zodValidations";
 
+const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const register = async (prevState: any, formData: FormData) => {
-  const data = { email: formData.get("email"), password: formData.get("password") };
-
    // zod validation
-  const validation = zodUserSchema.safeParse({
-    email: data.email,
-    password: data.password,
-  });
-
+  const validation = await zodValidation(formData)
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,
     };
   }
-
   const { email, password } = validation.data;
   // db connection
   await connectDB();
   // check if user already exist
   const userFound = await User.findOne({ email });
   if (userFound) {
-    return { errors: { message: "Email already exists, please use a different email." } }
+    return { errors: AuthErrors.emailUnavailable }
   }
   // create new user & save in db
   const hashedPassword = await HashPassword(password);
   const newUser = new User({email, password: hashedPassword});
-  const savedUser = await newUser.save();
+  let savedUser;
+  try {
+    savedUser = await newUser.save();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err:any) {
+    throw new Error(err.message)
+  }
 
   if (!savedUser) {
-    return { errors: {message: 'An error occurred while creating your account.'} };
+    return { errors: AuthErrors.accountCreatingError };
   }
   // redirect to signin page
   redirect("/signin")
 }
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function login(prevState: any, formData: FormData) {
-  const data = { email: formData.get("email"), password: formData.get("password") };
-   // zod validation
-  const validation = zodUserSchema.safeParse({
-    email: data.email,
-    password: data.password,
-  });
-
+   // zod valida
+  const validation = await zodValidation(formData);
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,
     };
   }
-
   const { email, password } = validation.data;
-
   // db connection
   await connectDB();
   // check if user is registered
   const user: UserDocument = await getUserByEmail(email);
   if (!user) {
-    return {errors: VALIDATION_ERROR}
+    return {errors: AuthErrors.validationDefaultError}
   }
-
   // password validation
-  const isValid = await ComparePassword(user.password, password)
+  const isValid = await ComparePassword(user.password, password);
 
   if (!isValid) {
-    return {errors: VALIDATION_ERROR}
+    return { errors: AuthErrors.validationDefaultError };
   }
-
   // Create the session
   const userId = user._id;
   await createSession(userId);
@@ -88,6 +79,6 @@ export async function login(prevState: any, formData: FormData) {
 
 export async function logout() {
   // Destroy the session
-  (await cookies()).delete({name: 'plant-doc-session'});
+  (await cookies()).delete({ name: COOKIE_NAME });
   redirect('/signin');
 }
