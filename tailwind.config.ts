@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-dongle)'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -22,6 +25,14 @@ const config: Config = {
       spacing: {
         '128': '32rem',
         '144': '36rem',
+      },
+      fontSize: {
+        'text-6xl': '2.75rem',
+        'text-7xl': '3.75rem',
+      },
+      lineHeight: {
+        '11': '3rem',
+        '12': '6.25rem',
       },
       borderRadius: {
         '4xl': '2rem',

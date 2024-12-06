@@ -1,6 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import { Playpen_Sans } from 'next/font/google'
+// Sour_Gummy, Balsamiq_Sans, Comic_Neue
+const dongle = Playpen_Sans({
+  weight: ['400', '300', '700'],
+  subsets: ['latin'],
+  variable: '--font-dongle',
+  // style: ['italic', 'normal']
+})
+
 // Layout components
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
@@ -25,12 +34,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${dongle.variable}`}>
       <body className="flex flex-col min-h-screen">
         <Header />
-        <div className="grow p-6 lg:p-14">
+        <main className="grow p-6 lg:p-14">
           {children}
-        </div>
+        </main>
         <Footer />
       </body>
     </html>

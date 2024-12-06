@@ -1,16 +1,25 @@
-import Image from "next/image";
-
 export default function Footer() {
   return (
-    <footer className="bg-transparent w-full flex-none py-3 flex flex-col text-xs text-center border border-t-1 border-x-0 border-b-0 ">
-      <Image
-        className="self-center"
-        src="/images/logo.png"
-        width={200}
-        height={30}
-        alt="Logo"
-      />
-      <p className="py-2">© 2024 Plants Documentation created by Monika Cilińska</p>
+    <footer className="">
+      <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="#" className="hover:underline">PlantsDoc</a>. All Rights Reserved.
+      </span>
+      <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <li>
+          <a href="#" className="hover:underline me-4 md:me-6">About</a>
+        </li>
+        <li>
+          <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
+        </li>
+        <li>
+          <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
+        </li>
+        <li>
+          <a href="#" className="hover:underline">Contact</a>
+        </li>
+      </ul>
+      </div>
     </footer>
+
   );
 }

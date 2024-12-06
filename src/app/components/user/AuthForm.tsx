@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import SubmitButton from "./../common/SubmitButton";
 import ZodErrors from "./../common/ZodErrors";
-import { AuthFormState } from "@/app/lib/zod/zod-user"
+import { AuthFormState } from "@/app/lib/zod/zodUser"
 
 interface Props {
   btnText: string,

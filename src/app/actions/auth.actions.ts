@@ -10,7 +10,7 @@ import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
 import { createSession } from "../lib/joseSession";
 import { UserDocument } from "../types/userTypes";
 import { AuthErrors } from "../lib/zod/errors";
-import { zodValidation } from "../utils/zodValidations";
+import { zodValidation } from "../lib/zod/zodValidations";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 

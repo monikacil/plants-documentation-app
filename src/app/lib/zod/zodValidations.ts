@@ -1,4 +1,4 @@
-import { zodUserSchema } from "@/app/lib/zod/zod-user";
+import { zodUserSchema } from "@/app/lib/zod/zodUser";
 
 export async function zodValidation(formData: FormData) {
   const data = { email: formData.get("email"), password: formData.get("password") };
