@@ -1,19 +1,22 @@
 'use client'
+
+import { deletePlant } from "@/app/actions/plant.actions"
+import { usePathname } from "next/navigation"
+import EditPlantModal from "./EditPlantModal"
+import { Collections, Plant } from "@/app/types/plantTypes"
+
 function getTableHeaders(data: Plant[]) {
-  const headers = Object.keys(data[0]).filter(key => key !== 'images')
+  const headers = Object.keys(data[0]).filter(key => key !== 'images' && key !== '_id')
   headers.push('actions')
   return headers
 }
 
-interface Plant {
-  species: string,
-  variety: string,
-  images?: []
-}
-
 export default function PlantTable({ data }: { data: Plant[] }) {
+  const url = usePathname()
+  const collection = url.split('/')[2] as Collections
+
   const tableHeaders = getTableHeaders(data).map((header, idx) =>
-    <th key={'table-header-'+idx} scope="col" className="px-6 py-3">
+    <th key={'table-header-' + idx} scope="col" className="px-6 py-3">
       {header}
     </th>
   )
@@ -23,14 +26,14 @@ export default function PlantTable({ data }: { data: Plant[] }) {
       <td className="w-4 p-4">
         {idx + 1}
       </td>
-       {Object.values(plant).map(function(el, idx){
-          return <td key={'table-cell-' + el + '-' + idx} className="px-6 py-4">
-            { el }
-          </td>;
-        })}
+      { Object.entries(plant).filter(([key]) => key !== 'images' && key !== '_id').map( (el, idx) => {
+        return <td key={'table-cell-' + el + '-' + idx} className="px-6 py-4">
+          { el[1] }
+        </td>;
+      })}
       <td className="w-6 p-4">
-        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-3">Edit</a>
-        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+        <EditPlantModal plant={plant}/>
+        <button onClick={ () => deletePlant(collection, plant?._id) } className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
       </td>
     </tr>
   )

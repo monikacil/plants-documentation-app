@@ -30,3 +30,21 @@ export type PlantDocument = {
 } | null;
 
 export type Collections = "collected" | "purchased" | "sold";
+
+
+export type Plant = {
+  _id: string,
+  species: string | undefined,
+  variety: string | undefined,
+  images?: [],
+  price: string | undefined,
+  date: string,
+  passport: string | undefined,
+  name: string | undefined,
+  address: string | undefined,
+  country: string | undefined,
+  phone: number | undefined,
+  email: string | undefined,
+
+}
+

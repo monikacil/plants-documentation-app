@@ -1,12 +1,13 @@
+'use client'
+import { addPlant } from '@/app/actions/plant.actions';
 import Modal from '../common/Modal';
-import AddPlantForm from './AddPlantForm';
+import PlantForm from './PlantForm';
 
-export default function AddPlantModal() {
-
+export default function PlantModal() {
   return (
     <>
       <Modal title="Add plant">
-        <AddPlantForm />
+        <PlantForm plantAction = { addPlant } />
       </Modal>
     </>
   )
