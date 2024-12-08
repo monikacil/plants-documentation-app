@@ -16,6 +16,7 @@ export type ImagesDocument = {
 } | null;
 
 export type PlantDocument = {
+  _id: mongoose.Types.ObjectId;
   _userId: mongoose.Types.ObjectId;
   species: string;
   variety: string;

@@ -4,9 +4,10 @@ import Form from 'next/form'
 import { useActionState } from "react";
 import { usePathname } from "next/navigation";
 
-import { Button, Field, Input, Label } from "@headlessui/react"
 import ExtraPlantFields from './ExtraPlantFields';
 import { Collections, Plant } from '@/app/types/plantTypes';
+import Input from '../common/form/Input';
+import SubmitButton from '../common/SubmitButton';
 
 interface Args {
   collection: Collections,
@@ -29,18 +30,11 @@ export default function PlantForm({ plant, plantAction }: Props) {
   return (
     <>
       <Form action={formAction} className="">
-        <Field>
-          <Label className="data-[disabled]:opacity-50">Species</Label>
-          <Input name="species" defaultValue={ plant?.species } className="data-[disabled]:bg-gray-100" />
-        </Field>
-         <Field>
-          <Label className="data-[disabled]:opacity-50">Variety</Label>
-          <Input name="variety" defaultValue={ plant?.variety } className="data-[disabled]:bg-gray-100" />
-        </Field>
+        <Input name="species" defaultValue={plant?.species} />
+        <Input name="variety" defaultValue={ plant?.variety } />
         {collection !== 'collected' ? <ExtraPlantFields plant={ plant } />: null}
-        <Button disabled={isPending} type="submit">Save</Button>
-        {isPending && <p>Please wait...</p>}
-        {state?.error && <p className="text-red-500">{ state?.error }</p>}
+        <SubmitButton disabled={isPending} text={isPending ? "Saving..." : "Save"} />
+        {state?.error && <div className="text-red-500">{ state?.error }</div>}
       </Form>
     </>
   )

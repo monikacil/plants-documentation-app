@@ -1,92 +1,82 @@
 'use server';
 
+import { revalidatePath } from "next/cache";
+
 import SoldPlant from "../models/plants/soldPlant.model";
 import PurchasedPlant from "../models/plants/purchasedPlant.model"
 import CollectedPlant from "../models/plants/collectedPlant.model"
 
 import { connectDB } from "../lib/connectDB";
 import { getSessionUserId } from "../helpers/session.helpers";
-import { Collections } from "../types/plantTypes";
-import { revalidatePath } from "next/cache";
+import { Collections, PlantDocument } from "../types/plantTypes";
 
 interface Args {
   collection: Collections,
   _id?: string | undefined
 }
 
-function dataToUpdate(collection: Collections, formData: FormData) {
-  return {
+function dataToUpdate( userId: unknown, formData: FormData, collection: Collections | undefined,) {
+  const data = {
+    _userId: userId,
     species: formData.get("species"),
     variety: formData.get("variety"),
+    images: []
+  }
+
+  if (!collection) {
+    return data
+  }
+
+  return Object.assign({}, data, additionalData(formData, collection));
+}
+
+function additionalData(formData: FormData, collection: Collections) {
+  const key = collection === "sold" ? 'buyer' : 'seller'
+  return {
     price: formData.get("price"),
     date: formData.get("date"),
     passport: formData.get("passport"),
-    [collection === 'sold' ? 'buyer' : 'seller']: {
+    [key]: {
       name: formData.get("name"),
       address: formData.get("address"),
-      variety: formData.get("variety"),
       phone: formData.get("phone"),
       email: formData.get("email"),
       country: formData.get("country"),
     },
-    images: []
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createPurchasedPlant = async (userId: unknown, formData: FormData) => {
+function uiPlantObject(plant: PlantDocument, collection: Collections) {
+  if (!plant) return
   const data = {
-    _userId: userId,
-    species: formData.get("species"),
-    variety: formData.get("variety"),
-    price: formData.get("price"),
-    date: formData.get("date"),
-    passport: formData.get("passport"),
-    seller: {
-      name: formData.get("name"),
-      address: formData.get("address"),
-      variety: formData.get("variety"),
-      phone: formData.get("phone"),
-      email: formData.get("email"),
-      country: formData.get("country"),
-    },
-    images: []
-  };
+    _id: plant._id,
+    species: plant.species,
+    variety: plant.variety,
+    images: plant.images
+  }
 
-  return data
+  if (collection === 'collected') {
+    return data
+  }
+
+  const key = collection === "sold" ? 'buyer' : 'seller'
+  const additionalFields = {
+    price: plant.price,
+    date: plant.date,
+    passport: plant.passport,
+    name: plant[key]?.name,
+    address: plant[key]?.address,
+    phone: plant[key]?.phone,
+    email: plant[key]?.email,
+    country: plant[key]?.country,
+  }
+
+  return Object.assign(data, additionalFields);
+
 }
 
-export const createSoldPlant = async (userId: unknown, formData: FormData) => {
-  const data = {
-    _userId: userId,
-    species: formData.get("species"),
-    variety: formData.get("variety"),
-    price: formData.get("price"),
-    date: formData.get("date"),
-    passport: formData.get("passport"),
-    buyer: {
-      name: formData.get("name"),
-      address: formData.get("address"),
-      variety: formData.get("variety"),
-      phone: formData.get("phone"),
-      email: formData.get("email"),
-      country: formData.get("country"),
-    },
-    images: []
-  };
-
-  return data
-}
-
-export const createCollectedPlant = async (userId: unknown, formData: FormData) => {
-  const data = {
-    _userId: userId,
-    species: formData.get("species"),
-    variety: formData.get("variety"),
-    images: []
-  };
-
-  return data
+export const createPlant = async (userId: unknown, formData: FormData, collection: Collections) => {
+  return dataToUpdate(userId, formData, collection)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,17 +85,16 @@ export const addPlant = async (extraArgs: Args, prevState: object, formData: For
   let plant = null;
   let newPlant = null;
 
+  plant = await createPlant(userId, formData, extraArgs?.collection)
+
   switch (extraArgs.collection) {
     case 'purchased':
-      plant = await createPurchasedPlant(userId, formData)
       newPlant = new PurchasedPlant(plant)
       break;
     case 'sold':
-      plant = await createSoldPlant(userId, formData)
       newPlant = new SoldPlant(plant)
       break;
     default:
-      plant = await createCollectedPlant(userId, formData)
       newPlant = new CollectedPlant(plant)
       break;
   }
@@ -150,8 +139,6 @@ export const deletePlant = async (collection: Collections, plantId: string | und
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const editPlant = async (extraArgs: Args, prevState: object, formData: FormData) => {
-
-  console.log(1, extraArgs._id, formData)
   const userId = await getSessionUserId();
   let plant;
 
@@ -169,7 +156,7 @@ export const editPlant = async (extraArgs: Args, prevState: object, formData: Fo
 
   try {
     await connectDB();
-    await plant.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, dataToUpdate(extraArgs.collection, formData))
+    await plant.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, dataToUpdate(userId, formData, extraArgs.collection))
     revalidatePath('/plants/' + extraArgs.collection);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
@@ -182,20 +169,22 @@ export async function getPlants(collection: Collections = 'collected') {
   await connectDB();
   // eslint-disable-next-line no-var
   let dbPlantsList;
-  let plants;
   switch (collection) {
     case 'purchased':
       dbPlantsList = await PurchasedPlant.find({_userId: userId})
-      plants = dbPlantsList.map(({ _id ,species, variety, images, price, date, passport, seller}) => ({_id, species, variety, images, price, date, passport, name: seller.name, address: seller.address, phone: seller.phone, email: seller.email, country: seller.countery}));
       break;
     case 'sold':
       dbPlantsList = await SoldPlant.find({ _userId: userId });
-      plants = dbPlantsList.map(({ _id, species, variety, images, price, date, passport, buyer}) => ({ _id, species, variety, images, price, date, passport, name: buyer.name, address:buyer.address, phone: buyer.phone, email: buyer.email, country: buyer.countery}));
       break;
     default:
       dbPlantsList = await CollectedPlant.find({ _userId: userId });
-      plants = dbPlantsList.map(({ _id, species, variety, images}) => ({ _id, species, variety, images}));
       break;
   }
+  if (!dbPlantsList) return []
+
+  const plants = dbPlantsList.map((plant: PlantDocument) => {
+    return uiPlantObject(plant, collection)
+  });
+
   return JSON.parse(JSON.stringify(plants))
 }

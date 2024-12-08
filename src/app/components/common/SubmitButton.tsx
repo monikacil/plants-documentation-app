@@ -10,7 +10,7 @@ export default function SubmitButton({text, disabled= false}: SubmitButtonType )
     <button
       disabled={disabled}
       type="submit"
-      className="flex w-full justify-center rounded-md bg-primary-dark-green px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-primary-green-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="flex w-full justify-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
     >
       {text}
     </button>
