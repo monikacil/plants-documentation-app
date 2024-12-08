@@ -8,38 +8,8 @@ import { connectDB } from "../lib/connectDB";
 import { getSessionUserId } from "../helpers/session.helpers";
 import { Collections } from "../types/plantTypes";
 
-const userId = await getSessionUserId();
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addSoldPlant = async (prevState: any, formData: FormData) => {
-  const data = {
-    _userId: userId,
-    species: formData.get("species"),
-    variety: formData.get("variety"),
-    price: formData.get("price"),
-    date: formData.get("date"),
-    passport: formData.get("passport"),
-    buyer: {
-      name: formData.get("name"),
-      address: formData.get("address"),
-      variety: formData.get("variety"),
-      phone: formData.get("phone"),
-      email: formData.get("email"),
-      country: formData.get("country"),
-    },
-    images: []
-  };
-
-  await connectDB();
-
-  const newPlant = new SoldPlant(data);
-  const savedPlant = await newPlant.save();
-
-  return savedPlant
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addPurchasedPlant = async (prevState: any, formData: FormData) => {
+export const createPurchasedPlant = async (userId: unknown, formData: FormData) => {
   const data = {
     _userId: userId,
     species: formData.get("species"),
@@ -58,16 +28,32 @@ export const addPurchasedPlant = async (prevState: any, formData: FormData) => {
     images: []
   };
 
-  await connectDB();
-
-  const newPlant = new PurchasedPlant(data)
-  const savedPlant = await newPlant.save();
-
-  return savedPlant
+  return data
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addCollectedPlant = async (prevState: any, formData: FormData) => {
+export const createSoldPlant = async (userId: unknown, formData: FormData) => {
+  const data = {
+    _userId: userId,
+    species: formData.get("species"),
+    variety: formData.get("variety"),
+    price: formData.get("price"),
+    date: formData.get("date"),
+    passport: formData.get("passport"),
+    buyer: {
+      name: formData.get("name"),
+      address: formData.get("address"),
+      variety: formData.get("variety"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      country: formData.get("country"),
+    },
+    images: []
+  };
+
+  return data
+}
+
+export const createCollectedPlant = async (userId: unknown, formData: FormData) => {
   const data = {
     _userId: userId,
     species: formData.get("species"),
@@ -75,28 +61,59 @@ export const addCollectedPlant = async (prevState: any, formData: FormData) => {
     images: []
   };
 
-  await connectDB();
+  return data
+}
 
-  const newPlant = new CollectedPlant(data)
-  const savedPlant = await newPlant.save();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addPlant = async (collection: string, prevState: object, formData: FormData) => {
+  const userId = await getSessionUserId();
+  let plant = null;
+  let newPlant = null;
 
-  return savedPlant
+  switch (collection) {
+    case 'purchased':
+      plant = await createPurchasedPlant(userId, formData)
+      newPlant = new PurchasedPlant(plant)
+      break;
+    case 'sold':
+      plant = await createSoldPlant(userId, formData)
+      newPlant = new SoldPlant(plant)
+      break;
+    default:
+      plant = await createCollectedPlant(userId, formData)
+      newPlant = new CollectedPlant(plant)
+      break;
+  }
+
+  try {
+    await connectDB();
+    const savedPlant = await newPlant.save();
+    return JSON.parse(JSON.stringify(savedPlant))
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
+    return { error: 'Error occurse when trying to save data' }
+  }
 }
 
 export async function getPlants(collection: Collections = 'collected') {
+  const userId = await getSessionUserId();
   await connectDB();
   // eslint-disable-next-line no-var
-  var plants;
+  let dbPlantsList;
+  let plants;
   switch (collection) {
     case 'purchased':
-        plants = await PurchasedPlant.find({_userId: userId});
-        break;
+      dbPlantsList = await PurchasedPlant.find({_userId: userId})
+      plants = dbPlantsList.map(({species, variety, images, price, date, passport, seller}) => ({species, variety, images, price, date, passport, seller}));
+      break;
     case 'sold':
-        plants = await SoldPlant.find({_userId: userId});
-        break;
+      dbPlantsList = await SoldPlant.find({ _userId: userId });
+      plants = dbPlantsList.map(({species, variety, images, price, date, passport, buyer}) => ({species, variety, images, price, date, passport, buyer}));
+      break;
     default:
-        plants = await CollectedPlant.find({_userId: userId});
-        break;
+      dbPlantsList = await CollectedPlant.find({ _userId: userId });
+      plants = dbPlantsList.map(({species, variety, images}) => ({species, variety, images}));
+      break;
   }
-  return plants
+  return JSON.parse(JSON.stringify(plants))
 }

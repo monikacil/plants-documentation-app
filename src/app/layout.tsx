@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { Playpen_Sans } from 'next/font/google'
+import { Fredoka } from 'next/font/google'
 // Sour_Gummy, Balsamiq_Sans, Comic_Neue
-const dongle = Playpen_Sans({
-  weight: ['400', '300', '700'],
+const fredoka = Fredoka({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-dongle',
-  // style: ['italic', 'normal']
+  variable: '--font-fredoka',
 })
 
 // Layout components
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dongle.variable}`}>
+    <html lang="en" className={`${fredoka.variable}`}>
       <body className="flex flex-col min-h-screen">
         <Header />
         <main className="grow p-6 lg:p-14">

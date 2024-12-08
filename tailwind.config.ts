@@ -6,12 +6,13 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+     "./node_modules/flowbite/**/*.{js,ts}",
     content(),
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-dongle)'],
+        sans: ['var(--font-fredoka)'],
       },
       colors: {
         background: "var(--background)",
@@ -42,9 +43,7 @@ const config: Config = {
   plugins: [
     plugin(),
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    require('flowbite/plugin')({
-      datatables: true,
-    }),
+    require('flowbite/plugin')
   ],
 };
 export default config;

@@ -10,7 +10,7 @@ const ImageSchema = new Schema<ImagesDocument>(
 );
 
 const CollectedPlantSchema = new Schema<PlantDocument>({
-  _ownerId: { type: mongoose.Types.ObjectId, ref: "User" },
+  _userId: { type: mongoose.Types.ObjectId, ref: "User" },
   species: {
     type: String,
     required: [true, "Species is required"],
@@ -30,5 +30,5 @@ const CollectedPlantSchema = new Schema<PlantDocument>({
   },
 });
 
-const CollectedPlant = model<PlantDocument>('CollectedPlant', CollectedPlantSchema);
+const CollectedPlant = mongoose.models?.CollectedPlant || model<PlantDocument>('CollectedPlant', CollectedPlantSchema);
 export default CollectedPlant;

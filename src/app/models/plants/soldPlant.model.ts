@@ -33,7 +33,7 @@ const ImageSchema = new Schema<ImagesDocument>(
 );
 
 const SoldPlantSchema = new Schema<PlantDocument>({
-  _ownerId: { type: mongoose.Types.ObjectId, ref: "User" },
+  _userId: { type: mongoose.Types.ObjectId, ref: "User" },
   species: {
     type: String,
     required: [true, "Species is required"],
@@ -67,5 +67,5 @@ const SoldPlantSchema = new Schema<PlantDocument>({
   },
 });
 
-const SoldPlant = model<PlantDocument>('SoldPlant', SoldPlantSchema);
+const SoldPlant = mongoose.models?.SoldPlant || model<PlantDocument>('SoldPlant', SoldPlantSchema);
 export default SoldPlant;

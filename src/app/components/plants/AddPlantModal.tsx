@@ -1,19 +1,12 @@
-'use client'
 import Modal from '../common/Modal';
+import AddPlantForm from './AddPlantForm';
 
-interface ModalProps {
-  isOpen: boolean,
-  onClose: () => void
-}
-
-export default function AddPlantModal({ isOpen, onClose }: ModalProps) {
+export default function AddPlantModal() {
 
   return (
     <>
-     <Modal title="Add plant" isOpen={isOpen} onClose={onClose}>
-        <p>
-            Modal
-        </p>
+      <Modal title="Add plant">
+        <AddPlantForm />
       </Modal>
     </>
   )

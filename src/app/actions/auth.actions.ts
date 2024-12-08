@@ -51,7 +51,7 @@ export const register = async (prevState: any, formData: FormData) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function login(prevState: any, formData: FormData) {
-   // zod valida
+   // zod validation
   const validation = await zodValidation(formData);
   if (!validation.success) {
     return {
