@@ -13,7 +13,7 @@ interface ModalProps {
   color: string,
   plant?: Plant,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plantAction?: (extraArgs:Args, prevState: any, formData: FormData) => Promise<any>
+  plantAction: (extraArgs:Args, prevState: any, formData: FormData) => Promise<any>
 
 }
 
