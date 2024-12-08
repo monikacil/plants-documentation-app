@@ -71,11 +71,11 @@ function uiPlantObject(plant: PlantDocument, collection: Collections) {
     country: plant[key]?.country,
   }
 
-  return Object.assign(data, additionalFields);
+  return { ...data, ...additionalFields };
 
 }
 
-export const createPlant = async (userId: unknown, formData: FormData, collection: Collections) => {
+async function createPlant (userId: unknown, formData: FormData, collection: Collections) {
   return dataToUpdate(userId, formData, collection)
 }
 
