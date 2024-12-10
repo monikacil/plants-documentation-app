@@ -11,7 +11,7 @@ const fredoka = Fredoka({
 
 // Layout components
 import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import { default as Footer } from "./components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Plants Documentation App",

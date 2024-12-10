@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import ExtraPlantFields from './ExtraPlantFields';
 import { Collections, Plant } from '@/app/types/plantTypes';
 import Input from '../common/form/Input';
-import SubmitButton from '../common/SubmitButton';
+import BasicButton from '../common/BasicButton';
 
 interface Args {
   collection: Collections,
@@ -30,10 +30,10 @@ export default function PlantForm({ plant, plantAction }: Props) {
   return (
     <>
       <Form action={formAction} className="">
-        <Input name="species" defaultValue={plant?.species} />
+        <Input name="species" defaultValue={ plant?.species } />
         <Input name="variety" defaultValue={ plant?.variety } />
         {collection !== 'collected' ? <ExtraPlantFields plant={ plant } />: null}
-        <SubmitButton disabled={isPending} text={isPending ? "Saving..." : "Save"} />
+        <BasicButton disabled={ isPending } isProcessing={ isPending }>Save Plant</BasicButton>
         {state?.error && <div className="text-red-500">{ state?.error }</div>}
       </Form>
     </>

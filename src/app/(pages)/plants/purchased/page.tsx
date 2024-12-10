@@ -9,7 +9,7 @@ export default async function PurchasedPlants() {
   return (
     <>
       <h1>Purchased</h1>
-      <PlantModal title="Add Plant" color="green" plantAction={ addPlant } />
+      <PlantModal title="Add Plant" color="success" plantAction={ addPlant } />
       <div>
         <PlantTable data={data} />
       </div>

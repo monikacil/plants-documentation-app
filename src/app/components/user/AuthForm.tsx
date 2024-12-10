@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import SubmitButton from "./../common/SubmitButton";
+import BasicButton from "./../common/BasicButton";
 import ZodErrors from "./../common/ZodErrors";
 import { AuthFormState } from "@/app/lib/zod/zodUser"
 
@@ -68,7 +68,7 @@ export default function AuthForm({ btnText, headerText, authAction }: Props) {
             <ZodErrors error={state?.errors.message} />
           </div>
           <div className="mt-8">
-            <SubmitButton disabled={isPending} text={btnText} />
+            <BasicButton disabled={ isPending } isProcessing={ isPending } type="submit" >{ btnText }</BasicButton>
           </div>
         </form>
       </div>

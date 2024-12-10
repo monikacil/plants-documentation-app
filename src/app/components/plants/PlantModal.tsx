@@ -1,5 +1,6 @@
 'use client'
-import Modal from '../common/Modal';
+
+import BasicModal from '../common/BasicModal';
 import PlantForm from './PlantForm';
 import { Collections, Plant } from '@/app/types/plantTypes';
 
@@ -20,9 +21,9 @@ interface ModalProps {
 export default function PlantModal ({ title, color, plant, plantAction }: ModalProps) {
   return (
     <>
-      <Modal title={ title } color={color}>
+      <BasicModal title={ title } color={color}>
         <PlantForm plant={ plant } plantAction = { plantAction } />
-      </Modal>
+      </BasicModal>
     </>
   )
 }
