@@ -39,8 +39,8 @@ export default function PlantTable({ data }: { data: Plant[] }) {
       })}
       <td className="w-6 p-4">
         <div className="flex gap-3">
-          <PlantModal plant={plant} title="Edit" color="cyan" plantAction={ editPlant } />
-          <BasicButton onClick={ () => deletePlant(collection, plant?._id) }>Delete</BasicButton>
+          <PlantModal plant={plant} title="Edit" color="teal" plantAction={ editPlant } />
+          <BasicButton color="red" onClick={ () => deletePlant(collection, plant?._id) }>Delete</BasicButton>
         </div>
       </td>
     </tr>

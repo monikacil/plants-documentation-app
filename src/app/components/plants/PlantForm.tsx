@@ -31,9 +31,9 @@ export default function PlantForm({ plant, plantAction }: Props) {
     <>
       <Form action={formAction} className="">
         <Input name="species" defaultValue={ plant?.species } />
-        <Input name="variety" defaultValue={ plant?.variety } />
+        <Input name="variety" defaultValue={plant?.variety} />
         {collection !== 'collected' ? <ExtraPlantFields plant={ plant } />: null}
-        <BasicButton disabled={ isPending } isProcessing={ isPending }>Save Plant</BasicButton>
+        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending }>Save Plant</BasicButton>
         {state?.error && <div className="text-red-500">{ state?.error }</div>}
       </Form>
     </>

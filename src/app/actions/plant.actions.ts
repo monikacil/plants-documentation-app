@@ -81,6 +81,7 @@ async function createPlant (userId: unknown, formData: FormData, collection: Col
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const addPlant = async (extraArgs: Args, prevState: object, formData: FormData) => {
+  console.log(formData)
   const userId = await getSessionUserId();
   let plant = null;
   let newPlant = null;
@@ -98,6 +99,8 @@ export const addPlant = async (extraArgs: Args, prevState: object, formData: For
       newPlant = new CollectedPlant(plant)
       break;
   }
+
+  console.log(newPlant)
 
   try {
     await connectDB();
