@@ -33,7 +33,7 @@ export type PlantDocument = {
 export type Collections = "collected" | "purchased" | "sold";
 
 export type Plant = {
-  _id?: string,
+  _id?: string | undefined,
   species: string | undefined,
   variety: string | undefined,
   images?: string[],

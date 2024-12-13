@@ -13,7 +13,7 @@ function tableHeadersList(data: Plant[], notAllowedHeaders: string[]) {
   return headers
 }
 
-function goToDetails(id: string, collection: Collections) { redirect(`/plants/${collection}/${id}`) }
+function goToDetails(id: string | undefined, collection: Collections) { redirect(`/plants/${collection}/${id}`) }
 
 export function getTableHeaders(data: Plant[], notAllowedHeaders: string[]) {
   const headers = tableHeadersList(data, notAllowedHeaders).map((header, idx) => {
