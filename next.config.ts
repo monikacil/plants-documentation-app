@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-   experimental: {
+  experimental: {
     turbo: {
       resolveExtensions: [
         '.mdx',

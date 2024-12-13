@@ -19,7 +19,7 @@ interface Props {
   isProcessing?: boolean,
   disabled?: boolean,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onClick?: () => void | Promise<any> | undefined,
+  onClick?: (e: any) => void | Promise<any> | undefined,
 }
 
 export default function BasicButton({
@@ -43,9 +43,11 @@ export default function BasicButton({
       outline={ outline }
       pill={ pill }
       isProcessing={ isProcessing  }
-      disabled={disabled}
-      theme={customTheme}
-      onClick={ onClick }>
+      disabled={ disabled }
+      theme={ customTheme }
+      onClick={onClick}
+      className="items-center"
+    >
       { children }
     </Button>
   )

@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 export type SourceDocument = {
   name: string;
   address: string;
-  phone: number;
-  email: string;
   country: string;
+  phone: string;
+  email: string;
 } | null;
 
 export type ImagesDocument = {
@@ -21,7 +21,7 @@ export type PlantDocument = {
   species: string;
   variety: string;
   price: string | undefined;
-  date: Date | undefined;
+  date: Date | null | undefined;
   passport: string | undefined;
   buyer: SourceDocument | undefined;
   seller: SourceDocument | undefined;
@@ -32,20 +32,17 @@ export type PlantDocument = {
 
 export type Collections = "collected" | "purchased" | "sold";
 
-
 export type Plant = {
-  _id: string,
+  _id?: string,
   species: string | undefined,
   variety: string | undefined,
-  images?: [],
+  images?: string[],
   price: string | undefined,
-  date: string,
+  date: Date | null | undefined,
   passport: string | undefined,
   name: string | undefined,
   address: string | undefined,
   country: string | undefined,
-  phone: number | undefined,
+  phone: string | undefined,
   email: string | undefined,
-
 }
-

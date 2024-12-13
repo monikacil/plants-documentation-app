@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${fredoka.variable}`}>
       <body className="flex flex-col min-h-screen">
         <Header />
-        <main className="grow p-6 lg:p-14">
+        <main className="grow p-6  lg:py-4">
           {children}
         </main>
         <Footer />

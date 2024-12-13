@@ -30,5 +30,7 @@ const CollectedPlantSchema = new Schema<PlantDocument>({
   },
 });
 
+CollectedPlantSchema.index({ species: 'text', variety: 'text' });
+
 const CollectedPlant = mongoose.models?.CollectedPlant || model<PlantDocument>('CollectedPlant', CollectedPlantSchema);
 export default CollectedPlant;

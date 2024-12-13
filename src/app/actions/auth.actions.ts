@@ -10,14 +10,14 @@ import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
 import { createSession } from "../lib/joseSession";
 import { UserDocument } from "../types/userTypes";
 import { AuthErrors } from "../lib/zod/errors";
-import { zodValidation } from "../lib/zod/zodValidations";
+import { zodAuthValidation } from "../lib/zod/zodValidations";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const register = async (prevState: any, formData: FormData) => {
    // zod validation
-  const validation = await zodValidation(formData)
+  const validation = await zodAuthValidation(formData)
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,
@@ -52,7 +52,7 @@ export const register = async (prevState: any, formData: FormData) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function login(prevState: any, formData: FormData) {
    // zod validation
-  const validation = await zodValidation(formData);
+  const validation = await zodAuthValidation(formData);
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,

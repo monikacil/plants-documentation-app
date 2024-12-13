@@ -67,5 +67,7 @@ const PurchasedPlantSchema = new Schema<PlantDocument>({
   },
 });
 
+PurchasedPlantSchema.index({ species: 'text', variety: 'text' });
+
 const PurchasedPlant = mongoose.models?.PurchasedPlant || model<PlantDocument>('PurchasedPlant', PurchasedPlantSchema);
 export default PurchasedPlant;

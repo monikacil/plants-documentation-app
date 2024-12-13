@@ -1,67 +1,55 @@
 'use client'
 
-import { deletePlant, editPlant } from "@/app/actions/plant.actions"
-import { usePathname } from "next/navigation"
-import PlantModal from "./PlantModal"
+import { Table } from "flowbite-react";
+
 import { Collections, Plant } from "@/app/types/plantTypes"
-import BasicButton from "../common/BasicButton"
+import { getTableBody, getTableHeaders } from "@/app/helpers/plantTableCells";
+import { BasicPagination } from "../common/BasicPagination";
+import Search from "../common/Search";
+import { searchPlants } from "@/app/actions/plant.actions";
+import { useEffect, useState } from "react";
 
-function getTableHeaders(data: Plant[]) {
-  const headers = Object.keys(data[0]).filter(key => key !== 'images' && key !== '_id')
-  headers.push('actions')
-  return headers
-}
+export default function PlantTable({ data, collection }: { data: Plant[], collection: Collections }) {
+  const [plantsList, setPlantsList] = useState(data)
 
-export default function PlantTable({ data }: { data: Plant[] }) {
-  const url = usePathname()
-  const collection = url.split('/')[2] as Collections
+  useEffect(()=> { setPlantsList(data)}, [data])
 
-
-  if (!data.length) {
-    return <p>No data</p>
+  const handleChange = async (text: string) => {
+    if (text) {
+      const plants = await searchPlants(collection, text)
+      setPlantsList(plants)
+    } else {
+      setPlantsList(data)
+    }
   }
 
-  const tableHeaders = getTableHeaders(data).map((header, idx) =>
-    <th key={'table-header-' + idx} scope="col" className="px-6 py-3">
-      {header}
-    </th>
-  )
+  // TODO: will be configurable
+  const notAllowedHeaders = ["_id", "images"]
 
-  const tableBody = data.map((plant, idx) =>
-    <tr key={'table-body-row-' + idx} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-      <td className="w-4 p-4">
-        {idx + 1}
-      </td>
-      {Object.entries(plant).filter(([key]) => key !== 'images' && key !== '_id').map((el, idx) => {
-        return <td key={'table-cell-' + el[0] + '-' + idx} className="px-6 py-4 cursor-pointer">
-          { el[1] }
-        </td>;
-      })}
-      <td className="w-6 p-4">
-        <div className="flex gap-3">
-          <PlantModal plant={plant} title="Edit" color="teal" plantAction={ editPlant } />
-          <BasicButton color="red" onClick={ () => deletePlant(collection, plant?._id) }>Delete</BasicButton>
-        </div>
-      </td>
-    </tr>
-  )
   return (
     <>
-      <div>
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="p-4">
-                No.
-              </th>
-              {tableHeaders}
-            </tr>
-          </thead>
-          <tbody>
-            {data ? tableBody : <p>No data</p>}
-          </tbody>
-        </table>
-     </div>
+       {data.length ? (
+        <>
+        <header>
+          <Search onChange={ handleChange}  />
+        </header>
+          <div className="overflow-x-auto">
+          <Table className="static">
+            <Table.Head className="tracking-widest">
+              <Table.HeadCell className="w-20 bg-teal-900 text-white">No.</Table.HeadCell>
+              {getTableHeaders(plantsList, notAllowedHeaders)}
+              <Table.HeadCell className="bg-teal-900 text-white">Actions</Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y text-gray-800">
+              {plantsList ? getTableBody(plantsList, collection) : <p>No data</p>}
+            </Table.Body>
+          </Table>
+          <BasicPagination />
+        </div>
+        </>
+      ) : (
+        (<p>No data</p>)
+      )}
     </>
   )
 }

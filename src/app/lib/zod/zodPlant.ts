@@ -1,4 +1,18 @@
-import { date, object, string, number } from "zod"
+import { object, string } from "zod"
+
+
+export const zodCollectedPlantSchema = object({
+  species: string()
+    .trim()
+    .refine((val) => val.length > 1, {
+      message: "Species is required",
+    }),
+  variety: string()
+    .trim()
+    .refine((val) => val.length > 1, {
+      message: "Variety is required",
+    }),
+})
 
 export const zodPlantSchema = object({
   species: string()
@@ -13,7 +27,7 @@ export const zodPlantSchema = object({
     }),
   price: string()
     .trim(),
-  date: date(),
+  date: string(),
   passport: string()
     .trim()
     .refine((val) => val.length > 1, {
@@ -26,9 +40,8 @@ export const zodPlantSchema = object({
     }),
   address: string()
     .trim(),
-  phone: number(),
+  phone: string(),
   email: string()
-    .email("Invalid email address format")
     .trim()
     .refine((val) => val.length > 1, {
       message: "Buyer email is required",
