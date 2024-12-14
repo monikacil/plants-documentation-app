@@ -52,18 +52,18 @@ export const zodPlantSchema = object({
 
 export type PlantFormState =
   | {
-      errors?: {
-        species?: string[]
-        variety?: string[]
-        price?: string[]
-        date?: string[]
-        passport?: string[]
-        name?: string[]
-        address?: string[]
-        phone?: string[]
-        email?: string[]
-        country?: string[]
-        messages?: string[]
+      errors: {
+        species: string[] | undefined,
+        variety: string[] | undefined,
+        price: string[] | undefined,
+        date: string[] | undefined,
+        passport: string[] | undefined,
+        name: string[] | undefined,
+        address: string[] | undefined,
+        phone: string[] | undefined,
+        email: string[] | undefined,
+        country: string[] | undefined,
+        messages: string[] | undefined
       }
     }
   | undefined

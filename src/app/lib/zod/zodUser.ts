@@ -15,10 +15,10 @@ export const zodUserSchema = object({
 
 export type AuthFormState =
   | {
-      errors?: {
-        email?: string[]
-        password?: string[]
-        message?: string
+      errors: {
+        email: string[] | undefined,
+        password: string[] | undefined,
+        message: string | undefined
       }
     }
   | undefined

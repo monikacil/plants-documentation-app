@@ -1,5 +1,6 @@
 "use client";
 
+import { ComponentPropsWithoutRef } from "react";
 import { Button, CustomFlowbiteTheme } from "flowbite-react";
 
 const customTheme: CustomFlowbiteTheme["button"] = {
@@ -8,16 +9,14 @@ const customTheme: CustomFlowbiteTheme["button"] = {
   },
 };
 
-interface Props {
+type Props = ComponentPropsWithoutRef<"button"> & {
   children: React.ReactNode,
   size?: 'xs'|'sm'|'md'|'lg'|'xl'
   color?: string,
   gradientMonochrome?: string | undefined,
-  type?: "button" | "submit" | "reset" | undefined,
   outline?: boolean,
   pill?: boolean,
   isProcessing?: boolean,
-  disabled?: boolean,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClick?: (e: any) => void | Promise<any> | undefined,
 }
@@ -27,26 +26,24 @@ export default function BasicButton({
   size = "sm",
   color = "blue",
   gradientMonochrome,
-  type,
   outline = false,
   pill = false,
   isProcessing = false,
-  disabled = false,
-  onClick
+  onClick,
+  ...rest
 }: Props) {
   return (
     <Button
       size={ size }
       color={ color }
       gradientMonochrome={ gradientMonochrome}
-      type={ type }
       outline={ outline }
       pill={ pill }
       isProcessing={ isProcessing  }
-      disabled={ disabled }
       theme={ customTheme }
       onClick={onClick}
       className="items-center"
+      {...rest}
     >
       { children }
     </Button>

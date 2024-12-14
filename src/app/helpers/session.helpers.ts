@@ -16,5 +16,5 @@ export const getSessionUserId = async () => {
   const cookie =  await getCookie(COOKIE_NAME, { cookies });
   const session = await decrypt(cookie)
   if (!session) return
-  return session.userId
+  return session.userId as string
 }

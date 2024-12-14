@@ -32,17 +32,22 @@ export type PlantDocument = {
 
 export type Collections = "collected" | "purchased" | "sold";
 
+export type PlantExtraArgs = {
+  collection: Collections,
+  _id?: string
+}
+
 export type Plant = {
-  _id?: string | undefined,
-  species: string | undefined,
-  variety: string | undefined,
-  images?: string[],
-  price: string | undefined,
-  date: Date | null | undefined,
-  passport: string | undefined,
-  name: string | undefined,
-  address: string | undefined,
-  country: string | undefined,
-  phone: string | undefined,
-  email: string | undefined,
+  _id: string,
+  species: string,
+  variety: string,
+  images: string[],
+  price: string,
+  date: Date | null,
+  passport: string,
+  name: string,
+  address: string,
+  country: string,
+  phone: string,
+  email: string,
 }

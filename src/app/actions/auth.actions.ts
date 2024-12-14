@@ -8,9 +8,10 @@ import { getUserByEmail } from "./user.actions";
 import { connectDB } from "@/app/lib/connectDB";
 import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
 import { createSession } from "../lib/joseSession";
-import { UserDocument } from "../types/userTypes";
+import { type UserDocument } from "../types/userTypes";
 import { AuthErrors } from "../lib/zod/errors";
 import { zodAuthValidation } from "../lib/zod/zodValidations";
+import { getErrorMessage } from "../helpers/getErrorMessage";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 
@@ -38,8 +39,10 @@ export const register = async (prevState: any, formData: FormData) => {
   try {
     savedUser = await newUser.save();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err:any) {
-    throw new Error(err.message)
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Registration failed.")
+    }
   }
 
   if (!savedUser) {
@@ -64,7 +67,7 @@ export async function login(prevState: any, formData: FormData) {
   // check if user is registered
   const user: UserDocument = await getUserByEmail(email);
   if (!user) {
-    return {errors: AuthErrors.validationDefaultError}
+    return { errors: AuthErrors.validationDefaultError }
   }
   // password validation
   const isValid = await ComparePassword(user.password, password);

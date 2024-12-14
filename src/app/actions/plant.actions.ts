@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { revalidatePath } from "next/cache";
 
@@ -7,14 +7,32 @@ import PurchasedPlant from "../models/plants/purchasedPlant.model"
 import CollectedPlant from "../models/plants/collectedPlant.model"
 
 import { connectDB } from "../lib/connectDB";
-import { getSessionUserId } from "../helpers/session.helpers";
-import { Collections, PlantDocument } from "../types/plantTypes";
 import { zodPlantValidation } from "../lib/zod/zodValidations";
 
-interface Args {
-  collection: Collections,
-  _id?: string | undefined
+import { getSessionUserId } from "../helpers/session.helpers";
+import { getErrorMessage } from "../helpers/getErrorMessage";
+
+import { Collections, PlantDocument, PlantExtraArgs } from "../types/plantTypes";
+
+function getCollectionModel(collection: Collections) {
+  let model;
+  switch (collection) {
+    case "purchased":
+      model = PurchasedPlant
+      break;
+    case "sold":
+      model = SoldPlant
+      break;
+    default:
+      model = CollectedPlant
+      break;
+  }
+  return model
 }
+
+function getAdditionalDataKey(collection: Collections) {
+   return collection === "sold" ? "buyer" : "seller"
+ }
 
 function dataToUpdate( userId: unknown, formData: FormData, collection: Collections | undefined,) {
   const data = {
@@ -32,7 +50,7 @@ function dataToUpdate( userId: unknown, formData: FormData, collection: Collecti
 }
 
 function additionalData(formData: FormData, collection: Collections) {
-  const key = collection === "sold" ? 'buyer' : 'seller'
+  const key = getAdditionalDataKey(collection)
   return {
     price: formData.get("price"),
     date: formData.get("date"),
@@ -56,14 +74,14 @@ function uiPlantObject(plant: PlantDocument, collection: Collections) {
     images: plant.images
   }
 
-  if (collection === 'collected') {
+  if (collection === "collected") {
     return data
   }
 
-  const key = collection === "sold" ? 'buyer' : 'seller'
+  const key = getAdditionalDataKey(collection)
   const additionalFields = {
     price: plant.price,
-    date: new Intl.DateTimeFormat('pl-PL').format(plant.date as Date),
+    date: new Intl.DateTimeFormat("pl-PL").format(plant.date as Date),
     passport: plant.passport,
     name: plant[key]?.name,
     address: plant[key]?.address,
@@ -80,11 +98,10 @@ async function createPlant (userId: unknown, formData: FormData, collection: Col
   return dataToUpdate(userId, formData, collection)
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addPlant = async (extraArgs: Args, prevState: object, formData: FormData) => {
+export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
+  const collectionModel = getCollectionModel(extraArgs.collection)
   const userId = await getSessionUserId();
-  let plant = null;
-  let newPlant = null;
+  const plant = await createPlant(userId, formData, extraArgs?.collection)
 
    // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
@@ -94,60 +111,37 @@ export const addPlant = async (extraArgs: Args, prevState: object, formData: For
     };
   }
 
-  plant = await createPlant(userId, formData, extraArgs?.collection)
-
-  switch (extraArgs.collection) {
-    case 'purchased':
-      newPlant = new PurchasedPlant(plant)
-      break;
-    case 'sold':
-      newPlant = new SoldPlant(plant)
-      break;
-    default:
-      newPlant = new CollectedPlant(plant)
-      break;
-  }
-
   try {
     await connectDB();
-    const savedPlant = await newPlant.save();
-    revalidatePath('/plants/[slug]');
+    const savedPlant = await new collectionModel(plant).save()
+    revalidatePath("/plants/[slug]");
     return JSON.parse(JSON.stringify(savedPlant))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    return { error: 'Error occurse when trying to save data' }
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Error occurred while saving plant.")
+    }
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const deletePlant = async (collection: Collections, plantId: string | undefined) => {
+export const deletePlant = async (collection: Collections, plantId: string) => {
+  const collectionModel = getCollectionModel(collection)
   const userId = await getSessionUserId();
-  let plant;
-
-  switch (collection) {
-    case 'purchased':
-      plant = PurchasedPlant
-      break;
-    case 'sold':
-      plant = SoldPlant
-      break;
-    default:
-      plant = CollectedPlant
-      break;
-  }
 
   try {
     await connectDB();
-    await plant.deleteOne({ _id: plantId, _userId: userId })
-    revalidatePath('/plants/[slug]');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    return { error: 'Error occurse when trying to save data' }
+    await collectionModel.deleteOne({ _id: plantId, _userId: userId })
+    revalidatePath("/plants/[slug]");
+  } catch (error) {
+     return {
+      message: getErrorMessage(error, "Error occurred while deleting plant.")
+    }
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const editPlant = async (extraArgs: Args, prevState: object, formData: FormData) => {
+export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
+  const collectionModel = getCollectionModel(extraArgs.collection)
+  const userId = await getSessionUserId();
+
   // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
   if (!validation.success) {
@@ -155,115 +149,76 @@ export const editPlant = async (extraArgs: Args, prevState: object, formData: Fo
       errors: validation.error.flatten().fieldErrors,
     };
   }
-  const userId = await getSessionUserId();
-  let plant;
-
-  switch (extraArgs.collection) {
-    case 'purchased':
-      plant = PurchasedPlant
-      break;
-    case 'sold':
-      plant = SoldPlant
-      break;
-    default:
-      plant = CollectedPlant
-      break;
-  }
 
   try {
     await connectDB();
-    await plant.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, dataToUpdate(userId, formData, extraArgs.collection))
-    revalidatePath('/plants/[slug]');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    return { error: 'Error occurse when trying to save data' }
+    await collectionModel.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, dataToUpdate(userId, formData, extraArgs.collection))
+    revalidatePath("/plants/[slug]");
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Error occurred while editing plant.")
+    }
   }
 }
 
 export async function searchPlants(collection: Collections, searchString: string) {
-  let dbPlantsList;
-  switch (collection) {
-    case 'purchased':
-      dbPlantsList = await PurchasedPlant.aggregate([{
-        $match: {
-          $or: [
-          { "species": { $regex: '.*' + searchString + '.*', $options: 'i' } },
-          { "variety": { $regex:'.*' + searchString + '.*',$options: 'i' } },
-          ]
-        }
-      }])
-      break;
-    case 'sold':
-      dbPlantsList = await SoldPlant.aggregate([{
-        $match: {
-          $or: [
-          { "species": { $regex: '.*' + searchString + '.*', $options: 'i' } },
-          { "variety": { $regex:'.*' + searchString + '.*',$options: 'i' } },
-          ]
-        }
-      }])
-      break;
-    default:
-      dbPlantsList = await CollectedPlant.aggregate([{
-        $match: {
-          $or: [
-          { "species": { $regex: '.*' + searchString + '.*', $options: 'i' } },
-          { "variety": { $regex:'.*' + searchString + '.*',$options: 'i' } },
-          ]
-        }
-      }])
-      break;
-  }
-  if (!dbPlantsList) return []
-  const plants = dbPlantsList.map((plant: PlantDocument) => {
-    return uiPlantObject(plant, collection)
-  });
+  const collectionModel = getCollectionModel(collection);
+  try {
+    await connectDB();
+    const dbPlantsList = await collectionModel.aggregate([{
+      $match: {
+        $or: [
+          { "species": { $regex: ".*" + searchString + ".*", $options: "i" } },
+          { "variety": { $regex: ".*" + searchString + ".*", $options: "i" } },
+        ]
+      }
+    }])
+    if (!dbPlantsList) return []
 
-  return JSON.parse(JSON.stringify(plants))
+    const plants = dbPlantsList.map((plant: PlantDocument) => {
+      return uiPlantObject(plant, collection)
+    });
+
+    return JSON.parse(JSON.stringify(plants))
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Something went wrong.")
+    }
+  }
 }
 
-export async function getPlants(collection: Collections = 'collected') {
+export async function getPlants(collection: Collections = "collected") {
+  const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
-  await connectDB();
-  // eslint-disable-next-line no-var
-  let dbPlantsList;
-  switch (collection) {
-    case 'purchased':
-      dbPlantsList = await PurchasedPlant.find({ _userId: userId })
-      break;
-    case 'sold':
-      dbPlantsList = await SoldPlant.find({ _userId: userId });
-      break;
-    default:
-      dbPlantsList = await CollectedPlant.find({ _userId: userId });
-      break;
+
+  try {
+    await connectDB();
+    const dbPlantsList = await collectionModel.find({ _userId: userId });
+    if (!dbPlantsList) return []
+
+    const plants = dbPlantsList.map((plant: PlantDocument) => {
+      return uiPlantObject(plant, collection)
+    });
+
+    return JSON.parse(JSON.stringify(plants))
+  } catch (error) {
+      return {
+        message: getErrorMessage(error, "Error occurred while fetching plants data.")
+      }
   }
-  if (!dbPlantsList) return []
-
-  const plants = dbPlantsList.map((plant: PlantDocument) => {
-    return uiPlantObject(plant, collection)
-  });
-
-  return JSON.parse(JSON.stringify(plants))
 }
 
-export async function getPlant(id: string, collection: Collections = 'collected') {
+export async function getPlant(id: string, collection: Collections = "collected") {
+  const collectionModel = getCollectionModel(collection)
   const userId = await getSessionUserId();
-  await connectDB();
-  // eslint-disable-next-line no-var
-  let dbPlant;
-  switch (collection) {
-    case 'purchased':
-      dbPlant = await PurchasedPlant.findOne({_id: id, _userId: userId})
-      break;
-    case 'sold':
-      dbPlant = await SoldPlant.findOne({_id: id, _userId: userId})
-      break;
-    default:
-      dbPlant = await CollectedPlant.findOne({_id: id, _userId: userId})
-      break;
-  }
-  if (!dbPlant) return null
 
-  return JSON.parse(JSON.stringify(dbPlant))
+  try {
+    await connectDB();
+    const dbPlant = await collectionModel.findOne({_id: id, _userId: userId})
+    return JSON.parse(JSON.stringify(uiPlantObject(dbPlant, collection)))
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Error occurred while fetching plant data.")
+    }
+  }
 }

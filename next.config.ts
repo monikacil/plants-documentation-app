@@ -56,8 +56,9 @@ const nextConfig: NextConfig = {
 };
 
 const withSerwist = withSerwistInit({
+  cacheOnNavigation: true,
   swSrc: "src/app-worker.ts",
-  swDest: ".next/sw.js",
+  swDest: "public/sw.js",
 });
 
 export default withSerwist(

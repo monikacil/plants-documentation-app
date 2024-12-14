@@ -5,25 +5,20 @@ import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from 'flowbite-react';
 import Form from 'next/form'
 
-import { Collections, Plant } from '@/app/types/plantTypes';
+import { Collections, Plant, PlantExtraArgs } from '@/app/types/plantTypes';
 import { toDateFromUiDate } from '@/app/helpers/dateFormatters';
 import Input from '../common/form/Input';
 import BasicButton from '../common/BasicButton';
 import FormDatepicker from '../common/form/Datepicker';
 
-interface Args {
-  collection: Collections,
-  _id?: string | undefined
-}
-
-interface Props {
+type Props = {
   plant?: Plant,
   collection: Collections,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plantAction: (extraArgs:Args, prevState: any, formData: FormData) => Promise<any>
+  plantAction: (extraArgs: PlantExtraArgs, prevState: any, formData: FormData) => Promise<any>
 }
 
-const initForm: Plant = {
+const initForm: Omit<Plant, "_id" | "images"> = {
   species: '',
   variety: '',
   price: '',
