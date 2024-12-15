@@ -1,8 +1,16 @@
-import type { NextConfig } from "next";
-import withSerwistInit from "@serwist/next";
+import { default as withPWA } from "next-pwa";
 
-const nextConfig: NextConfig = {
-   async headers() {
+/** @type {import('next').NextConfig} */
+
+
+const withPWAConfig = withPWA({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+});
+
+export default withPWAConfig({
+  async headers() {
     return [
       {
         source: '/(.*)',
@@ -40,27 +48,25 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+  reactStrictMode: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV !== "development",
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      use: ["@svgr/webpack"],
+    });
+    return config;
+  },
   experimental: {
     turbo: {
-      resolveExtensions: [
-        '.mdx',
-        '.tsx',
-        '.ts',
-        '.jsx',
-        '.js',
-        '.mjs',
-        '.json',
-      ],
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js'
+        }
+      },
     },
   },
-};
-
-const withSerwist = withSerwistInit({
-  cacheOnNavigation: true,
-  swSrc: "src/app-worker.ts",
-  swDest: "public/sw.js",
 });
-
-export default withSerwist(
-  nextConfig
-);
