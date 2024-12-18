@@ -23,8 +23,4 @@ html {
 body {
   color: var(--foreground);
   background-color: var(--background);
-  /* background-image: url("/images/monstera.png");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: contain; */
 }

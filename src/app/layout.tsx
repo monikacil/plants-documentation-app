@@ -12,12 +12,13 @@ const fredoka = Fredoka({
 // Layout components
 import Header from "./components/layout/Header";
 import { default as Footer } from "./components/layout/Footer";
+import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
 
 export const metadata: Metadata = {
   title: "Plants Documentation App",
   description: "An simple application created for plant growing enthusiasts",
   generator: "Next.js",
-  manifest: "/public/manifest.ts",
+  manifest: "/manifest.json",
   keywords: ["nextjs", "next14", "pwa", "next-pwa"],
   category: "application",
   authors: [
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fredoka.variable}`}>
       <body className="flex flex-col min-h-screen">
+        <AddToHomeScreen />
         <Header />
         <main className="grow p-6  lg:py-4">
           {children}
