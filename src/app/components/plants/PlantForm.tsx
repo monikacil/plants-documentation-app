@@ -10,7 +10,7 @@ import { toDateFromUiDate } from "@/app/lib/utils";
 
 import Input from '../form/Input';
 import BasicButton from '../common/BasicButton';
-import FormDatepicker from '../form/Datepicker';
+import FormDatepicker from '../form/FormDatepicker';
 
 type Props = {
   plant?: Plant,
@@ -39,7 +39,7 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
   return (
     <>
       <Form action={formAction}>
-        <div className="font-semibold my-5">Plant Info</div>
+        <div className="font-semibold mb-3">Plant Info</div>
         <div className={ collection !== 'collected' ? "lg:grid lg:grid-cols-2 gap-4" : ""}>
           <Input
             name="species"
@@ -83,7 +83,7 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
               onChange={(value) => { setPlantForm({ ...plantForm, passport: value }) }}
             />
           </div>
-          <div className="font-semibold my-5">{ collection === 'purchased' ? "Seller" : "Buyer" } Info</div>
+          <div className="font-semibold mt-5 mb-3">{ collection === 'purchased' ? "Seller" : "Buyer" } Info</div>
           <div className="lg:grid lg:grid-cols-2 gap-4">
             <Input
               name="name"
@@ -127,7 +127,7 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
             />
           </div>
         </>: null }
-        <BasicButton type="submit" disabled={isPending} isProcessing={isPending}>Save Plant</BasicButton>
+        <BasicButton type="submit" disabled={isPending} isProcessing={isPending} className="my-5">Save Plant</BasicButton>
         {state?.error &&
         <Alert color="failure" icon={HiInformationCircle}>
           <span className="font-medium">{ state?.error }</span>

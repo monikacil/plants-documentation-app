@@ -17,7 +17,10 @@ export default function PlantTable({ plantsList, collection }: Props) {
   return (
     <>
       {plantsList.length ? (
-         <BasicTable tableBody={ getTableBody(plantsList, collection, notAllowedHeaders)} tableHeaders={ getTableHeaders(plantsList, notAllowedHeaders) }/>
+        <BasicTable
+          tableBody={getTableBody(plantsList, collection, notAllowedHeaders)}
+          tableHeaders={getTableHeaders(plantsList, notAllowedHeaders)}
+        />
       ) : (
         (<p>No data</p>)
       )}

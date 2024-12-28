@@ -18,9 +18,9 @@ export default function ConfirmationModal({ title, children, onConfirmClick }: P
       <section>
         <p>Are you sure?</p>
         {children}
-        <footer>
-          <BasicButton onClick={onConfirmClick}>Yes</BasicButton>
-          <BasicButton onClick={() => router.back()}>No</BasicButton>
+        <footer className="flex justify-end gap-2">
+          <BasicButton color="failure" onClick={ onConfirmClick }>Yes</BasicButton>
+          <BasicButton color="gray" onClick={() => router.back()}>No</BasicButton>
         </footer>
       </section>
     </BasicModal>

@@ -27,17 +27,16 @@ export default function Search({ placeholder }: Props) {
 
   return (
     <div className="bg-white dark:bg-gray-900">
-      <div className="mt-1">
-        <TextInput
-          id="table-search"
-          type="email"
-          rightIcon={IoIosSearch}
-          placeholder={ placeholder }
-          defaultValue={searchParams.get('query')?.toString()}
-          onChange={(e) => {
-            handleSearch(e.target.value);
-          }}  />
-      </div>
+      <TextInput
+        id="table-search"
+        type="email"
+        sizing="md"
+        rightIcon={IoIosSearch}
+        placeholder={ placeholder }
+        defaultValue={searchParams.get('query')?.toString()}
+        onChange={(e) => {
+          handleSearch(e.target.value);
+        }}  />
     </div>
   )
 }

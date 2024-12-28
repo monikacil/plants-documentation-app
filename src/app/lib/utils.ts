@@ -22,11 +22,11 @@ export function getBreadcrumbsLinks(url: string) {
     }
     if (idx === 1) {
       return { name: `${capitalizeFirstLetter(el)} Plants`, href: '/plants/' + el }
-    } if (idx === 2) {
-      return { name: `Plant Details`, href: `/plants/${splittedUrl[1]}/${el}`}
-    } else {
-       return { name: capitalizeFirstLetter(el) , href: `/plants/${splittedUrl[1]}/${splittedUrl[2]}/${el}`}
     }
+    if (idx > 1 && ["add", "edit", "delete"].includes(el)) {
+      return { name: capitalizeFirstLetter(el), href: `/plants/${splittedUrl[1]}/${splittedUrl[2]}/${el}` }
+    }
+    return { name: `Plant Details (${el})` , href: `/${splittedUrl[1]}/${splittedUrl[2]}/${el}`}
   })
 
   return links

@@ -20,7 +20,7 @@ interface Props {
 
 export default function Input({ name, label, type="text", defaultValue, value, disabled = false, placeholder, className, errors, onChange }: Props) {
   return (
-    <div className={`mb-3 ${className}`}>
+    <div className={className}>
       <Label
         htmlFor={name}
         value={label}

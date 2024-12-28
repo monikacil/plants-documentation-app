@@ -10,7 +10,7 @@ type Link = {
 
 export default function Breadcrumbs({ links }: { links: Link[] }) {
   return (
-    <Breadcrumb className="py-3 mb-5">
+    <Breadcrumb className="py-3">
       {links.map((el, idx) => {
         return <Breadcrumb.Item key={ 'breadcrumb-to-' + el.name } href={ el.href ?? el.href } icon={ idx === 0 ? HiHome : undefined }>
          { el.name }

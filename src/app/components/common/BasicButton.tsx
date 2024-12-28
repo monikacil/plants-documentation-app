@@ -2,6 +2,7 @@
 
 import { ComponentPropsWithoutRef } from "react";
 import { Button, CustomFlowbiteTheme } from "flowbite-react";
+import { cn } from "@/app/lib/utils";
 
 const customTheme: CustomFlowbiteTheme["button"] = {
   color: {
@@ -17,6 +18,7 @@ type Props = ComponentPropsWithoutRef<"button"> & {
   outline?: boolean,
   pill?: boolean,
   isProcessing?: boolean,
+  className?: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onClick?: (e: any) => void | Promise<any> | undefined,
 }
@@ -29,6 +31,7 @@ export default function BasicButton({
   outline = false,
   pill = false,
   isProcessing = false,
+  className,
   onClick,
   ...rest
 }: Props) {
@@ -42,7 +45,7 @@ export default function BasicButton({
       isProcessing={ isProcessing  }
       theme={ customTheme }
       onClick={onClick}
-      className="items-center"
+      className={cn("items-center", className)}
       {...rest}
     >
       { children }
