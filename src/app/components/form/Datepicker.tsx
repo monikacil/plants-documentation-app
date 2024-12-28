@@ -1,7 +1,7 @@
 "use client";
 
 import { Datepicker, Label } from 'flowbite-react';
-import ZodErrors from "../ZodErrors";
+import ZodErrors from "../common/ZodErrors";
 
 interface Props {
   name: string,

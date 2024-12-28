@@ -6,10 +6,11 @@ import { Alert } from 'flowbite-react';
 import Form from 'next/form'
 
 import { Collections, Plant, PlantExtraArgs } from '@/app/types/plantTypes';
-import { toDateFromUiDate } from '@/app/helpers/dateFormatters';
-import Input from '../common/form/Input';
+import { toDateFromUiDate } from "@/app/lib/utils";
+
+import Input from '../form/Input';
 import BasicButton from '../common/BasicButton';
-import FormDatepicker from '../common/form/Datepicker';
+import FormDatepicker from '../form/Datepicker';
 
 type Props = {
   plant?: Plant,

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import useUserAgent from '@/app/helpers/useUserAgent';
+import useUserAgent from '@/app/components/layout/UseUserAgent';
 import AddToMobileDevice from './AddToMobileDevice';
 
 export default function AddToHomeScreen() {
@@ -44,13 +44,7 @@ export default function AddToHomeScreen() {
   return (
     <>
       {
-        displayPrompt && deferredPrompt
-          ?
-          <>
-            <AddToMobileDevice closePrompt={closePrompt} installPrompt={ handleInstallPrompt } />,
-          </>
-          :
-          <></>
+        (displayPrompt && deferredPrompt) && <AddToMobileDevice closePrompt={closePrompt} installPrompt={ handleInstallPrompt } />
       }
     </>
   );

@@ -1,8 +1,9 @@
 'use client'
 
-import Breadcrumbs from "@/app/components/common/Breadcrumbs"
-import { getBreadcrumbsLinks } from "@/app/helpers/getBreadcrumbsLinks";
 import { usePathname } from "next/navigation";
+
+import { getBreadcrumbsLinks } from "@/app/lib/utils";
+import Breadcrumbs from "@/app/components/common/Breadcrumbs"
 
 export default function PlantsLayout({
   children,

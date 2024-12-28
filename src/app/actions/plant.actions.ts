@@ -9,10 +9,11 @@ import CollectedPlant from "../models/plants/collectedPlant.model"
 import { connectDB } from "../lib/connectDB";
 import { zodPlantValidation } from "../lib/zod/zodValidations";
 
-import { getSessionUserId } from "../helpers/session.helpers";
-import { getErrorMessage } from "../helpers/getErrorMessage";
+import { getSessionUserId } from "../helpers/session.helper";
+import { getErrorMessage } from "../helpers/getErrorMessage.helper";
 
 import { Collections, PlantDocument, PlantExtraArgs } from "../types/plantTypes";
+import mongoose from "mongoose";
 
 function getCollectionModel(collection: Collections) {
   let model;
@@ -187,13 +188,24 @@ export async function searchPlants(collection: Collections, searchString: string
   }
 }
 
-export async function getPlants(collection: Collections = "collected") {
+export async function getPlants(collection: Collections = "collected", query: string, currentPage: number, limit: number) {
   const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
 
   try {
     await connectDB();
-    const dbPlantsList = await collectionModel.find({ _userId: userId });
+    const dbPlantsList =  await collectionModel.aggregate([{
+      $match: {
+        _userId: new mongoose.Types.ObjectId(userId),
+        $or: [
+          { "species": { $regex: ".*" + query + ".*", $options: "i" } },
+          { "variety": { $regex: ".*" + query + ".*", $options: "i" } },
+        ]
+      }
+    },
+    { $skip: (currentPage - 1) * limit },
+    { $limit: limit }
+    ])
     if (!dbPlantsList) return []
 
     const plants = dbPlantsList.map((plant: PlantDocument) => {
@@ -220,5 +232,27 @@ export async function getPlant(id: string, collection: Collections = "collected"
     return {
       message: getErrorMessage(error, "Error occurred while fetching plant data.")
     }
+  }
+}
+
+export async function fetchPlantsPages(query: string, collection: Collections, limit: number) {
+  const collectionModel = getCollectionModel(collection);
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    const dbPlantsList =  await collectionModel.aggregate([{
+      $match: {
+        _userId: new mongoose.Types.ObjectId(userId),
+        $or: [
+          { "species": { $regex: ".*" + query + ".*", $options: "i" } },
+          { "variety": { $regex: ".*" + query + ".*", $options: "i" } },
+        ]
+      }
+    }])
+    return Math.ceil(dbPlantsList.length / limit)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+      return 1
   }
 }

@@ -13,6 +13,10 @@ const nextConfig = {
     return config;
   },
   experimental: {
+    staleTimes: {
+      dynamic: 60,
+      static: 300,
+    },
     turbo: {
       rules: {
         "*.svg": {

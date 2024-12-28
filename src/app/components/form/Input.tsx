@@ -1,7 +1,7 @@
 "use client";
 
 import { Label, TextInput } from "flowbite-react";
-import ZodErrors from "../ZodErrors";
+import ZodErrors from "../common/ZodErrors";
 import { ChangeEvent } from "react";
 
 interface Props {

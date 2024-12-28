@@ -1,9 +1,10 @@
 import Link from "next/link";
+
 import { logout } from "@/app/actions/auth.actions";
+
 import BasicButton from "../common/BasicButton";
 
 export default async function DesktopNav( {isAuth}: {isAuth: boolean}) {
-
   return (
     <div className="flex gap-2 align-middle justify-end md:order-2">
       {!isAuth

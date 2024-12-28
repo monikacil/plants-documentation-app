@@ -5,8 +5,9 @@ import { redirect } from "next/navigation";
 
 import { deletePlant, editPlant } from "@/app/actions/plant.actions"
 import { Collections, Plant } from "@/app/types/plantTypes"
-import PlantModal from "../components/plants/PlantModal";
-import BasicButton from "../components/common/BasicButton";
+
+import PlantModal from "./PlantModal";
+import BasicButton from "../common/BasicButton";
 
 function tableHeadersList(data: Plant[], notAllowedHeaders: string[]) {
   const headers = Object.keys(data[0]).filter(key => !notAllowedHeaders.includes(key))
@@ -24,13 +25,13 @@ export function getTableHeaders(data: Plant[], notAllowedHeaders: string[]) {
   return headers
 }
 
-export function getTableBody(data: Plant[], collection: Collections) {
+export function getTableBody(data: Plant[], collection: Collections, notAllowedHeaders: string[]) {
   const tableBody = data.map((plant, idx) =>
     <Table.Row key={'table-body-row-' + idx} className="cursor-pointer border-teal-800/30">
       <Table.Cell onClick={ () => goToDetails(plant._id, collection) }>
         {idx + 1}
       </Table.Cell>
-      {Object.entries(plant).filter(([key]) => key !== 'images' && key !== '_id').map((el, idx) => {
+      {Object.entries(plant).filter(([key]) => !notAllowedHeaders.includes(key)).map((el, idx) => {
         return <Table.Cell key={'table-cell-' + el[0] + '-' + idx} className="max-w-[280px]" onClick={ () => goToDetails(plant._id, collection) }>
           { el[1] as string }
         </Table.Cell>;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export default function useUserAgent() {
+export default function UseUserAgent() {
     const [isMobile, setIsMobile] = useState<boolean | null>(null);
     const [isIOS, setIsIOS] = useState<boolean | null>(null);
     const [isStandalone, setIsStandalone] = useState<boolean | null>(null);

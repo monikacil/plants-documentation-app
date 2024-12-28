@@ -4,14 +4,18 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 import User from "@/app/models/user.model";
+
 import { getUserByEmail } from "./user.actions";
+
+import { type UserDocument } from "@/app/types/userTypes";
+
+import { getErrorMessage } from "@/app/helpers/getErrorMessage.helper";
+
 import { connectDB } from "@/app/lib/connectDB";
 import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
-import { createSession } from "../lib/joseSession";
-import { type UserDocument } from "../types/userTypes";
-import { AuthErrors } from "../lib/zod/errors";
-import { zodAuthValidation } from "../lib/zod/zodValidations";
-import { getErrorMessage } from "../helpers/getErrorMessage";
+import { createSession } from "@/app/lib/joseSession";
+import { AuthErrors } from "@/app/lib/zod/errors";
+import { zodAuthValidation } from "@/app/lib/zod/zodValidations";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 

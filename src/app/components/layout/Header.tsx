@@ -13,13 +13,13 @@ export default async function Header() {
   const isAuth = session ? true : false
 
   return (
-    <header className="bg-primary-green-0 bg-opacity-80 w-full flex-none">
+    <header className="bg-primary-green-0 bg-opacity-80 w-full flex-none h-[95px]">
      <Navbar fluid className="w-full justify-between items-center">
       <NavbarBrand href="/">
         <Image
           src="/images/logo.png"
           width={280}
-          height={20}
+          height={75}
           alt="Logo"
         />
       </NavbarBrand>
