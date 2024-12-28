@@ -14,6 +14,7 @@ import { getErrorMessage } from "../helpers/getErrorMessage.helper";
 
 import { Collections, PlantDocument, PlantExtraArgs } from "../types/plantTypes";
 import mongoose from "mongoose";
+import { SortType } from "../types/others";
 
 function getCollectionModel(collection: Collections) {
   let model;
@@ -103,6 +104,7 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
   const collectionModel = getCollectionModel(extraArgs.collection)
   const userId = await getSessionUserId();
   const plant = await createPlant(userId, formData, extraArgs?.collection)
+  const createdPlant = new collectionModel(plant)
 
    // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
@@ -114,7 +116,7 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
 
   try {
     await connectDB();
-    const savedPlant = await new collectionModel(plant).save()
+    const savedPlant = await createdPlant.save()
     revalidatePath("/plants/[slug]");
     return JSON.parse(JSON.stringify(savedPlant))
   } catch (error) {
@@ -188,9 +190,19 @@ export async function searchPlants(collection: Collections, searchString: string
   }
 }
 
-export async function getPlants(collection: Collections = "collected", query: string, currentPage: number, limit: number) {
+export async function getPlants(collection: Collections = "collected", query: string, currentPage: number, limit: number, sort?: SortType[]) {
   const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
+
+  const sortQuery = { "$sort": { } }
+
+  if (sort) {
+    sort.forEach((query) => {
+      sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {[query.key]: query.direction === "asc" ? 1 : -1})
+    })
+  } else {
+    sortQuery["$sort"] = { createdAt: 1 }
+  }
 
   try {
     await connectDB();
@@ -204,7 +216,8 @@ export async function getPlants(collection: Collections = "collected", query: st
       }
     },
     { $skip: (currentPage - 1) * limit },
-    { $limit: limit }
+    { $limit: limit },
+    sortQuery
     ])
     if (!dbPlantsList) return []
 

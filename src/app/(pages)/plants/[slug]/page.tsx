@@ -16,6 +16,8 @@ type Props = {
   searchParams?: Promise<{
     query?: string;
     page?: string;
+    sortBy?: string;
+    order?: string
   }>
 }
 
@@ -26,7 +28,14 @@ export default async function Page({ params, searchParams }: Props) {
   const currentPage = Number(searchedParams?.page) || 1;
   const limit = PAGINATION_LIMIT
   const totalPages = await fetchPlantsPages(query, collection, limit)
-  const plantsList:Plant[] = await getPlants(collection, query, currentPage, limit)
+  const sortBy = searchedParams?.sortBy || undefined
+  const order = searchedParams?.order || "asc"
+  let sort = undefined
+  if (sortBy) {
+    sort = [{key: sortBy, direction: order}]
+  }
+
+  const plantsList:Plant[] = await getPlants(collection, query, currentPage, limit, sort)
 
   return (
       <>

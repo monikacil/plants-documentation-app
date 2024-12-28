@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import { Collections, Plant } from "@/app/types/plantTypes"
 import BasicButton from "../common/BasicButton";
+import Sort from "../common/Sort";
 
 function tableHeadersList(data: Plant[], notAllowedHeaders: string[]) {
   const headers = Object.keys(data[0]).filter(key => !notAllowedHeaders.includes(key))
@@ -17,7 +18,10 @@ function goToDetails(id: string | undefined, collection: Collections) { redirect
 export function getTableHeaders(data: Plant[], notAllowedHeaders: string[]) {
   const headers = tableHeadersList(data, notAllowedHeaders).map((header, idx) => {
     return <Table.HeadCell key={'table-header-' + idx} className="max-w-[280px] bg-teal-900 text-white">
-      {header}
+      <div className="flex items-center">
+        {header}
+        <Sort name={ header } />
+      </div>
     </Table.HeadCell>
   })
   return headers

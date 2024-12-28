@@ -28,8 +28,7 @@ const ImageSchema = new Schema<ImagesDocument>(
   {
     originalname: String,
     filename: String,
-  },
-  { timestamps: true }
+  }
 );
 
 const PurchasedPlantSchema = new Schema<PlantDocument>({
@@ -65,7 +64,11 @@ const PurchasedPlantSchema = new Schema<PlantDocument>({
     type: [ImageSchema],
     default: [],
   },
-});
+  createdAt: Number,
+  updatedAt: Number,
+},
+{ timestamps: true }
+);
 
 PurchasedPlantSchema.index({ species: 'text', variety: 'text' });
 
