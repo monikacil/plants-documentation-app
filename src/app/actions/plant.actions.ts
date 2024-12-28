@@ -125,6 +125,7 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
 }
 
 export const deletePlant = async (collection: Collections, plantId: string) => {
+  console.log('deleeeeeete')
   const collectionModel = getCollectionModel(collection)
   const userId = await getSessionUserId();
 
@@ -132,6 +133,7 @@ export const deletePlant = async (collection: Collections, plantId: string) => {
     await connectDB();
     await collectionModel.deleteOne({ _id: plantId, _userId: userId })
     revalidatePath("/plants/[slug]");
+    return {message: "success"}
   } catch (error) {
      return {
       message: getErrorMessage(error, "Error occurred while deleting plant.")

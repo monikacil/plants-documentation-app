@@ -1,13 +1,10 @@
 'use client'
 
+import Link from "next/link";
 import { Table } from "flowbite-react";
 import { redirect } from "next/navigation";
 
-import { deletePlant, editPlant } from "@/app/actions/plant.actions"
 import { Collections, Plant } from "@/app/types/plantTypes"
-
-import PlantModal from "./PlantModal";
-import BasicButton from "../common/BasicButton";
 
 function tableHeadersList(data: Plant[], notAllowedHeaders: string[]) {
   const headers = Object.keys(data[0]).filter(key => !notAllowedHeaders.includes(key))
@@ -38,8 +35,8 @@ export function getTableBody(data: Plant[], collection: Collections, notAllowedH
       })}
       <Table.Cell className="w-44">
         <div className="flex gap-2">
-          <PlantModal plant={ plant } collection={ collection } btnText="Edit" title="Edit Plant" color="teal" plantAction={ editPlant } />
-          <BasicButton color="red" onClick={() => { deletePlant(collection, plant._id) }}>Delete</BasicButton>
+          <Link href={`/plants/${collection}/${plant._id}/edit`}>Edit</Link>
+          <Link href={`/plants/${collection}/${plant._id}/delete`}>Delete</Link>
         </div>
       </Table.Cell>
     </Table.Row>

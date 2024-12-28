@@ -32,13 +32,17 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children, modal }: {
+  children: React.ReactNode,
+  modal: React.ReactNode
+}) {
   return (
     <html lang="en" className={`${fredoka.variable}`}>
       <body className="flex flex-col min-h-screen">
         <AddToHomeScreen />
         <Header />
-        <main className="grow p-6  lg:py-4">
+        <main className="grow p-6 lg:py-4">
+          { modal }
           {children}
         </main>
         <Footer />

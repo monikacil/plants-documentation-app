@@ -1,3 +1,6 @@
+import { twMerge } from "tailwind-merge"
+import { clsx, ClassValue } from "clsx"
+
 export function capitalizeFirstLetter(string: string) {
   return string[0].toUpperCase() + string.slice(1);
 }
@@ -17,14 +20,18 @@ export function getBreadcrumbsLinks(url: string) {
     if (idx === 0) {
       return { name: 'Dashboard', href: '/dashboard' }
     }
-    if (idx === 1 && splittedUrl.length > 3) {
-      return { name: `${capitalizeFirstLetter(el)} Plants`, href: '/plants/' + el }
-    }
     if (idx === 1) {
-      return { name: `${capitalizeFirstLetter(el)} Plants` }
+      return { name: `${capitalizeFirstLetter(el)} Plants`, href: '/plants/' + el }
+    } if (idx === 2) {
+      return { name: `Plant Details`, href: `/plants/${splittedUrl[1]}/${el}`}
+    } else {
+       return { name: capitalizeFirstLetter(el) , href: `/plants/${splittedUrl[1]}/${splittedUrl[2]}/${el}`}
     }
-    return { name: "Plant Details" }
   })
 
   return links
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

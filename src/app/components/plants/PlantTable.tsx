@@ -4,16 +4,13 @@ import { Collections, Plant } from "@/app/types/plantTypes"
 import BasicTable from "../common/BasicTable";
 import { getTableBody, getTableHeaders } from "./PlantTableCells";
 
-
 type Props = {
-  plantsList: Plant[]
-  collection: Collections,
-  query: string,
-  currentPage: number,
-  limit: number
+  plantsList: Plant[],
+  collection: Collections
 }
 
-export default function PlantTable({plantsList, collection}: Props) {
+export default function PlantTable({ plantsList, collection }: Props) {
+
   // TODO: will be configurable
   const notAllowedHeaders = ["_id", "images"]
 
