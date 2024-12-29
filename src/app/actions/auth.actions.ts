@@ -39,7 +39,6 @@ export const register = async (prevState: any, formData: FormData) => {
   // create new user & save in db
   const hashedPassword = await HashPassword(password);
   const newUser = new User({ email, password: hashedPassword });
-  console.log(newUser)
   let savedUser;
   try {
     savedUser = await newUser.save();

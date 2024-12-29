@@ -3,8 +3,8 @@
 import { Table } from "flowbite-react";
 
 type Props = {
-  tableBody: JSX.Element[],
-  tableHeaders: JSX.Element[]
+  tableBody: JSX.Element[] | undefined,
+  tableHeaders: JSX.Element[] | undefined
 }
 
 export default function BasicTable({ tableHeaders, tableBody }: Props) {

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import { fetchPlantsPages, getPlants } from "@/app/actions/plant.actions";
-import { Collections, Plant } from "@/app/types/plantTypes";
+import { Collections, PlantTableType } from "@/app/types/plantTypes";
 
 import PlantTable from "@/app/components/plants/PlantTable";
 import Search from "@/app/components/common/Search";
@@ -35,7 +35,7 @@ export default async function Page({ params, searchParams }: Props) {
     sort = [{key: sortBy, direction: order}]
   }
 
-  const plantsList:Plant[] = await getPlants(collection, query, currentPage, limit, sort)
+  const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort)
 
   return (
       <>

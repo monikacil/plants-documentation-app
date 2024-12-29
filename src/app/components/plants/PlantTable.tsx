@@ -1,11 +1,11 @@
 'use client'
 
-import { Collections, Plant } from "@/app/types/plantTypes"
+import { Collections, PlantTableType } from "@/app/types/plantTypes"
 import BasicTable from "../common/BasicTable";
 import { getTableBody, getTableHeaders } from "./PlantTableCells";
 
 type Props = {
-  plantsList: Plant[],
+  plantsList: PlantTableType[],
   collection: Collections
 }
 

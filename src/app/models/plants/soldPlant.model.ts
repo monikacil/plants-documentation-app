@@ -1,28 +1,6 @@
 import mongoose, { model, Schema } from "mongoose";
-import { SourceDocument, ImagesDocument, PlantDocument } from "../../types/plantTypes";
+import { ImagesDocument, PlantDocument } from "../../types/plantTypes";
 
-const BuyerSubSchema = new Schema<SourceDocument>({
-  name: {
-    type: String,
-    required: [true, "Buyer name is required"],
-  },
-  address: {
-    type: String,
-  },
-  phone: {
-    type: Number,
-    trim: true,
-    required: [true, "Buyer phone number is required"],
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: [true, "Buyer email is required"],
-  },
-  country: {
-    type: String,
-  },
-});
 
 const ImageSchema = new Schema<ImagesDocument>(
   {
@@ -52,14 +30,17 @@ const SoldPlantSchema = new Schema<PlantDocument>({
     lowercase: true,
   },
   date: {
-    type: Date,
+    type: String,
   },
   passport: {
     type: String,
     required: [true, "Passport number is required"],
     trim: true,
   },
-  buyer: BuyerSubSchema,
+  buyer: {
+    type: String,
+    required: [true, "Buyer data is required"],
+  },
   images: {
     type: [ImageSchema],
     default: [],

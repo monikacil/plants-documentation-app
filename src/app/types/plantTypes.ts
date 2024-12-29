@@ -21,11 +21,26 @@ export type PlantDocument = {
   species: string;
   variety: string;
   price: string | undefined;
-  date: Date | null | undefined;
+  date: string | undefined;
   passport: string | undefined;
-  buyer: SourceDocument | undefined;
-  seller: SourceDocument | undefined;
-  images: ImagesDocument;
+  buyer: string | undefined;
+  seller: string | undefined;
+  images: ImagesDocument[] | undefined;
+  createdAt: Date;
+  updatedAt: Date;
+} | null;
+
+export type Plant = {
+  _id: mongoose.Types.ObjectId;
+  _userId: mongoose.Types.ObjectId;
+  species: string;
+  variety: string;
+  price: string | undefined;
+  date: string | undefined;
+  passport: string | undefined;
+  buyer: string | undefined;
+  seller: string | undefined;
+  images: ImagesDocument[] | undefined;
   createdAt: Date;
   updatedAt: Date;
 } | null;
@@ -37,13 +52,12 @@ export type PlantExtraArgs = {
   _id?: string
 }
 
-export type Plant = {
+export type PlantTableType = {
   _id: string,
   species: string,
   variety: string,
-  images: string[],
   price: string,
-  date: Date | null,
+  date: string,
   passport: string,
   name: string,
   address: string,

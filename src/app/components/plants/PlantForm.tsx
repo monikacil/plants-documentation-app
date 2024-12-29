@@ -5,25 +5,25 @@ import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from 'flowbite-react';
 import Form from 'next/form'
 
-import { Collections, Plant, PlantExtraArgs } from '@/app/types/plantTypes';
-import { toDateFromUiDate } from "@/app/lib/utils";
+import { Collections, PlantExtraArgs, PlantTableType } from '@/app/types/plantTypes';
 
 import Input from '../form/Input';
 import BasicButton from '../common/BasicButton';
 import FormDatepicker from '../form/FormDatepicker';
 
 type Props = {
-  plant?: Plant,
+  plant?: PlantTableType,
   collection: Collections,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plantAction: (extraArgs: PlantExtraArgs, prevState: any, formData: FormData) => Promise<any>
 }
 
-const initForm: Omit<Plant, "_id" | "images"> = {
+const initForm: PlantTableType = {
+  _id: '',
   species: '',
   variety: '',
   price: '',
-  date: new Date(),
+  date: new Date().toString(),
   passport: '',
   name: '',
   address: '',
@@ -33,8 +33,8 @@ const initForm: Omit<Plant, "_id" | "images"> = {
 }
 
 export default function PlantForm({ plant, collection, plantAction }: Props) {
-  const [state, formAction, isPending] = useActionState(plantAction.bind(null, { collection: collection, _id: plant?._id }), null)
-  const [plantForm, setPlantForm] = useState(plant ? { ...plant, date: toDateFromUiDate(plant.date) } : initForm)
+  const [state, formAction, isPending] = useActionState(plantAction.bind(null, { collection: collection, _id: plant?._id.toString() }), null)
+  const [plantForm, setPlantForm] = useState(plant ? plant : initForm)
 
   return (
     <>
@@ -64,8 +64,8 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
                 name="date"
                 label="Pick date"
                 maxDate={ new Date() }
-                value={ plantForm.date }
-                onChange={(value) => { setPlantForm({ ...plantForm, date: value }) }}
+                value={ new Date(plantForm.date) }
+                onChange={(value) => { setPlantForm({ ...plantForm, date: value ? value.toString() : new Date().toString() }) }}
               />
               <Input
                 name="price"
@@ -113,7 +113,6 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
             <Input
               name="phone"
               label="Phone Number"
-              type="number"
               value={plantForm?.phone}
               errors={!plantForm.phone ? state?.errors?.phone : null}
               onChange={(value) => { setPlantForm({ ...plantForm, phone: value }) }}

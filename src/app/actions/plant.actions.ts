@@ -12,9 +12,10 @@ import { zodPlantValidation } from "../lib/zod/zodValidations";
 import { getSessionUserId } from "../helpers/session.helper";
 import { getErrorMessage } from "../helpers/getErrorMessage.helper";
 
-import { Collections, PlantDocument, PlantExtraArgs } from "../types/plantTypes";
+import { Collections, Plant, PlantExtraArgs } from "../types/plantTypes";
 import mongoose from "mongoose";
 import { SortType } from "../types/others";
+import { decryptData, encryptData } from "../lib/crypto";
 
 function getCollectionModel(collection: Collections) {
   let model;
@@ -57,18 +58,19 @@ function additionalData(formData: FormData, collection: Collections) {
     price: formData.get("price"),
     date: formData.get("date"),
     passport: formData.get("passport"),
-    [key]: {
+    [key]:encryptData({
       name: formData.get("name"),
       address: formData.get("address"),
       phone: formData.get("phone"),
       email: formData.get("email"),
       country: formData.get("country"),
-    },
+    }),
   }
 }
 
-function uiPlantObject(plant: PlantDocument, collection: Collections) {
+function uiPlantObject(plant: Plant, collection: Collections) {
   if (!plant) return
+
   const data = {
     _id: plant._id,
     species: plant.species,
@@ -81,15 +83,17 @@ function uiPlantObject(plant: PlantDocument, collection: Collections) {
   }
 
   const key = getAdditionalDataKey(collection)
+  const decryptedData = decryptData(plant[key])
+  console.log(decryptData)
   const additionalFields = {
     price: plant.price,
-    date: new Intl.DateTimeFormat("pl-PL").format(plant.date as Date),
+    date: plant.date,
     passport: plant.passport,
-    name: plant[key]?.name,
-    address: plant[key]?.address,
-    country: plant[key]?.country,
-    phone: plant[key]?.phone,
-    email: plant[key]?.email,
+    name: decryptedData.name,
+    address: decryptedData.address,
+    country: decryptedData.country,
+    phone: decryptedData.phone,
+    email: decryptedData.email,
   }
 
   return { ...data, ...additionalFields };
@@ -101,11 +105,6 @@ async function createPlant (userId: unknown, formData: FormData, collection: Col
 }
 
 export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
-  const collectionModel = getCollectionModel(extraArgs.collection)
-  const userId = await getSessionUserId();
-  const plant = await createPlant(userId, formData, extraArgs?.collection)
-  const createdPlant = new collectionModel(plant)
-
    // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
   if (!validation.success) {
@@ -114,12 +113,21 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
     };
   }
 
+  const collectionModel = getCollectionModel(extraArgs.collection)
+  const userId = await getSessionUserId();
+  const plant = await createPlant(userId, formData, extraArgs?.collection)
+  console.log(1111, plant)
+  const createdPlant = new collectionModel(plant)
+  console.log(22222, createdPlant)
+
   try {
     await connectDB();
     const savedPlant = await createdPlant.save()
+    console.log(33333, savedPlant)
     revalidatePath("/plants/[slug]");
     return JSON.parse(JSON.stringify(savedPlant))
   } catch (error) {
+    console.log("erroooorrrr", error)
     return {
       message: getErrorMessage(error, "Error occurred while saving plant.")
     }
@@ -178,7 +186,7 @@ export async function searchPlants(collection: Collections, searchString: string
     }])
     if (!dbPlantsList) return []
 
-    const plants = dbPlantsList.map((plant: PlantDocument) => {
+    const plants = dbPlantsList.map((plant: Plant) => {
       return uiPlantObject(plant, collection)
     });
 
@@ -221,7 +229,7 @@ export async function getPlants(collection: Collections = "collected", query: st
     ])
     if (!dbPlantsList) return []
 
-    const plants = dbPlantsList.map((plant: PlantDocument) => {
+    const plants = dbPlantsList.map((plant: Plant) => {
       return uiPlantObject(plant, collection)
     });
 

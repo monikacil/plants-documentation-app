@@ -11,7 +11,6 @@ export default function Sort({ name }: { name: string }) {
   const { replace } = useRouter();
 
   const handleSort = () => {
-    console.log('aaaaaa')
     const params = new URLSearchParams(searchParams);
     params.set('page', '1');
     setOrder(order === "asc" ? "desc" : "asc")
