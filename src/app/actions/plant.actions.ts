@@ -58,7 +58,7 @@ function additionalData(formData: FormData, collection: Collections) {
     price: formData.get("price"),
     date: formData.get("date"),
     passport: formData.get("passport"),
-    [key]:encryptData({
+    [key]: encryptData({
       name: formData.get("name"),
       address: formData.get("address"),
       phone: formData.get("phone"),
@@ -84,7 +84,6 @@ function uiPlantObject(plant: Plant, collection: Collections) {
 
   const key = getAdditionalDataKey(collection)
   const decryptedData = decryptData(plant[key])
-  console.log(decryptData)
   const additionalFields = {
     price: plant.price,
     date: plant.date,
@@ -116,18 +115,14 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
   const collectionModel = getCollectionModel(extraArgs.collection)
   const userId = await getSessionUserId();
   const plant = await createPlant(userId, formData, extraArgs?.collection)
-  console.log(1111, plant)
   const createdPlant = new collectionModel(plant)
-  console.log(22222, createdPlant)
 
   try {
     await connectDB();
     const savedPlant = await createdPlant.save()
-    console.log(33333, savedPlant)
     revalidatePath("/plants/[slug]");
     return JSON.parse(JSON.stringify(savedPlant))
   } catch (error) {
-    console.log("erroooorrrr", error)
     return {
       message: getErrorMessage(error, "Error occurred while saving plant.")
     }
