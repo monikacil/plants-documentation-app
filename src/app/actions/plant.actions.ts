@@ -2,106 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 
-import SoldPlant from "../models/plants/soldPlant.model";
-import PurchasedPlant from "../models/plants/purchasedPlant.model"
-import CollectedPlant from "../models/plants/collectedPlant.model"
-
 import { connectDB } from "../lib/connectDB";
 import { zodPlantValidation } from "../lib/zod/zodValidations";
 
 import { getSessionUserId } from "../helpers/session.helper";
 import { getErrorMessage } from "../helpers/getErrorMessage.helper";
 
-import { Collections, Plant, PlantExtraArgs } from "../types/plantTypes";
+import { Collections, Plant, PlantExtraArgs } from "../types/plant.types";
 import mongoose from "mongoose";
 import { SortType } from "../types/others";
-import { decryptData, encryptData } from "../lib/crypto";
-
-function getCollectionModel(collection: Collections) {
-  let model;
-  switch (collection) {
-    case "purchased":
-      model = PurchasedPlant
-      break;
-    case "sold":
-      model = SoldPlant
-      break;
-    default:
-      model = CollectedPlant
-      break;
-  }
-  return model
-}
-
-function getAdditionalDataKey(collection: Collections) {
-   return collection === "sold" ? "buyer" : "seller"
- }
-
-function dataToUpdate( userId: unknown, formData: FormData, collection: Collections | undefined,) {
-  const data = {
-    _userId: userId,
-    species: formData.get("species"),
-    variety: formData.get("variety"),
-    images: []
-  }
-
-  if (!collection) {
-    return data
-  }
-
-  return Object.assign({}, data, additionalData(formData, collection));
-}
-
-function additionalData(formData: FormData, collection: Collections) {
-  const key = getAdditionalDataKey(collection)
-  return {
-    price: formData.get("price"),
-    date: formData.get("date"),
-    passport: formData.get("passport"),
-    [key]: encryptData({
-      name: formData.get("name"),
-      address: formData.get("address"),
-      phone: formData.get("phone"),
-      email: formData.get("email"),
-      country: formData.get("country"),
-    }),
-  }
-}
-
-function uiPlantObject(plant: Plant, collection: Collections) {
-  if (!plant) return
-
-  const data = {
-    _id: plant._id,
-    species: plant.species,
-    variety: plant.variety,
-    images: plant.images
-  }
-
-  if (collection === "collected") {
-    return data
-  }
-
-  const key = getAdditionalDataKey(collection)
-  const decryptedData = decryptData(plant[key])
-  const additionalFields = {
-    price: plant.price,
-    date: plant.date,
-    passport: plant.passport,
-    name: decryptedData.name,
-    address: decryptedData.address,
-    country: decryptedData.country,
-    phone: decryptedData.phone,
-    email: decryptedData.email,
-  }
-
-  return { ...data, ...additionalFields };
-
-}
-
-async function createPlant (userId: unknown, formData: FormData, collection: Collections) {
-  return dataToUpdate(userId, formData, collection)
-}
+import { dataToUpdate, getCollectionModel, uiPlantObject } from "../helpers/plantActions.helper";
 
 export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
    // zod validation
@@ -114,7 +24,7 @@ export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, for
 
   const collectionModel = getCollectionModel(extraArgs.collection)
   const userId = await getSessionUserId();
-  const plant = await createPlant(userId, formData, extraArgs?.collection)
+  const plant = dataToUpdate(userId, formData, extraArgs?.collection)
   const createdPlant = new collectionModel(plant)
 
   try {
@@ -147,6 +57,7 @@ export const deletePlant = async (collection: Collections, plantId: string) => {
 export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
   const collectionModel = getCollectionModel(extraArgs.collection)
   const userId = await getSessionUserId();
+  const data = dataToUpdate(userId, formData, extraArgs.collection)
 
   // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
@@ -158,7 +69,7 @@ export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, fo
 
   try {
     await connectDB();
-    await collectionModel.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, dataToUpdate(userId, formData, extraArgs.collection))
+    await collectionModel.findByIdAndUpdate({ _id: extraArgs._id, _userId: userId }, data)
     revalidatePath("/plants/[slug]");
   } catch (error) {
     return {
@@ -167,33 +78,7 @@ export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, fo
   }
 }
 
-export async function searchPlants(collection: Collections, searchString: string) {
-  const collectionModel = getCollectionModel(collection);
-  try {
-    await connectDB();
-    const dbPlantsList = await collectionModel.aggregate([{
-      $match: {
-        $or: [
-          { "species": { $regex: ".*" + searchString + ".*", $options: "i" } },
-          { "variety": { $regex: ".*" + searchString + ".*", $options: "i" } },
-        ]
-      }
-    }])
-    if (!dbPlantsList) return []
-
-    const plants = dbPlantsList.map((plant: Plant) => {
-      return uiPlantObject(plant, collection)
-    });
-
-    return JSON.parse(JSON.stringify(plants))
-  } catch (error) {
-    return {
-      message: getErrorMessage(error, "Something went wrong.")
-    }
-  }
-}
-
-export async function getPlants(collection: Collections = "collected", query: string, currentPage: number, limit: number, sort?: SortType[]) {
+export const getPlants = async (collection: Collections, query: string, currentPage: number, limit: number, sort?: SortType[]) => {
   const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
 
@@ -236,7 +121,7 @@ export async function getPlants(collection: Collections = "collected", query: st
   }
 }
 
-export async function getPlant(id: string, collection: Collections = "collected") {
+export const getPlant = async (id: string, collection: Collections = "collected") => {
   const collectionModel = getCollectionModel(collection)
   const userId = await getSessionUserId();
 
@@ -251,7 +136,7 @@ export async function getPlant(id: string, collection: Collections = "collected"
   }
 }
 
-export async function fetchPlantsPages(query: string, collection: Collections, limit: number) {
+export const fetchPlantsPages = async (query: string, collection: Collections, limit: number) => {
   const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
 

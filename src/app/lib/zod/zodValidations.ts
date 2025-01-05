@@ -1,6 +1,6 @@
 import { zodUserSchema } from "@/app/lib/zod/zodUser";
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
-import { Collections } from "@/app/types/plantTypes";
+import { Collections } from "@/app/types/plant.types";
 
 export async function zodAuthValidation(formData: FormData) {
   const data = { email: formData.get("email"), password: formData.get("password") };

@@ -1,6 +1,6 @@
 "use client"
 
-import { Collections, PlantDocument } from "@/app/types/plantTypes";
+import { Collections, PlantDocument } from "@/app/types/plant.types";
 import Link from "next/link";
 import BasicButton from "../common/BasicButton";
 

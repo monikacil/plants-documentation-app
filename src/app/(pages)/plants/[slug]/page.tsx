@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import { fetchPlantsPages, getPlants } from "@/app/actions/plant.actions";
-import { Collections, PlantTableType } from "@/app/types/plantTypes";
+import { Collections, PlantTableType } from "@/app/types/plant.types";
 
 import PlantTable from "@/app/components/plants/PlantTable";
 import Search from "@/app/components/common/Search";

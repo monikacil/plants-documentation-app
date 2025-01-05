@@ -5,7 +5,7 @@ import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from 'flowbite-react';
 import Form from 'next/form'
 
-import { Collections, PlantExtraArgs, PlantTableType } from '@/app/types/plantTypes';
+import { Collections, PlantExtraArgs, PlantTableType } from '@/app/types/plant.types';
 
 import Input from '../form/Input';
 import BasicButton from '../common/BasicButton';

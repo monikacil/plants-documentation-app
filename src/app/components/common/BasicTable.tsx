@@ -4,19 +4,24 @@ import { Table } from "flowbite-react";
 
 type Props = {
   tableBody: JSX.Element[] | undefined,
-  tableHeaders: JSX.Element[] | undefined
+  tableHeaders: JSX.Element | undefined,
+  tableSubHeaders?: JSX.Element | undefined
 }
 
-export default function BasicTable({ tableHeaders, tableBody }: Props) {
+export default function BasicTable({ tableHeaders, tableSubHeaders, tableBody }: Props) {
+  // console.log(tableSubHeaders)
   return (
     <>
       <div className="overflow-x-auto">
         <Table className="static">
           <Table.Head className="tracking-widest">
-            <Table.HeadCell className="w-20 bg-teal-900 text-white">No.</Table.HeadCell>
             {tableHeaders}
-            <Table.HeadCell className="bg-teal-900 text-white">Actions</Table.HeadCell>
           </Table.Head>
+          { tableSubHeaders ? (
+            <Table.Head>
+              {tableSubHeaders}
+            </Table.Head>
+          ): null }
           <Table.Body className="divide-y text-gray-800">
             {tableBody}
           </Table.Body>

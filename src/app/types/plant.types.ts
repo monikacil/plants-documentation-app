@@ -16,8 +16,8 @@ export type ImagesDocument = {
 } | null;
 
 export type PlantDocument = {
-  _id: mongoose.Types.ObjectId;
-  _userId: mongoose.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId;
+  _userId: mongoose.Schema.Types.ObjectId;
   species: string;
   variety: string;
   price: string | undefined;
@@ -31,8 +31,8 @@ export type PlantDocument = {
 } | null;
 
 export type Plant = {
-  _id: mongoose.Types.ObjectId;
-  _userId: mongoose.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId;
+  _userId: mongoose.Schema.Types.ObjectId;
   species: string;
   variety: string;
   price: string | undefined;

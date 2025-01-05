@@ -1,5 +1,5 @@
 import mongoose, { model, Schema } from "mongoose";
-import { ImagesDocument, PlantDocument } from "../../types/plantTypes";
+import { ImagesDocument, PlantDocument } from "../../types/plant.types";
 
 
 const ImageSchema = new Schema<ImagesDocument>(
@@ -10,7 +10,7 @@ const ImageSchema = new Schema<ImagesDocument>(
 );
 
 const SoldPlantSchema = new Schema<PlantDocument>({
-  _userId: { type: mongoose.Types.ObjectId, ref: "User" },
+  _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   species: {
     type: String,
     required: [true, "Species is required"],
@@ -50,8 +50,6 @@ const SoldPlantSchema = new Schema<PlantDocument>({
 },
   { timestamps: true }
 );
-
-SoldPlantSchema.index({ species: 'text', variety: 'text' });
 
 const SoldPlant = mongoose.models?.SoldPlant || model<PlantDocument>('SoldPlant', SoldPlantSchema);
 export default SoldPlant;

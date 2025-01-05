@@ -12,7 +12,6 @@ export default function Sort({ name }: { name: string }) {
 
   const handleSort = () => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', '1');
     setOrder(order === "asc" ? "desc" : "asc")
     params.set('sortBy', name);
     params.set('order', order );
@@ -20,6 +19,6 @@ export default function Sort({ name }: { name: string }) {
   }
 
   return (
-      <HiMiniChevronUpDown className="text-xl" onClick={ handleSort} />
+      <HiMiniChevronUpDown className="text-xl cursor-pointer" onClick={ handleSort} />
   )
 }

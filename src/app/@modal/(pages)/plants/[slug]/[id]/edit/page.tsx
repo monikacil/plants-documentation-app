@@ -1,7 +1,7 @@
 import { editPlant, getPlant } from '@/app/actions/plant.actions'
 import BasicModal from '@/app/components/common/BasicModal'
 import PlantForm from '@/app/components/plants/PlantForm'
-import { Collections, PlantTableType } from '@/app/types/plantTypes'
+import { Collections, PlantTableType } from '@/app/types/plant.types'
 
 type Props = {
   params: Promise<{ slug: string, id: string }>

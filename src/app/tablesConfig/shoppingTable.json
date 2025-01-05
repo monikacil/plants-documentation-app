@@ -1,0 +1,30 @@
+[
+  {
+    "title": "No.",
+    "width": "115px"
+  },
+  {
+    "title": "Products",
+    "dbName": "products"
+  },
+  {
+    "title": "Price",
+    "dbName": "price",
+    "sortable": true
+  },
+  {
+    "title": "Shop",
+    "dbName": "shop",
+    "sortable": true
+  },
+  {
+    "title": "Date",
+    "dbName": "date",
+    "sortable": true
+  },
+  {
+    "title": "Actions",
+    "editable": true,
+    "deletable": true
+  }
+]

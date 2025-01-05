@@ -1,7 +1,7 @@
 "use client"
 
 import ConfirmationModal from "../common/ConfirmationModal";
-import { Collections } from "@/app/types/plantTypes";
+import { Collections } from "@/app/types/plant.types";
 import { deletePlant } from "@/app/actions/plant.actions";
 import { redirect, useRouter } from "next/navigation";
 

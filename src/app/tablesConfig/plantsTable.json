@@ -1,0 +1,149 @@
+[
+  {
+    "collected": [
+      {
+        "title": "No.",
+        "width": "115px"
+      },
+      {
+        "title": "Species",
+        "dbName": "species",
+        "sortable": true
+      },
+      {
+        "title": "Variety",
+        "dbName": "variety",
+        "sortable": true
+      },
+        {
+        "title": "Actions",
+        "editable": true,
+        "deletable": true
+      }
+    ]
+  },
+  {
+    "purchased": [
+      {
+        "plantDetails": [
+          {
+            "title": "No.",
+            "width": "115px"
+          },
+          {
+            "title": "Species",
+            "dbName": "species",
+            "sortable": true
+          },
+          {
+            "title": "Variety",
+            "dbName": "variety",
+            "sortable": true
+          },
+          {
+            "title": "Price",
+            "dbName": "price",
+            "sortable": true
+          },
+          {
+            "title": "Date",
+            "dbName": "date"
+          },
+          {
+            "title": "Passport Number",
+            "dbName": "passport"
+          }
+      ]},
+      {
+        "sellerInfo": [
+          {
+            "title": "Seller Name",
+            "dbName": "name"
+          },
+          {
+            "title": "Seller Address",
+            "dbName": "address"
+          },
+          {
+            "title": "Country",
+            "dbName": "country"
+          },
+          {
+            "title": "Phone Number",
+            "dbName": "phone"
+          },
+          {
+            "title": "Email",
+            "dbName": "email"
+          }
+      ]},
+      {
+        "title": "Actions",
+        "editable": true,
+        "deletable": true
+      }
+    ]
+  },
+  {
+    "sold": [
+      {
+        "plantDetails": [
+          {
+            "title": "No.",
+            "width": "115px"
+          },
+          {
+            "title": "Species",
+            "dbName": "species",
+            "sortable": true
+          },
+          {
+            "title": "Variety",
+            "dbName": "variety",
+            "sortable": true
+          },
+          {
+            "title": "Price",
+            "dbName": "price",
+            "sortable": true
+          },
+          {
+            "title": "Date",
+            "dbName": "date"
+          },
+          {
+            "title": "Passport Number",
+            "dbName": "passport"
+          }
+      ]},
+      {
+        "buyerInfo": [
+          {
+            "title": "Buyer Name",
+            "dbName": "name"
+          },
+          {
+            "title": "Buyer Address",
+            "dbName": "address"
+          },
+          {
+            "title": "Country",
+            "dbName": "country"
+          },
+          {
+            "title": "Phone Number",
+            "dbName": "phone"
+          },
+          {
+            "title": "Email",
+            "dbName": "email"
+          }
+      ]},
+      {
+        "title": "Actions",
+        "editable": true,
+        "deletable": true
+      }
+    ]
+  }
+]

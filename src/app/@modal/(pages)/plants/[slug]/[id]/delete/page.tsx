@@ -1,5 +1,5 @@
 import ConfirmDeletePlant from '@/app/components/plants/ConfirmDeletePlant'
-import { Collections } from '@/app/types/plantTypes'
+import { Collections } from '@/app/types/plant.types'
 
 type Props = {
   params: Promise<{ slug: string, id: string }>

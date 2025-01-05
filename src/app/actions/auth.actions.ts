@@ -7,7 +7,7 @@ import User from "@/app/models/user.model";
 
 import { getUserByEmail } from "./user.actions";
 
-import { type UserDocument } from "@/app/types/userTypes";
+import { type UserDocument } from "@/app/types/user.types";
 
 import { getErrorMessage } from "@/app/helpers/getErrorMessage.helper";
 
