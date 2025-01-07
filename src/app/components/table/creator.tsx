@@ -50,6 +50,7 @@ export function getTableSubHeaders(tableHeaders: TableHeaderType[]) {
 }
 
 export function getTableHeaders(tableHeaders: TableHeaderType[]) {
+  // console.log(tableHeaders)
   const subHeaders = tableHeaders?.map((header: TableHeaderType) => {
     if ('title' in header) {
       return <Table.HeadCell key={'table-header-' + header.title} className={`w-[${header.width ? header.width : "280px"}] bg-teal-900 text-white`}>

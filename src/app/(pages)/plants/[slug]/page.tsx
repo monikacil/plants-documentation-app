@@ -1,9 +1,9 @@
 import { fetchPlantsPages, getPlants } from "@/app/actions/plant.actions";
 import { Collections, PlantTableType } from "@/app/types/plant.types";
 
-import PlantTable from "@/app/components/plants/PlantTable";
 import { PAGINATION_LIMIT } from "@/app/lib/constants";
 import TableWrapper from "@/app/components/table/TableWrapper";
+import Table from "@/app/components/table/Table";
 
 type Props = {
   params: Promise<{ slug: string }>,
@@ -33,7 +33,7 @@ export default async function Page({ params, searchParams }: Props) {
 
   return (
     <TableWrapper query={query} currentPage={currentPage} pages={totalPages} link={{href: `/plants/${collection}/add`, text: "Add Plant"}}>
-      <PlantTable plantsList={ plantsList } collection={ collection } />
+      <Table elementsList={plantsList}></Table>
     </TableWrapper>
     )
 }

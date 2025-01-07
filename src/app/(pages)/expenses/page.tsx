@@ -1,5 +1,5 @@
 import { getExpenses } from "@/app/actions/expenses.actions";
-import ExpensesTable from "@/app/components/expenses/ExpensesTable";
+import Table from "@/app/components/table/Table";
 import TableWrapper from "@/app/components/table/TableWrapper";
 import { PAGINATION_LIMIT } from "@/app/lib/constants";
 import { ExpenseDocument } from "@/app/types/expenses.types";
@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     <TableWrapper query={query} currentPage={currentPage} pages={totalPages} link={{href: `/expenses/add`, text: "Add Expense"}}>
-      <ExpensesTable expensesList={expensesList} details={false}></ExpensesTable>
+      <Table elementsList={expensesList}></Table>
     </TableWrapper>
   );
 }
