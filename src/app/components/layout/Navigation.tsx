@@ -21,13 +21,16 @@ export default async function DesktopNav( {isAuth}: {isAuth: boolean}) {
         </>
         :<>
           <BasicButton color="cyan">
-            <Link href="/plants">Plants</Link>
+            <Link href="/dashboard">Plants Dashboard</Link>
+          </BasicButton>
+          <BasicButton color="cyan">
+            <Link href="/expenses">Expenses</Link>
           </BasicButton>
           <BasicButton onClick={ logout } color="cyan">
             Logout
           </BasicButton>
         </>
-        }
+      }
       </div>
   );
 }

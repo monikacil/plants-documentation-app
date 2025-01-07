@@ -13,15 +13,15 @@ export default function BasicTable({ tableHeaders, tableSubHeaders, tableBody }:
   return (
     <>
       <div className="overflow-x-auto">
-        <Table className="static">
-          <Table.Head className="tracking-widest">
-            {tableHeaders}
-          </Table.Head>
-          { tableSubHeaders ? (
-            <Table.Head>
+        <Table className="static" hoverable>
+        { tableSubHeaders ? (
+            <Table.Head className="tracking-widest">
               {tableSubHeaders}
             </Table.Head>
           ): null }
+          <Table.Head className="tracking-widest">
+            {tableHeaders}
+          </Table.Head>
           <Table.Body className="divide-y text-gray-800">
             {tableBody}
           </Table.Body>

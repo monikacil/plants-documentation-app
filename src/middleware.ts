@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { decrypt } from './app/lib/joseSession'
 
 // 1. Specify protected and public routes
-const protectedRoutes = ['/user', '/dashboard']
+const protectedRoutes = ['/user', '/dashboard', "/expenses"]
 const publicRoutes = ['/signin', '/signup', '/']
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
@@ -37,7 +37,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
 
-   if (
+  if (
     !isPublicRoute &&
     session?.userId &&
     req.nextUrl.pathname.startsWith('/plants')

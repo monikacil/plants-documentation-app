@@ -7,6 +7,7 @@ export function capitalizeFirstLetter(string: string) {
 
 export function getBreadcrumbsLinks(url: string) {
   const splittedUrl = url.split('/')
+  console.log(splittedUrl)
   const links = splittedUrl.filter((el) => el !== "plants").map((el, idx) => {
     if (idx === 0) {
       return { name: 'Dashboard', href: '/dashboard' }

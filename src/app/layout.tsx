@@ -43,7 +43,7 @@ export default function RootLayout({ children, modal }: {
         <Header />
         <main className="grow p-6 lg:py-4">
           { modal }
-          {children}
+          { children }
         </main>
         <Footer />
       </body>

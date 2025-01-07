@@ -5,7 +5,7 @@ export type SortType = {
 
 export type TableHeaderType = {
   title: string,
-  dbName: string,
+  dbName: string | undefined,
   sortable: boolean | undefined,
   editable: boolean | undefined,
   deletable: boolean | undefined,

@@ -5,12 +5,14 @@
   },
   {
     "title": "Products",
-    "dbName": "products"
+    "dbName": "products",
+    "sortable": true
   },
   {
     "title": "Price",
     "dbName": "price",
-    "sortable": true
+    "sortable": true,
+    "width": "250px"
   },
   {
     "title": "Shop",
@@ -24,7 +26,7 @@
   },
   {
     "title": "Actions",
-    "editable": true,
-    "deletable": true
+    "deletable": true,
+    "editable": true
   }
 ]

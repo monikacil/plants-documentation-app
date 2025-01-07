@@ -1,8 +1,9 @@
 import  mongoose, { Schema, model } from  "mongoose";
-import { ShoppingDocument } from "../types/shopping.types";
+import { ExpenseDocument } from "../types/expenses.types";
 
-const ShoppingSchema = new Schema<ShoppingDocument>(
+const ExpenseSchema = new Schema<ExpenseDocument>(
   {
+    _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     products: {
       type: String,
       required: [true, "Product is required"],
@@ -31,5 +32,5 @@ const ShoppingSchema = new Schema<ShoppingDocument>(
   }
 );
 
-const Shopping = mongoose.models?.Shopping || model<ShoppingDocument>('User', ShoppingSchema);
-export default Shopping;
+const Expense = mongoose.models?.Expense || model<ExpenseDocument>('Expense', ExpenseSchema);
+export default Expense;

@@ -18,7 +18,7 @@ export default function BasicModal({ children, title, size="5xl" }: ModalProps) 
         }}>
         <Modal.Header>{ title }</Modal.Header>
         <Modal.Body>
-         { children }
+          { children }
         </Modal.Body>
       </Modal>
     </>

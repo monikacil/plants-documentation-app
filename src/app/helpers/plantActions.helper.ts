@@ -5,10 +5,9 @@ import CollectedPlant from "../models/plants/collectedPlant.model"
 import { Collections, Plant } from "../types/plant.types";
 
 import { decryptData, encryptData } from "../lib/crypto";
-import { TableHeaderType } from "../types/others";
 
 export const getAdditionalDataKey = (collection: Collections) => {
-   return collection === "sold" ? "buyer" : "seller"
+  return collection === "sold" ? "buyer" : "seller"
 }
 
 export const getCollectionModel = (collection: Collections) => {
@@ -88,23 +87,4 @@ export const uiPlantObject = (plant: Plant, collection: Collections) => {
   }
 
   return { ...data, ...additionalFields };
-}
-
-
-export const getHeadersForBody = (headers: TableHeaderType[]) => {
-  let arr: TableHeaderType[] = [];
-  headers.forEach((el: TableHeaderType | TableHeaderType[]) => {
-    if (Array.isArray(Object.values(el)[0])) {
-      arr = arr.concat(Object.values(el)[0])
-    } else {
-      arr = arr.concat(el)
-    }
-  })
-  const table = arr.filter((el) => {
-    if (el.dbName) return el
-  }).map((el) => {
-    return el.dbName
-  })
-
-  return table
 }

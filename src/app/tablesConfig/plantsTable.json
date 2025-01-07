@@ -75,13 +75,13 @@
           {
             "title": "Email",
             "dbName": "email"
+          },
+          {
+            "title": "Actions",
+            "editable": true,
+            "deletable": true
           }
-      ]},
-      {
-        "title": "Actions",
-        "editable": true,
-        "deletable": true
-      }
+      ]}
     ]
   },
   {
@@ -137,13 +137,13 @@
           {
             "title": "Email",
             "dbName": "email"
+          },
+          {
+            "title": "Actions",
+            "editable": true,
+            "deletable": true
           }
-      ]},
-      {
-        "title": "Actions",
-        "editable": true,
-        "deletable": true
-      }
+      ]}
     ]
   }
 ]

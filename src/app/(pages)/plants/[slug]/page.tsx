@@ -1,15 +1,9 @@
-import { Suspense } from "react";
-
 import { fetchPlantsPages, getPlants } from "@/app/actions/plant.actions";
 import { Collections, PlantTableType } from "@/app/types/plant.types";
 
 import PlantTable from "@/app/components/plants/PlantTable";
-import Search from "@/app/components/common/Search";
-import { BasicPagination } from "@/app/components/common/BasicPagination";
-import TableSceleton from "@/app/components/skeletons/TableSceleton";
-import Link from "next/link";
-import BasicButton from "@/app/components/common/BasicButton";
 import { PAGINATION_LIMIT } from "@/app/lib/constants";
+import TableWrapper from "@/app/components/table/TableWrapper";
 
 type Props = {
   params: Promise<{ slug: string }>,
@@ -38,15 +32,8 @@ export default async function Page({ params, searchParams }: Props) {
   const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort)
 
   return (
-      <>
-      <nav className="flex justify-between mb-3">
-        <Search placeholder="Search for plant..." />
-        <Link href={`/plants/${collection}/add`} scroll={false}><BasicButton size="md">Add new plant</BasicButton></Link>
-      </nav>
-        <Suspense key={query + currentPage} fallback={<TableSceleton />}>
-          <PlantTable plantsList={ plantsList } collection={ collection } />
-      </Suspense>
-      { totalPages > 1 ? <BasicPagination totalPages={ totalPages } /> : null }
-      </>
+    <TableWrapper query={query} currentPage={currentPage} pages={totalPages} link={{href: `/plants/${collection}/add`, text: "Add Plant"}}>
+      <PlantTable plantsList={ plantsList } collection={ collection } />
+    </TableWrapper>
     )
 }

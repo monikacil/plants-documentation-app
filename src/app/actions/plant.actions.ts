@@ -10,7 +10,7 @@ import { getErrorMessage } from "../helpers/getErrorMessage.helper";
 
 import { Collections, Plant, PlantExtraArgs } from "../types/plant.types";
 import mongoose from "mongoose";
-import { SortType } from "../types/others";
+import { SortType } from "../types/others.types";
 import { dataToUpdate, getCollectionModel, uiPlantObject } from "../helpers/plantActions.helper";
 
 export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
@@ -48,7 +48,7 @@ export const deletePlant = async (collection: Collections, plantId: string) => {
     await collectionModel.deleteOne({ _id: plantId, _userId: userId })
     revalidatePath("/plants/[slug]");
   } catch (error) {
-     return {
+      return {
       message: getErrorMessage(error, "Error occurred while deleting plant.")
     }
   }

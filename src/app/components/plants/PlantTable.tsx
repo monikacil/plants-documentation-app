@@ -2,10 +2,11 @@
 
 import { Collections, PlantTableType } from "@/app/types/plant.types"
 import BasicTable from "../common/BasicTable";
-import { getTableBody, getTableHeaders, getTableSubHeaders } from "./PlantTableCells";
+import { getTableBody, getTableHeaders, getTableSubHeaders } from "./../table/creator";
 
 import headersConfig from "@/app/tablesConfig/plantsTable.json"
-import { getHeadersForBody } from "@/app/helpers/plantActions.helper";
+import { getHeadersForBody } from "@/app/components/table/creator";
+import { usePathname } from "next/navigation";
 
 type Props = {
   plantsList: PlantTableType[],
@@ -31,8 +32,9 @@ export default function PlantTable({ plantsList, collection }: Props) {
 
   const headersList = getHeadersForBody(headers)
 
+  const collectionUrl = usePathname()
 
-  const tableBody = getTableBody(plantsList, collection, headersList)
+  const tableBody = getTableBody(plantsList, collectionUrl, headersList)
 
   return (
     <>
@@ -42,9 +44,9 @@ export default function PlantTable({ plantsList, collection }: Props) {
           tableHeaders={tableHeaders}
           tableSubHeaders={tableSubHeaders}
         />
-      ) : (
-        (<p>No data</p>)
-      )}
+      ) :
+        <p>No data</p>
+      }
     </>
   )
 }

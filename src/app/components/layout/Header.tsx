@@ -14,20 +14,20 @@ export default async function Header() {
 
   return (
     <header className="bg-primary-green-0 bg-opacity-80 w-full flex-none h-[95px]">
-     <Navbar fluid className="w-full justify-between items-center">
-      <NavbarBrand href="/">
-        <Image
-          src="/images/logo.png"
-          width={280}
-          height={75}
-          alt="Logo"
-        />
-      </NavbarBrand>
-      <NavbarToggle />
-      <NavbarCollapse>
-        <Navigation isAuth={ isAuth } />
-      </NavbarCollapse>
-    </Navbar>
+      <Navbar fluid className="w-full justify-between items-center">
+        <NavbarBrand href="/">
+          <Image
+            src="/images/logo.png"
+            width={280}
+            height={75}
+            alt="Logo"
+          />
+        </NavbarBrand>
+        <NavbarToggle />
+        <NavbarCollapse>
+          <Navigation isAuth={ isAuth } />
+        </NavbarCollapse>
+      </Navbar>
     </header>
   );
 }

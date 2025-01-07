@@ -1,12 +1,28 @@
 import { zodUserSchema } from "@/app/lib/zod/zodUser";
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
 import { Collections } from "@/app/types/plant.types";
+import { zodExpenseSchema } from "./zodExpense";
 
 export async function zodAuthValidation(formData: FormData) {
   const data = { email: formData.get("email"), password: formData.get("password") };
   return zodUserSchema.safeParse({
     email: data.email,
     password: data.password,
+  });
+}
+
+export async function zodExpenseValidation(formData: FormData) {
+  const data = {
+    products: formData.get("products"),
+    price: formData.get("price"),
+    shop: formData.get("shop"),
+    date: formData.get("date"),
+  };
+  return zodExpenseSchema.safeParse({
+    products: data.products,
+    price: data.price,
+    shop: data.shop,
+    date: data.date,
   });
 }
 
