@@ -1,15 +1,10 @@
-import { Footer, FooterCopyright, FooterLink, FooterLinkGroup } from "flowbite-react";
-
 export default function MainFooter() {
   return (
-    <Footer container>
-      <FooterCopyright by="PlantDoc" year={2025} />
-      <FooterLinkGroup>
-        <FooterLink href="#">About</FooterLink>
-        <FooterLink href="#">Privacy Policy</FooterLink>
-        <FooterLink href="#">Licensing</FooterLink>
-        <FooterLink href="#">Contact</FooterLink>
-      </FooterLinkGroup>
-    </Footer>
+    <footer className="text-center">
+      <div className="w-full text-center mx-auto p-4 items-center">
+        <span className="text-xs text-gray-500 sm:text-center dark:text-gray-400">© 2025 <a href="https://flowbite.com/" className="hover:underline">PlantDoc</a>. All Rights Reserved.
+        </span>
+      </div>
+  </footer>
   );
 }

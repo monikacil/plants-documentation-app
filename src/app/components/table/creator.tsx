@@ -99,8 +99,8 @@ export function getTableBody(data: any[], url: string, headers: (string | undefi
       { headers.includes("actions") ? (
       <Table.Cell className="w-44">
         <div className="flex gap-2">
-          <Link href={`url${element._id}/edit`} scroll={false}><BasicButton color="teal">Edit</BasicButton></Link>
-          <Link href={`url${element._id}/delete`} scroll={false}><BasicButton color="red">Delete</BasicButton></Link>
+          <Link href={`${url}/${element._id}/edit`} scroll={false}><BasicButton color="teal">Edit</BasicButton></Link>
+          <Link href={`${url}/${element._id}/delete`} scroll={false}><BasicButton color="red">Delete</BasicButton></Link>
         </div>
       </Table.Cell>
       ): null}

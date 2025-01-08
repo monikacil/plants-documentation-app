@@ -22,5 +22,8 @@ html {
 
 body {
   color: var(--foreground);
-  background-color: var(--background);
+  background: rgb(225,218,205);
+  background: linear-gradient(180deg, rgba(225,218,205,1) 9%, rgba(238,233,223,1) 45%, rgba(240,237,231,1) 65%, rgba(252,251,250,1) 88%, rgba(255,255,255,1) 99%);
+  background-repeat: no-repeat;
+  background-size: cover;
 }

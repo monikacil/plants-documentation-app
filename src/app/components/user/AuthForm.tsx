@@ -19,7 +19,7 @@ export default function AuthForm({ btnText, headerText, authAction }: Props) {
   const [password, setPassword] = useState('');
 
   return (
-    <div className="flex max-w-144 m-auto flex-1 flex-col lg:my-48 px-6 py-8 lg:py-12 lg:px-8 rounded-md bg-primary-green-50/30 shadow-md shadow-primary-green-50/50">
+    <div className="flex max-w-144 m-auto flex-1 flex-col lg:my-48 px-6 py-8 lg:py-12 lg:px-8 ">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="text-center text-2xl/9 font-bold tracking-tight">
           { headerText }

@@ -28,6 +28,7 @@ export default function Table({ elementsList }: Props) {
         setHeadersConfig(headersByType(config)[0][subHeaderConfig])
       }
     })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

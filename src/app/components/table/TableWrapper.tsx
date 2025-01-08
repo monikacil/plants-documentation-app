@@ -17,14 +17,13 @@ type Props = {
     href: string,
     text: string
   }
-
 }
 
 export default function TableWrapper({ children, query, currentPage, pages, link }: Props) {
   return (
     <>
       <nav className="flex justify-between mb-3">
-        <Search placeholder="Search for plant..." />
+        <Search placeholder="Search..." />
         { link ? (
           <Link href={link.href} scroll={false}><BasicButton size="md">{link.text}</BasicButton></Link>
         ): null}

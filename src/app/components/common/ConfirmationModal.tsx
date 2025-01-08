@@ -13,13 +13,18 @@ type Props = {
 export default function ConfirmationModal({ title, children, onConfirmClick }: Props) {
   const router = useRouter()
 
+  const handleConfirmClick = () => {
+    onConfirmClick()
+    router.back()
+  }
+
   return (
     <BasicModal title={ title }>
       <section>
         <p>Are you sure?</p>
         {children}
         <footer className="flex justify-end gap-2">
-          <BasicButton color="failure" onClick={ onConfirmClick }>Yes</BasicButton>
+          <BasicButton color="failure" onClick={ handleConfirmClick }>Yes</BasicButton>
           <BasicButton color="gray" onClick={() => router.back()}>No</BasicButton>
         </footer>
       </section>

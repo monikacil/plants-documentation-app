@@ -10,7 +10,6 @@ const fredoka = Fredoka({
 })
 
 // Layout components
-import Header from "./components/layout/Header";
 import { default as Footer } from "./components/layout/Footer";
 import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
 
@@ -38,13 +37,12 @@ export default function RootLayout({ children, modal }: {
 }) {
   return (
     <html lang="en" className={`${fredoka.variable}`}>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex flex-col h-screen">
         <AddToHomeScreen />
-        <Header />
-        <main className="grow p-6 lg:py-4">
+        <section className="grow p-6 lg:py-4">
           { modal }
           { children }
-        </main>
+        </section>
         <Footer />
       </body>
     </html>
