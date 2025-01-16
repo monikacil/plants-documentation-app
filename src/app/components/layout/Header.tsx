@@ -18,7 +18,7 @@ export default async function Header({ className }: { className?: string }) {
     <header className={ cn("w-full flex-none h-[70px]", className) }>
       <nav className="h-full flex items-center justify-between">
         <Link href="/dashboard" className="w-80 flex">
-          <Logo size="lg" />
+          <Logo size="xl" />
         </Link>
         <Navigation isAuth={ isAuth } />
       </nav>

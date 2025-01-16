@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import Datepicker from "tailwind-datepicker-react"
-import { FaAngleLeft, FaAngleRight, FaCalendarDays } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 import { cn, getDatepickerOptions } from "@/app/lib/utils";
 import { useOutsideClick } from "@/app/lib/useOutsideClick";
@@ -41,9 +41,6 @@ export default function FormDatepicker({ name, value, maxDate, minDate, classNam
     <div ref={ ref }>
       <Datepicker options={ options } onChange={ handleChange } show={show} setShow={ (state) => setShow(state) }>
         <div className={ cn("flex w-full rounded-full bg-white", className) } >
-          {/* <div className="self-center">
-            <FaCalendarDays className="text-base-gray-700" />
-          </div> */}
           <input
             type="text"
             value={selectedDate.toLocaleDateString('pl')}

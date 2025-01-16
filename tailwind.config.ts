@@ -6,14 +6,33 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/tailwind-datepicker-react/dist/**/*.js", // <--- Add this line
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
     content(),
+  ],
+  safelist: [
+    'text-2xl',
+    'text-3xl',
+    'text-4xl',
+    'text-5xl',
+    'text-6xl',
+    'sm:text-2xl',
+    'sm:text-3xl',
+    'sm:text-4xl',
+    'sm:text-5xl',
+    'sm:text-6xl',
+    'md:text-2xl',
+    'md:text-3xl',
+    'md:text-4xl',
+    'md:text-5xl',
+    'md:text-6xl',
+    'lg:text-2xl',
+    'lg:text-3xl',
+    'lg:text-4xl',
+    'lg:text-5xl',
+    'lg:text-6xl',
   ],
   theme: {
     extend: {
-      boxShadow: {
-        "innerColor": "0 0 0px 1000px #343159 inset",
-      },
       fontFamily: {
         sans: ["var(--font-fredoka)"],
       },
@@ -57,10 +76,6 @@ const config: Config = {
       borderRadius: {
         "4xl": "2rem",
       },
-      textColor: {
-        light: "#fff",
-        dark: "#030303"
-      }
     },
   },
   plugins: [
