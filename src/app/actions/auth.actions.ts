@@ -52,8 +52,8 @@ export const register = async (prevState: any, formData: FormData) => {
   if (!savedUser) {
     return { errors: AuthErrors.accountCreatingError };
   }
-  // redirect to signin page
-  redirect("/signin")
+  // redirect to login page
+  redirect("/login")
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,5 +87,5 @@ export async function login(prevState: any, formData: FormData) {
 export async function logout() {
   // Destroy the session
   (await cookies()).delete({ name: COOKIE_NAME });
-  redirect('/signin');
+  redirect('/login');
 }

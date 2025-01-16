@@ -13,7 +13,7 @@ export default function BasicModal({ children, title, size="5xl" }: ModalProps) 
 
   return (
     <>
-      <Modal size={ size } show={ true } position="center" onClose={() => {
+      <Modal size={ size } show={ true } position="center" onClose={ () => {
           router.back()
         }}>
         <Modal.Header>{ title }</Modal.Header>

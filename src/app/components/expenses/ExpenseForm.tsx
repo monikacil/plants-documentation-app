@@ -29,27 +29,27 @@ export default function ExpenseForm({ expense }: Props) {
 
   return (
     <>
-      <Form action={formAction}>
+      <Form action={ formAction }>
         <>
           <Input
             name="products"
             label="Products"
-            value={expensesForm?.products}
-            errors={!expensesForm.products ? state?.errors?.products : null}
+            value={ expensesForm?.products }
+            errors={ !expensesForm.products ? state?.errors?.products : null }
             onChange={(value) => { setExpensesForm({ ...expensesForm, products: value }) }}
           />
           <Input
             name="price"
             label="Price"
-            value={expensesForm?.price}
-            errors={!expensesForm.price ? state?.errors?.price : null}
+            value={ expensesForm?.price }
+            errors={ !expensesForm.price ? state?.errors?.price : null }
             onChange={(value) => { setExpensesForm({ ...expensesForm, price: value }) }}
           />
           <Input
             name="shop"
             label="Shop"
-            value={expensesForm?.shop}
-            errors={!expensesForm.shop ? state?.errors?.shop : null}
+            value={ expensesForm?.shop }
+            errors={ !expensesForm.shop ? state?.errors?.shop : null }
             onChange={(value) => { setExpensesForm({ ...expensesForm, shop: value }) }}
           />
           <FormDatepicker
@@ -60,9 +60,9 @@ export default function ExpenseForm({ expense }: Props) {
             onChange={(value) => { setExpensesForm({ ...expensesForm, date: value ? value.toString() : new Date().toString() }) }}
           />
         </>
-        <BasicButton type="submit" disabled={isPending} isProcessing={isPending} className="my-5">Save Expense</BasicButton>
+        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending } className="my-5">Save Expense</BasicButton>
         {state?.error &&
-        <Alert color="failure" icon={HiInformationCircle}>
+        <Alert color="failure" icon={ HiInformationCircle }>
           <span className="font-medium">{ state?.error }</span>
         </Alert>}
       </Form>

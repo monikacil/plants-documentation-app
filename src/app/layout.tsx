@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
 
 import { Fredoka } from 'next/font/google'
@@ -36,10 +37,10 @@ export default function RootLayout({ children, modal }: {
   modal: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${fredoka.variable}`}>
-      <body className="flex flex-col h-screen">
+    <html lang="en" className={ `${ fredoka.variable }` }>
+      <body className="flex flex-col h-screen p-3 md:p-6">
         <AddToHomeScreen />
-        <section className="grow p-6 lg:py-4">
+        <section className="grow">
           { modal }
           { children }
         </section>

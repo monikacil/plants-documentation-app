@@ -1,13 +1,15 @@
-export default function ZodErrors({ error }: { error: string[] | undefined }) {
+import { cn, generateUniqKey } from "@/app/lib/utils";
+
+export default function ZodErrors({ error, className }: { error: string[] | undefined, className?: string }) {
   if (!error) return null;
   if (typeof error === 'string') {
-    return <div className="text-xs text-red-500">
-        {error}
+    return <div className={ cn("text-xs text-danger-500", className) }>
+        { error }
       </div>
   }
-  return error.map((err: string, index: number) => (
-    <div key={index} className="text-xs text-red-500">
-      {err}
+  return error.map((err: string) => (
+    <div key={ generateUniqKey("zod-error") } className={ cn("text-xs text-danger-500", className) }>
+      { err }
     </div>
   ));
 }

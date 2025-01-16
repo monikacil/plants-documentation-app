@@ -32,8 +32,8 @@ export default function Dropdown({ children, title, className, icon }: Props) {
   }
 
   return (
-    <div ref={ref}>
-      <button onClick={handleDropdownClick} className= {cn("flex items-center justify-between w-full py-2 px-3 text-gray-900", className)}>
+    <div ref={ ref }>
+      <button onClick={ handleDropdownClick } className= { cn("flex items-center justify-between w-full py-2 px-3 text-gray-900", className) }>
         { !icon ? (
           <>
             { title }
@@ -44,7 +44,7 @@ export default function Dropdown({ children, title, className, icon }: Props) {
       </button>
       { dropdownCollapsed ? (
       <div className="z-10 absolute right-0 mt-2 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-        {children}
+        { children }
       </div>
       ): null }
     </div>

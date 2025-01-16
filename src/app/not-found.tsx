@@ -12,7 +12,7 @@ export default function NotFound() {
           Sorry, we couldn’t find the page you’re looking for.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
-          <Link href="/">Return Home</Link>
+          <Link href="/" scroll={ false }>Return Home</Link>
         </div>
       </div>
     </main>

@@ -3,15 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #fbfff8;
-  --foreground: #303330;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #303330;
-    --foreground: #ededed;
-  }
+  --background: #fafcfa;
+  --foreground: #030303;
 }
 
 html {
@@ -22,8 +15,13 @@ html {
 
 body {
   color: var(--foreground);
-  background: rgb(225,218,205);
-  background: linear-gradient(180deg, rgba(225,218,205,1) 9%, rgba(238,233,223,1) 45%, rgba(240,237,231,1) 65%, rgba(252,251,250,1) 88%, rgba(255,255,255,1) 99%);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: var(--background);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-box-shadow: 0 0 0px 1000px var(--input-box-shadow-color, #f4fcf2) inset;
 }

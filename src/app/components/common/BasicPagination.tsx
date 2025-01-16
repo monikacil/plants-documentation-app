@@ -15,7 +15,7 @@ export default function BasicPagination({ totalPages }: { totalPages: number }) 
   const createPageURL = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${ pathname }?${ params.toString() }`);
   };
 
   return (

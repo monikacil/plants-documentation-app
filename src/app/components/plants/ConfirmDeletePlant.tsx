@@ -14,7 +14,7 @@ export default function ConfirmDeletePlant({ collection, id }: Props) {
 
   const handleDelete = () => {
     deletePlant(collection, id).then(() => {
-      redirect(`/plants/${collection}`)
+      redirect(`/plants/${ collection }`)
     })
   }
 

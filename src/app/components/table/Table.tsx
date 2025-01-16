@@ -1,7 +1,7 @@
 'use client'
 
 import BasicTable from "../common/BasicTable";
-import { getTableBody, getTableHeaders, getTableSubHeaders } from "./creator";
+import { getTableBody, getTableHeaders } from "./creator";
 
 import { getHeadersForBody } from "@/app/components/table/creator";
 import { usePathname } from "next/navigation";
@@ -16,12 +16,12 @@ export default function Table({ elementsList }: Props) {
 
   const url = usePathname()
 
-  const pathName = url.split('/')[1]
+  const pathName = url.split("/")[1]
   const subHeaderConfig = url.split("/")[2]
 
   useEffect(() => {
     (async () => {
-      const config = await import(`@/app/tablesConfig/${pathName}Table`).then((data) => {return data.default})
+      const config = await import(`@/app/tablesConfig/${ pathName }Table`).then((data) => { return data.default  })
       if(config[0].title) {
         setHeadersConfig(config)
       } else {
@@ -40,17 +40,15 @@ export default function Table({ elementsList }: Props) {
     })
   }
 
-  // const headers = headersByType(headersConfig)[0][collection]
-
   const headersList = getHeadersForBody(headersConfig)
   const tableBody = getTableBody(elementsList, url, headersList)
+  const tableHeaders = getTableHeaders(headersConfig)
   return (
     <>
-      {elementsList.length ? (
+      { elementsList.length ? (
         <BasicTable
-          tableBody={tableBody}
-          tableHeaders={getTableHeaders(headersConfig)}
-          tableSubHeaders={getTableSubHeaders(headersConfig)}
+          tableBody={ tableBody }
+          tableHeaders={ tableHeaders }
         />
       ) :
         <p>No data</p>

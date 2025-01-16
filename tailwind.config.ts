@@ -6,46 +6,60 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/tailwind-datepicker-react/dist/**/*.js", // <--- Add this line
     content(),
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "innerColor": "0 0 0px 1000px #343159 inset",
+      },
       fontFamily: {
-        sans: ['var(--font-fredoka)'],
+        sans: ["var(--font-fredoka)"],
       },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        'primary-green-0': "#fbfff8",
-        'primary-green-50': '#58a773',
-        'primary-green-100': '#4d8f63',
-        'base-green': {
-          100: "#d4d9d9",
-          200: "#a9b4b2",
-          300: "#7e8e8c",
-          400: "#536965",
-          500: "#28433f",
-          600: "#203632",
-          700: "#182826",
-          800: "#101b19",
-          900: "#080d0d"
+        "base-gray": {
+          100: "#fbfbfb",
+          200: "#f6f6f6",
+          300: "#f2f2f2",
+          400: "#ededed",
+          500: "#e9e9e9",
+          600: "#bababa",
+          700: "#8c8c8c",
+          800: "#5d5d5d",
+          900: "#2f2f2f"
         },
-        'primary-light-green': '#cde5d5',
+        "base-green": {
+          100: "#eaf2e0",
+          150: "#e2f2ce",
+          200: "#d5e5c2",
+          300: "#c0d8a3",
+          400: "#abcb85",
+          500: "#96be66",
+          600: "#799d4d",
+          700: "#5a723d",
+          800: "#3c4c29",
+          900: "#1e2614"
+        },
+        danger: {
+          500: "#ef4444",
+          600: "#bf3636",
+        },
+        warning: {
+          500: "#ffa53e",
+          600: "#cc8432",
+        },
       },
       spacing: {
-        '128': '32rem',
-        '144': '36rem',
-      },
-      fontSize: {
-        'text-6xl': '2.75rem',
-        'text-7xl': '3.75rem',
-      },
-      lineHeight: {
-        '11': '3rem',
-        '12': '6.25rem',
+        "128": "32rem",
+        "144": "36rem",
       },
       borderRadius: {
-        '4xl': '2rem',
+        "4xl": "2rem",
+      },
+      textColor: {
+        light: "#fff",
+        dark: "#030303"
       }
     },
   },

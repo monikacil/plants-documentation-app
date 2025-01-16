@@ -3,7 +3,7 @@ import { decrypt } from './app/lib/joseSession'
 
 // 1. Specify protected and public routes
 const protectedRoutes = ['/user', '/dashboard', "/expenses"]
-const publicRoutes = ['/signin', '/signup', '/']
+const publicRoutes = ['/login', '/signup', '/']
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 
@@ -20,13 +20,13 @@ export default async function middleware(req: NextRequest) {
 
   // 4. Redirect
   if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL('/signin', req.nextUrl));
+    return NextResponse.redirect(new URL('/login', req.nextUrl));
   }
 
   if (
     !session?.userId && req.nextUrl.pathname.startsWith('/plants')
   ) {
-    return NextResponse.redirect(new URL('/signin', req.nextUrl));
+    return NextResponse.redirect(new URL('/login', req.nextUrl));
   }
 
   if (
@@ -49,7 +49,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [ '/', '/signin', '/signup',
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-  ],
+  matcher: ['/', '/login', '/signup', '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'],
 }

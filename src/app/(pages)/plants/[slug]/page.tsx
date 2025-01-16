@@ -26,14 +26,14 @@ export default async function Page({ params, searchParams }: Props) {
   const order = searchedParams?.order || "asc"
   let sort = undefined
   if (sortBy) {
-    sort = [{key: sortBy, direction: order}]
+    sort = [{ key: sortBy, direction: order }]
   }
 
   const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort)
 
   return (
-    <TableWrapper query={query} currentPage={currentPage} pages={totalPages} link={{href: `/plants/${collection}/add`, text: "Add Plant"}}>
-      <Table elementsList={plantsList}></Table>
+    <TableWrapper pages={ totalPages } link={{ href: `/plants/${collection}/add`, text: "Add Plant" }}>
+      <Table elementsList={ plantsList }></Table>
     </TableWrapper>
     )
 }

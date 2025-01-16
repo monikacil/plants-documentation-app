@@ -22,7 +22,7 @@ export default function Search({ placeholder }: Props) {
     } else {
       params.delete('query');
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${ pathname }?${ params.toString() }`);
   }, 500);
 
   return (
@@ -30,12 +30,11 @@ export default function Search({ placeholder }: Props) {
       id="table-search"
       type="email"
       sizing="md"
-      rightIcon={IoIosSearch}
+      rightIcon={ IoIosSearch }
       placeholder={ placeholder }
-      defaultValue={searchParams.get('query')?.toString()}
-      onChange={(e) => {
-        handleSearch(e.target.value);
-      }}  />
+      defaultValue={ searchParams.get('query')?.toString() }
+      onChange={ (e) => { handleSearch(e.target.value) } }
+    />
   )
 }
 

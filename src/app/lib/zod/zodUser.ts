@@ -13,8 +13,7 @@ export const zodUserSchema = object({
     .trim(),
 })
 
-export type AuthFormState =
-  | {
+export type AuthFormState = {
       errors: {
         email: string[] | undefined,
         password: string[] | undefined,

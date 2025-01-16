@@ -22,7 +22,7 @@ export async function getMongoDbClient() {
   if (!MONGODB_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
   }
-   try {
+  try {
     return new MongoClient(MONGODB_URI)
   } catch (error) {
     console.error(error);

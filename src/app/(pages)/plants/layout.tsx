@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode}) {
 
   return (
     <section>
-      <Breadcrumbs links={getBreadcrumbsLinks(url)} />
+      <Breadcrumbs links={ getBreadcrumbsLinks(url) } />
       <article>
         { children }
       </article>

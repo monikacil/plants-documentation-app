@@ -26,10 +26,10 @@ export default function ExpensesTable({ expensesList, details=true }: Props) {
 
   return (
     <>
-      {expensesList.length ? (
+      { expensesList.length ? (
         <BasicTable
-          tableBody={tableBody}
-          tableHeaders={tableHeaders}
+          tableBody={ tableBody }
+          tableHeaders={ tableHeaders }
         />
       ) :
         <p>No data</p>

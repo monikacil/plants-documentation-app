@@ -3,9 +3,8 @@
 import React from 'react'
 import { Banner, BannerCollapseButton } from "flowbite-react";
 import { HiX } from "react-icons/hi";
-import BasicButton from '../common/BasicButton';
-import Image from "next/image";
 import { IoDownloadOutline } from "react-icons/io5";
+import Logo from '../layout/Logo';
 
 
 interface Props {
@@ -23,15 +22,10 @@ export default function AddToMobileDevice(props: Props) {
             <BannerCollapseButton color="gray" className="border-0 bg-transparent text-gray-500 dark:text-gray-400" onClick={(closePrompt)}>
               <HiX className="text-xl" />
             </BannerCollapseButton>
-            <Image
-              src="/images/logo.png"
-              width={300}
-              height={100}
-              alt="Logo"
-            />
+            <Logo size="sm"/>
           </div>
           <div className="pr-3">
-            <BasicButton color="success" onClick={installPrompt}>Install <IoDownloadOutline className="ml-2 text-lg" /></BasicButton>
+            <IoDownloadOutline size={ 40 } onClick={ installPrompt } className="ml-2 text-md bg-base-green-500 rounded-full p-2 text-white hover:bg-base-green-600" />
           </div>
         </div>
       </Banner>

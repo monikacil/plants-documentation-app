@@ -5,13 +5,11 @@ import { Suspense } from "react";
 
 import BasicButton from "../common/BasicButton";
 import Search from "../common/Search";
-import TableSceleton from "../skeletons/TableSceleton";
 import BasicPagination from "../common/BasicPagination";
+import TableSceleton from "../skeletons/TableSceleton";
 
 type Props = {
   children: React.ReactNode,
-  query: string,
-  currentPage: number,
   pages: number,
   link?: {
     href: string,
@@ -19,19 +17,19 @@ type Props = {
   }
 }
 
-export default function TableWrapper({ children, query, currentPage, pages, link }: Props) {
+export default function TableWrapper({ children, pages, link }: Props) {
   return (
-    <>
+    <section className="bg-white py-4 px-3 md:py-5 md:px-4">
       <nav className="flex justify-between mb-3">
         <Search placeholder="Search..." />
         { link ? (
-          <Link href={link.href} scroll={false}><BasicButton size="md">{link.text}</BasicButton></Link>
+          <Link href={ link.href }><BasicButton size="md">{ link.text }</BasicButton></Link>
         ): null}
       </nav>
-      <Suspense key={query + currentPage} fallback={<TableSceleton />}>
-        {children}
+      <Suspense  fallback={ <TableSceleton /> }>
+        { children }
       </Suspense>
       { pages > 1 ? <BasicPagination totalPages={ pages } /> : null }
-    </>
+    </section>
   );
 }

@@ -15,10 +15,10 @@ export default function Sort({ name }: { name: string }) {
     setOrder(order === "asc" ? "desc" : "asc")
     params.set('sortBy', name);
     params.set('order', order );
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${ pathname }?${ params.toString() }`);
   }
 
   return (
-      <HiMiniChevronUpDown className="text-xl cursor-pointer" onClick={ handleSort} />
+      <HiMiniChevronUpDown className="text-xl cursor-pointer" onClick={ handleSort } />
   )
 }

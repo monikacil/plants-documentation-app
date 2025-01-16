@@ -22,10 +22,10 @@ export default function ConfirmationModal({ title, children, onConfirmClick }: P
     <BasicModal title={ title }>
       <section>
         <p>Are you sure?</p>
-        {children}
+        { children }
         <footer className="flex justify-end gap-2">
-          <BasicButton color="failure" onClick={ handleConfirmClick }>Yes</BasicButton>
-          <BasicButton color="gray" onClick={() => router.back()}>No</BasicButton>
+          <BasicButton color="danger" onClick={ handleConfirmClick }>Yes</BasicButton>
+          <BasicButton color="primary" onClick={ () => router.back() }>No</BasicButton>
         </footer>
       </section>
     </BasicModal>

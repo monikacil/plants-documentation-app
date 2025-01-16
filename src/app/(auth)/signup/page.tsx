@@ -4,7 +4,7 @@ import AuthForm from "@/app/components/user/AuthForm";
 export default function SignUp() {
   return (
     <>
-      <AuthForm btnText="Sign Up!" headerText="Create new account" authAction={register} />
+      <AuthForm btnText="Sign Up!" authAction={ register } />
     </>
   )
 }

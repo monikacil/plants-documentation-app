@@ -30,8 +30,8 @@ export default async function Page({ searchParams }: Props) {
     const expensesList: ExpenseDocument[] = await getExpenses(query, currentPage, limit, sort)
 
   return (
-    <TableWrapper query={query} currentPage={currentPage} pages={totalPages} link={{href: `/expenses/add`, text: "Add Expense"}}>
-      <Table elementsList={expensesList}></Table>
+    <TableWrapper pages={totalPages} link={{ href: `/expenses/add`, text: "Add Expense" }}>
+      <Table elementsList={ expensesList }></Table>
     </TableWrapper>
   );
 }

@@ -1,40 +1,58 @@
 "use client";
 
-import { Datepicker, Label } from 'flowbite-react';
-import ZodErrors from "../common/ZodErrors";
+import { useState } from "react";
 
-interface Props {
+import Datepicker from "tailwind-datepicker-react"
+import { FaAngleLeft, FaAngleRight, FaCalendarDays } from "react-icons/fa6";
+
+import { cn, getDatepickerOptions } from "@/app/lib/utils";
+import { useOutsideClick } from "@/app/lib/useOutsideClick";
+
+type Props = {
   name: string,
-  label: string,
-  maxDate?: Date,
-  minDate?: Date,
-  defaultValue?: Date | undefined,
-  value?: Date | null | undefined,
-  disabled?: boolean,
-  errors?: [],
-  className?: string,
-  onChange?: (date: Date | null) => void | undefined
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value?: string | undefined,
+  maxDate?: Date | undefined,
+  minDate?: Date | undefined,
+  className?: string | undefined,
+  onChange: (e: Date) => void | undefined,
 }
 
-export default function FormDatepicker({ name, label, maxDate, minDate, value, disabled = false, errors, className, onChange }: Props) {
+export default function FormDatepicker({ name, value, maxDate, minDate, className, onChange }: Props) {
+  const options = getDatepickerOptions(maxDate, minDate, name, {
+    // () => ReactElement | JSX.Element
+    prev: () => <FaAngleLeft />,
+    next: () => <FaAngleRight />,
+  } )
+
+  const [show, setShow] = useState(false)
+	const [selectedDate, setSelectedDate] = useState(new Date || Date.parse(value || ""))
+	const handleChange = (selectedDate: Date) => {
+		setSelectedDate(selectedDate)
+    if(selectedDate) {
+      onChange(selectedDate)
+    }
+	}
+
+  const ref = useOutsideClick(() => {
+    setShow(false)
+  });
+
   return (
-    <div>
-      <Label
-        htmlFor={name}
-        value={label}
-      />
-      <Datepicker
-        id="datepicker"
-        name={name}
-        value={value}
-        disabled={disabled}
-        maxDate={maxDate}
-        minDate={minDate}
-        className={className}
-        onChange={(date: Date | null) => onChange ? onChange(date) : null}
-      />
-      {errors ? <ZodErrors error={errors} /> : ''}
+    <div ref={ ref }>
+      <Datepicker options={ options } onChange={ handleChange } show={show} setShow={ (state) => setShow(state) }>
+        <div className={ cn("flex w-full rounded-full bg-white", className) } >
+          {/* <div className="self-center">
+            <FaCalendarDays className="text-base-gray-700" />
+          </div> */}
+          <input
+            type="text"
+            value={selectedDate.toLocaleDateString('pl')}
+            onFocus={() => setShow(true)}
+            readOnly
+            className="w-full cursor-pointer rounded-full border-0 py-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm"
+            />
+        </div>
+      </Datepicker>
     </div>
   )
-}
+};

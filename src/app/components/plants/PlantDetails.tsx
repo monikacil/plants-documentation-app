@@ -1,8 +1,7 @@
 "use client"
 
 import { Collections, PlantDocument } from "@/app/types/plant.types";
-import Link from "next/link";
-import BasicButton from "../common/BasicButton";
+import ActionButtons from "../table/ActionButtons";
 
 type Props = {
   plant: PlantDocument,
@@ -10,10 +9,10 @@ type Props = {
 }
 
 export default function PlantDetails({ plant, collection }: Props) {
+  const url = `/plants/${ collection }/${ plant?._id }`
   return (
     <div className="flex gap-2">
-      <Link href={`/plants/${collection}/${plant?._id}/edit`} scroll={false}><BasicButton color="teal">Edit</BasicButton></Link>
-      <Link href={`/plants/${collection}/${plant?._id}/delete`} scroll={false}><BasicButton color="red">Delete</BasicButton></Link>
+      <ActionButtons url={ url } />
     </div>
   );
 }
