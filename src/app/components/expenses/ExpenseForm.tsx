@@ -33,38 +33,34 @@ export default function ExpenseForm({ expense }: Props) {
         <>
           <Input
             name="products"
-            label="Products"
             value={ expensesForm?.products }
             errors={ !expensesForm.products ? state?.errors?.products : null }
-            onChange={(value) => { setExpensesForm({ ...expensesForm, products: value }) }}
+            onChange={ (value) => { setExpensesForm({ ...expensesForm, products: value }) }}
           />
           <Input
             name="price"
-            label="Price"
             value={ expensesForm?.price }
             errors={ !expensesForm.price ? state?.errors?.price : null }
-            onChange={(value) => { setExpensesForm({ ...expensesForm, price: value }) }}
+            onChange={ (value) => { setExpensesForm({ ...expensesForm, price: value }) }}
           />
           <Input
             name="shop"
-            label="Shop"
             value={ expensesForm?.shop }
             errors={ !expensesForm.shop ? state?.errors?.shop : null }
-            onChange={(value) => { setExpensesForm({ ...expensesForm, shop: value }) }}
+            onChange={ (value) => { setExpensesForm({ ...expensesForm, shop: value }) }}
           />
           <FormDatepicker
             name="date"
-            label="Pick date"
             maxDate={ new Date() }
-            value={ new Date(expensesForm.date) }
-            onChange={(value) => { setExpensesForm({ ...expensesForm, date: value ? value.toString() : new Date().toString() }) }}
+            value={ expensesForm.date }
+            onChange={ (value) => { setExpensesForm({ ...expensesForm, date: value ? value.toString() : new Date().toString() }) }}
           />
         </>
-        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending } className="my-5">Save Expense</BasicButton>
-        {state?.error &&
+        { state?.error &&
         <Alert color="failure" icon={ HiInformationCircle }>
           <span className="font-medium">{ state?.error }</span>
-        </Alert>}
+        </Alert> }
+        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending } className="my-5">Save Expense</BasicButton>
       </Form>
     </>
   )

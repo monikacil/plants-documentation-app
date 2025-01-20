@@ -11,9 +11,4 @@ export type ExpenseDocument = {
   updatedAt: Date;
 };
 
-export type ExpenseFormType = {
-  products: string,
-  price: string,
-  shop: string,
-  date: string,
-}
+export type ExpenseFormType = Pick<ExpenseDocument, "products" | "price" | "shop" | "date">

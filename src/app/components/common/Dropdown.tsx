@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation';
 
-import { useOutsideClick } from "@/app/lib/useOutsideClick";
+import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/app/lib/utils/others";
 
 type Props =  {
   children:React.ReactNode,
@@ -32,7 +32,7 @@ export default function Dropdown({ children, title, className, icon }: Props) {
   }
 
   return (
-    <div ref={ ref }>
+    <div id={`dropdown-ref-${title}`} ref={ ref }>
       <button onClick={ handleDropdownClick } className= { cn("flex items-center justify-between w-full py-2 px-3 text-gray-900", className) }>
         { !icon ? (
           <>

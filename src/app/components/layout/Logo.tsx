@@ -1,4 +1,4 @@
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/app/lib/utils/others";
 import { GiMonsteraLeaf } from "react-icons/gi";
 
 export default function Logo({ className, size="lg" }: { className?: string, size?: "sm" | "md" | "lg" | "xl" }) {

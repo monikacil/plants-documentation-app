@@ -1,12 +1,4 @@
-import mongoose from "mongoose";
-
-export type SourceDocument = {
-  name: string;
-  address: string;
-  country: string;
-  phone: string;
-  email: string;
-} | null;
+import { Schema } from "mongoose";
 
 export type ImagesDocument = {
   originalname: string;
@@ -15,9 +7,9 @@ export type ImagesDocument = {
   updatedAt: Date;
 } | null;
 
-export type PlantDocument = {
-  _id: mongoose.Schema.Types.ObjectId;
-  _userId: mongoose.Schema.Types.ObjectId;
+export interface PlantDocument {
+  _id: Schema.Types.ObjectId | string;
+  _userId: Schema.Types.ObjectId;
   species: string;
   variety: string;
   price: string | undefined;
@@ -28,22 +20,7 @@ export type PlantDocument = {
   images: ImagesDocument[] | undefined;
   createdAt: Date;
   updatedAt: Date;
-} | null;
-
-export type Plant = {
-  _id: mongoose.Schema.Types.ObjectId;
-  _userId: mongoose.Schema.Types.ObjectId;
-  species: string;
-  variety: string;
-  price: string | undefined;
-  date: string | undefined;
-  passport: string | undefined;
-  buyer: string | undefined;
-  seller: string | undefined;
-  images: ImagesDocument[] | undefined;
-  createdAt: Date;
-  updatedAt: Date;
-} | null;
+}
 
 export type Collections = "collected" | "purchased" | "sold";
 
@@ -52,16 +29,7 @@ export type PlantExtraArgs = {
   _id?: string
 }
 
-export type PlantTableType = {
-  _id: string,
-  species: string,
-  variety: string,
-  price: string,
-  date: string,
-  passport: string,
-  name: string,
-  address: string,
-  country: string,
-  phone: string,
-  email: string,
-}
+type ClienType = { name: string, address: string, phone: string, email: string, country: string }
+type PlantOmitType = Omit<PlantDocument, "_userId" | "createdAt" | "updatedAt" | "images" | "buyer" | "seller">
+
+export type PlantTableType = PlantOmitType & ClienType

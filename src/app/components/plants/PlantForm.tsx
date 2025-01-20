@@ -8,12 +8,14 @@ import { Collections, PlantExtraArgs, PlantTableType } from '@/app/types/plant.t
 import Input from '../form/Input';
 import BasicButton from '../common/BasicButton';
 import FormDatepicker from "../form/FormDatepicker";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from "react-icons/hi";
 
 type Props = {
   plant?: PlantTableType,
   collection: Collections,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plantAction: (extraArgs: PlantExtraArgs, prevState: any, formData: FormData) => Promise<any>
+  action: (extraArgs: PlantExtraArgs, prevState: any, formData: FormData) => Promise<any>
 }
 
 const initForm: PlantTableType = {
@@ -30,15 +32,14 @@ const initForm: PlantTableType = {
   country: ''
 }
 
-export default function PlantForm({ plant, collection, plantAction }: Props) {
-  const [state, formAction, isPending] = useActionState(plantAction.bind(null, { collection: collection, _id: plant?._id.toString() }), null)
+export default function PlantForm({ plant, collection, action }: Props) {
+  const [state, formAction, isPending] = useActionState(action.bind(null, { collection: collection, _id: plant?._id.toString() }), null)
   const [plantForm, setPlantForm] = useState(plant ? plant : initForm)
 
   return (
     <>
       <Form action={ formAction }>
-        <div className="font-semibold mb-3">Plant Info</div>
-        <div className={ collection !== 'collected' ? "lg:grid lg:grid-cols-2 gap-4" : "" }>
+        <div className="grid lg:grid-cols-2 gap-4 mb-3">
           <Input
             name="species"
             placeholder="Species"
@@ -79,9 +80,6 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
               errors={ !plantForm.passport ? state?.errors?.passport : null }
               onChange={ (value) => { setPlantForm({ ...plantForm, passport: value }) } }
             />
-          </div>
-          <div className="font-semibold mt-5 mb-3">{ collection === 'purchased' ? "Seller" : "Buyer" } Info</div>
-          <div className="lg:grid lg:grid-cols-2 gap-4">
             <Input
               name="name"
               placeholder="Name"
@@ -123,7 +121,11 @@ export default function PlantForm({ plant, collection, plantAction }: Props) {
             />
           </div>
         </>: null }
-        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending } className="my-5">Save Plant</BasicButton>
+        { state?.error &&
+        <Alert color="failure" icon={ HiInformationCircle }>
+          <span className="font-medium">{ state?.error }</span>
+        </Alert> }
+        <BasicButton type="submit" disabled={ isPending } isProcessing={ isPending } className="mt-5">Save Plant</BasicButton>
       </Form>
     </>
   )

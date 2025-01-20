@@ -49,6 +49,7 @@ const config: Config = {
           900: "#2f2f2f"
         },
         "base-green": {
+          50: "#fbeded",
           100: "#eaf2e0",
           150: "#e2f2ce",
           200: "#d5e5c2",

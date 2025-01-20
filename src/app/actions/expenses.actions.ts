@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "../lib/connectDB";
-import { zodExpenseValidation } from "../lib/zod/zodValidations";
+import { connectDB } from "@/app/lib/connectDB";
+import { zodExpenseValidation } from "@/app/lib/zod/zodValidations";
 
-import { getSessionUserId } from "../helpers/session.helper";
-import { getErrorMessage } from "../helpers/getErrorMessage.helper";
+import { getSessionUserId } from "@/app/lib/utils/session.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
 import mongoose from "mongoose";
-import { SortType } from "../types/others.types";
-import Expense from "../models/expense.model";
+import { SortType } from "@/app/types/others.types";
+import Expense from "@/app/models/expense.model";
 
 export const getExpenses = async (query: string, currentPage: number, limit: number, sort?: SortType[]) => {
   const userId = await getSessionUserId();
@@ -71,12 +71,91 @@ export const addExpenses = async (prevState: unknown, formData: FormData ) => {
     const createdExpense = await new Expense(data)
     try {
       await connectDB();
-      const savedExtension = await createdExpense.save()
-      revalidatePath("/extensions");
-      return JSON.parse(JSON.stringify(savedExtension))
+      const savedExpense = await createdExpense.save()
+      revalidatePath("/expenses");
+      return JSON.parse(JSON.stringify(savedExpense))
     } catch (error) {
       return {
-        message: getErrorMessage(error, "Error occurred while saving extension.")
+        message: getErrorMessage(error, "Error occurred while saving expense.")
       }
     }
+}
+
+export const deleteExpense = async (id: string) => {
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    await Expense.deleteOne({ _id: id, _userId: userId })
+    revalidatePath("/expenses");
+  } catch (error) {
+      return {
+      message: getErrorMessage(error, "Error occurred while deleting expense.")
+    }
+  }
+}
+
+export const editPlant = async (id: string, prevState: object, formData: FormData) => {
+  const userId = await getSessionUserId();
+  const data = {
+      _userId: userId,
+      products: formData.get("products"),
+      price: formData.get("price"),
+      shop: formData.get("shop"),
+      date: formData.get("date"),
+    }
+
+  // zod validation
+  const validation = await zodExpenseValidation(formData);
+  if (!validation.success) {
+    return {
+      errors: validation.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    await connectDB();
+    await Expense.findByIdAndUpdate({ _id: id, _userId: userId }, data)
+    revalidatePath("/expenses");
+  } catch (error) {
+    return {
+      message: getErrorMessage(error, "Error occurred while editing expense.")
+    }
+  }
+}
+
+export const getExpense = async (id: string) => {
+    const userId = await getSessionUserId();
+
+    try {
+      await connectDB();
+      const expense = await Expense.findOne({_id: id, _userId: userId})
+      revalidatePath("/expenses");
+      return JSON.parse(JSON.stringify(expense))
+    } catch (error) {
+      return {
+        message: getErrorMessage(error, "Error occurred while getting expense.")
+      }
+    }
+}
+
+export const fetchExpensesPages = async (query: string, limit: number) => {
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    const expenses =  await Expense.aggregate([{
+      $match: {
+        _userId: new mongoose.Types.ObjectId(userId),
+        $or: [
+          { "products": { $regex: ".*" + query + ".*", $options: "i" } },
+          { "shop": { $regex: ".*" + query + ".*", $options: "i" } },
+        ]
+      }
+    }])
+    return Math.ceil(expenses.length / limit)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+      return 1
+  }
 }

@@ -7,7 +7,7 @@ import { FaBars, FaCircleUser } from "react-icons/fa6";
 import Dropdown from "../common/Dropdown";
 import { usePathname } from "next/navigation";
 import { NAVIGATION_CONFIG } from "@/app/lib/navConfig"
-import { generateUniqKey } from "@/app/lib/utils";
+import { generateUniqKey } from "@/app/lib/utils/others";
 
 export default function Navigation({ isAuth }: { isAuth: boolean }) {
   const pathname = usePathname();
@@ -54,7 +54,7 @@ export default function Navigation({ isAuth }: { isAuth: boolean }) {
                               </li>
                             } else if(link.href) {
                               return <li key={ generateUniqKey(`nav-link-${link.name}`) } className={ `hover:bg-gray-100 rounded-lg ${ link.href === pathname ? "bg-gray-green-200": "" }` }>
-                                <Link href={ link.href } className="block px-4 py-2">{ link.name }</Link>
+                                <Link href={ link.href } scroll={ false } className="block px-4 py-2">{ link.name }</Link>
                               </li>
                             }
                           })
@@ -64,7 +64,7 @@ export default function Navigation({ isAuth }: { isAuth: boolean }) {
                   </li>
                 } else {
                   return <li key={ generateUniqKey(`link-${el.name}`) } className={ `hover:text-gray-green-700 rounded-lg ${ el.href === pathname ? "bg-gray-green-200": "" }` }>
-                    <Link href={ el.href ? el.href : '' } className="block px-4 py-2">{ el.name }</Link>
+                    <Link href={ el.href ? el.href : '' } scroll={ false } className="block px-4 py-2">{ el.name }</Link>
                   </li>
                 }
               })

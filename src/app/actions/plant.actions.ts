@@ -2,16 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "../lib/connectDB";
-import { zodPlantValidation } from "../lib/zod/zodValidations";
+import { connectDB } from "@/app/lib/connectDB";
+import { zodPlantValidation } from "@/app/lib/zod/zodValidations";
 
-import { getSessionUserId } from "../helpers/session.helper";
-import { getErrorMessage } from "../helpers/getErrorMessage.helper";
+import { getSessionUserId } from "@/app/lib/utils/session.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
-import { Collections, Plant, PlantExtraArgs } from "../types/plant.types";
+import { Collections, PlantDocument, PlantExtraArgs } from "@/app/types/plant.types";
 import mongoose from "mongoose";
-import { SortType } from "../types/others.types";
-import { dataToUpdate, getCollectionModel, uiPlantObject } from "../helpers/plantActions.helper";
+import { SortType } from "@/app/types/others.types";
+import { dataToUpdate, getCollectionModel, uiPlantObject } from "@/app/lib/utils/plantActions";
 
 export const addPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
    // zod validation
@@ -86,10 +86,11 @@ export const getPlants = async (collection: Collections, query: string, currentP
 
   if (sort) {
     sort.forEach((query) => {
+      if (!query) return
       sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {[query.key]: query.direction === "asc" ? 1 : -1})
     })
   } else {
-    sortQuery["$sort"] = { createdAt: 1 }
+    sortQuery["$sort"] = { createdAt: -1 }
   }
 
   try {
@@ -109,7 +110,7 @@ export const getPlants = async (collection: Collections, query: string, currentP
     ])
     if (!dbPlantsList) return []
 
-    const plants = dbPlantsList.map((plant: Plant) => {
+    const plants = dbPlantsList.map((plant: PlantDocument) => {
       return uiPlantObject(plant, collection)
     });
 

@@ -1,24 +1,26 @@
 "use client";
 
 import { HiMiniChevronUpDown } from "react-icons/hi2"
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export default function Sort({ name }: { name: string }) {
-  const [order, setOrder] = useState("asc")
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const handleSort = () => {
     const params = new URLSearchParams(searchParams);
-    setOrder(order === "asc" ? "desc" : "asc")
-    params.set('sortBy', name);
-    params.set('order', order );
+    const order = params.get("order")
+    params.set("sortBy", name);
+    if (!order) {
+      params.set("order", "asc");
+    } else {
+      params.set("order", order === "asc" ? "desc" : "asc");
+    }
     replace(`${ pathname }?${ params.toString() }`);
   }
 
   return (
-      <HiMiniChevronUpDown className="text-xl cursor-pointer" onClick={ handleSort } />
+      <HiMiniChevronUpDown className="text-2xl cursor-pointer hover:text-base-green-300" onClick={ handleSort } />
   )
 }

@@ -9,7 +9,7 @@ import { getUserByEmail } from "./user.actions";
 
 import { type UserDocument } from "@/app/types/user.types";
 
-import { getErrorMessage } from "@/app/helpers/getErrorMessage.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
 import { connectDB } from "@/app/lib/connectDB";
 import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";

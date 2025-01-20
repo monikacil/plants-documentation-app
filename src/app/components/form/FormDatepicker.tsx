@@ -5,8 +5,9 @@ import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
-import { cn, getDatepickerOptions } from "@/app/lib/utils";
-import { useOutsideClick } from "@/app/lib/useOutsideClick";
+import { cn } from "@/app/lib/utils/others";
+import getDatepickerOptions from "@/app/lib/utils/getDatePickerOption"
+import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
 
 type Props = {
   name: string,
@@ -43,10 +44,10 @@ export default function FormDatepicker({ name, value, maxDate, minDate, classNam
         <div className={ cn("flex w-full rounded-full bg-white", className) } >
           <input
             type="text"
-            value={selectedDate.toLocaleDateString('pl')}
+            value={selectedDate.toDateString()}
             onFocus={() => setShow(true)}
             readOnly
-            className="w-full cursor-pointer rounded-full border-0 py-1.5 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm"
+            className={cn("w-full rounded-full border-0 py-1.5 px-2  placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm", className) }
             />
         </div>
       </Datepicker>

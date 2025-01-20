@@ -1,4 +1,4 @@
-import { cn, generateUniqKey } from "@/app/lib/utils";
+import { cn, generateUniqKey } from "@/app/lib/utils/others";
 
 export default function ZodErrors({ error, className }: { error: string[] | undefined, className?: string }) {
   if (!error) return null;

@@ -3,7 +3,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SessionPayload } from '../helpers/session.helper';
+import { SessionPayload } from '@/app/lib/utils/session.helper';
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 

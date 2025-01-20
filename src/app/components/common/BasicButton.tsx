@@ -10,7 +10,7 @@ const customTheme: CustomFlowbiteTheme = {
       primary: "bg-base-green-500 hover:bg-base-green-600 text-white",
       warning: "bg-warning-500 hover:bg-warning-600 text-white",
       danger: "bg-danger-500 hover:bg-danger-600 text-white",
-      info: "bg-blue-500 hover:bg-blue-600 text-white",
+      info: "bg-base-gray-800 hover:bg-base-gray-900 text-white",
     }
   },
 };
@@ -27,10 +27,10 @@ type Props = ComponentPropsWithoutRef<"button"> & {
   onClick?: (e: any) => void | Promise<any> | undefined,
 }
 
-export default function BasicButton({ children, size, color, type, isProcessing, wide=false, fullSized=false, onClick }: Props) {
+export default function BasicButton({ children, size, color, type, isProcessing, wide=false, fullSized=false, onClick, ...rest }: Props) {
   return (
     <Flowbite theme={{ theme: customTheme }}>
-      <Button color={ color || "primary" } size={ size } type={ type } disabled={ isProcessing } pill className={ wide ? "px-7" : "" } fullSized={ fullSized } onClick={ onClick }>
+      <Button color={ color || "primary" } size={ size } type={ type } disabled={ isProcessing } pill className={ wide ? "px-7" : "" } fullSized={ fullSized } onClick={ onClick } { ...rest }>
         { children }
       </Button>
     </Flowbite>
