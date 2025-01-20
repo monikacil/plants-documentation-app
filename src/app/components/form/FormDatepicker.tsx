@@ -20,7 +20,6 @@ type Props = {
 
 export default function FormDatepicker({ name, value, maxDate, minDate, className, onChange }: Props) {
   const options = getDatepickerOptions(maxDate, minDate, name, {
-    // () => ReactElement | JSX.Element
     prev: () => <FaAngleLeft />,
     next: () => <FaAngleRight />,
   } )
@@ -44,6 +43,7 @@ export default function FormDatepicker({ name, value, maxDate, minDate, classNam
         <div className={ cn("flex w-full rounded-full bg-white", className) } >
           <input
             type="text"
+            name={ name }
             value={selectedDate.toDateString()}
             onFocus={() => setShow(true)}
             readOnly

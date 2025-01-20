@@ -55,10 +55,6 @@ export const deletePlant = async (collection: Collections, plantId: string) => {
 }
 
 export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, formData: FormData) => {
-  const collectionModel = getCollectionModel(extraArgs.collection)
-  const userId = await getSessionUserId();
-  const data = dataToUpdate(userId, formData, extraArgs.collection)
-
   // zod validation
   const validation = await zodPlantValidation(formData, extraArgs.collection);
   if (!validation.success) {
@@ -66,6 +62,11 @@ export const editPlant = async (extraArgs: PlantExtraArgs, prevState: object, fo
       errors: validation.error.flatten().fieldErrors,
     };
   }
+
+  const collectionModel = getCollectionModel(extraArgs.collection)
+  const userId = await getSessionUserId();
+
+  const data = dataToUpdate(userId, formData, extraArgs.collection)
 
   try {
     await connectDB();
