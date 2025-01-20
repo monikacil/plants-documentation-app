@@ -3,7 +3,11 @@
 import { HiMiniChevronUpDown } from "react-icons/hi2"
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-export default function Sort({ name }: { name: string }) {
+type Props = {
+  name: string
+}
+
+export default function Sort({ name }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

@@ -8,7 +8,11 @@ import { cn } from "@/app/lib/utils/others";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string
 
-export default async function Header({ className }: { className?: string }) {
+type Props = {
+  className?: string
+}
+
+export default async function Header({ className }: Props) {
   const cookieStore = await cookies()
   const session = cookieStore.get(COOKIE_NAME)
 

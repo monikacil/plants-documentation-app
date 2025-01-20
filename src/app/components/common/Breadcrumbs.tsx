@@ -10,7 +10,11 @@ type Link = {
   href?: string | undefined,
 }
 
-export default function Breadcrumbs({ links }: { links: Link[] }) {
+type Props = {
+  links: Link[]
+}
+
+export default function Breadcrumbs({ links }: Props) {
   return (
     <Breadcrumb className="py-3">
       { links.map((el, idx) => {

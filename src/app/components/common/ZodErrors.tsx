@@ -1,6 +1,11 @@
 import { cn, generateUniqKey } from "@/app/lib/utils/others";
 
-export default function ZodErrors({ error, className }: { error: string[] | undefined, className?: string }) {
+type Props = {
+  error: string[] | undefined,
+  className?: string
+}
+
+export default function ZodErrors({ error, className }: Props) {
   if (!error) return null;
   if (typeof error === 'string') {
     return <div className={ cn("text-xs text-danger-500", className) }>

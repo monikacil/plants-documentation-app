@@ -138,7 +138,7 @@ export const getPlant = async (id: string, collection: Collections = "collected"
   }
 }
 
-export const fetchPlantsPages = async (query: string, collection: Collections, limit: number) => {
+export const getPlantsPages = async (query: string, collection: Collections, limit: number) => {
   const collectionModel = getCollectionModel(collection);
   const userId = await getSessionUserId();
 
@@ -156,6 +156,6 @@ export const fetchPlantsPages = async (query: string, collection: Collections, l
     return Math.ceil(dbPlantsList.length / limit)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-      return 1
+      return -1
   }
 }

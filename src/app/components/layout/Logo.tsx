@@ -1,7 +1,11 @@
 import { cn } from "@/app/lib/utils/others";
 import { GiMonsteraLeaf } from "react-icons/gi";
 
-export default function Logo({ className, size="lg" }: { className?: string, size?: "sm" | "md" | "lg" | "xl" }) {
+type Props = {
+  className?: string, size?: "sm" | "md" | "lg" | "xl"
+}
+
+export default function Logo({ className, size="lg" }: Props) {
   const cssSize = () => {
     let textSize;
     let logoSize
@@ -32,7 +36,7 @@ export default function Logo({ className, size="lg" }: { className?: string, siz
   return (
     <div className={ cn(`flex items-center gap-2 font-semibold text-${ cssSize().textSize }`, className) }>
       <GiMonsteraLeaf className={`text-${ cssSize().logoSize } text-base-green-600`}/>
-      <div className={`text-${ cssSize().textSize }`}>
+      <div className={ `text-${ cssSize().textSize }` }>
         PlantsDoc
       </div>
     </div>

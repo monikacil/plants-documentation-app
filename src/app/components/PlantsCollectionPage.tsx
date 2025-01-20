@@ -1,4 +1,4 @@
-import { fetchPlantsPages, getPlants } from "@/app/actions/plant.actions";
+import { getPlantsPages, getPlants } from "@/app/actions/plant.actions";
 import { Collections, PlantTableType } from "@/app/types/plant.types";
 
 import { PAGINATION_LIMIT } from "@/app/lib/constants";
@@ -21,7 +21,7 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
   const query = searchedParams?.query || '';
   const currentPage = Number(searchedParams?.page) || 1;
   const limit = PAGINATION_LIMIT
-  const totalPages = await fetchPlantsPages(query, collection, limit)
+  const totalPages = await getPlantsPages(query, collection, limit)
   const sortBy = searchedParams?.sortBy || undefined
   const order = searchedParams?.order || undefined
   let sort;

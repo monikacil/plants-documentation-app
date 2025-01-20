@@ -9,10 +9,10 @@ type Props = {
 }
 
 export default function PlantDetails({ plant, collection }: Props) {
-  const url = `/plants/${ collection }/${ plant?._id }`
+  const route = `/plants/${ collection }/${ plant?._id }`
   return (
     <div className="flex gap-2">
-      <ActionButtons url={ url } />
+      <ActionButtons route={ route } />
     </div>
   );
 }

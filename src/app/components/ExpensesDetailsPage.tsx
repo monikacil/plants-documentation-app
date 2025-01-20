@@ -3,7 +3,11 @@ import { ExpenseDocument } from "../types/expenses.types";
 
 import ExpenseDetails from "./expenses/ExpenseDetails";
 
-export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+type Props = {
+  params: Promise<{ id: string }>
+}
+
+export default async function Page({ params }: Props) {
   const id = (await params).id
   const expense: ExpenseDocument = await getExpense(id)
 

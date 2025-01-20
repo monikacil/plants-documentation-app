@@ -11,5 +11,5 @@ type Props = {
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  return <PlantsCollectionPage params={params} searchParams={searchParams} />
+  return <PlantsCollectionPage params={ params } searchParams={ searchParams } />
 }

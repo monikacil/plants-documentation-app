@@ -126,7 +126,7 @@ export const getExpense = async (id: string) => {
   }
 }
 
-export const fetchExpensesPages = async (query: string, limit: number) => {
+export const getExpensesPages = async (query: string, limit: number) => {
   const userId = await getSessionUserId();
 
   try {
@@ -143,6 +143,6 @@ export const fetchExpensesPages = async (query: string, limit: number) => {
     return Math.ceil(expenses.length / limit)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-      return 1
+    return -1
   }
 }

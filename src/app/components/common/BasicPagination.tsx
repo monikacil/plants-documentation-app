@@ -3,7 +3,11 @@
 import { Pagination } from "flowbite-react";
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function BasicPagination({ totalPages }: { totalPages: number }) {
+type Props = {
+  totalPages: number
+}
+
+export default function BasicPagination({ totalPages }: Props) {
   // const [currentPage, setCurrentPage] = useState(1);
 
   const pathname = usePathname();
