@@ -1,7 +1,3 @@
-
 export default async function Page() {
-
-  return (
-    <div>sdadsada</div>
-  );
+  return <div>sdadsada</div>;
 }

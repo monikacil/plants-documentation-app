@@ -3,7 +3,7 @@ export type UserAuth = {
   password: string | null
 }
 
-export type UserDocument  = {
+export type UserDocument = {
   _id: string;
   email: string;
   password: string;

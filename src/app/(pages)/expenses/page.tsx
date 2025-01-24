@@ -5,12 +5,10 @@ type Props = {
     query?: string;
     page?: string;
     sortBy?: string;
-    order?: string
-  }>
-}
+    order?: string;
+  }>;
+};
 
 export default async function Page({ searchParams }: Props) {
-  return (
-    <ExpensesPage searchParams={ searchParams } />
-  );
+  return <ExpensesPage searchParams={searchParams} />;
 }

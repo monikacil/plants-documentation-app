@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Fredoka } from 'next/font/google'
+import { Fredoka } from "next/font/google";
 // Sour_Gummy, Balsamiq_Sans, Comic_Neue
 const fredoka = Fredoka({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-fredoka',
-})
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-fredoka",
+});
 
 // Layout components
 import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
@@ -26,21 +26,18 @@ export const metadata: Metadata = {
       url: "https://www.linkedin.com/in/monika-cilinska/",
     },
   ],
-  icons: [
-    { rel: "icon", url: "/images/web-app-manifest-192x192.png" },
-  ],
+  icons: [{ rel: "icon", url: "/images/web-app-manifest-192x192.png" }],
 };
 
-export default function RootLayout({ children }: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={ `${ fredoka.variable }` }>
-      <body className="flex flex-col h-screen p-3 md:p-6">
+    <html
+      lang='en'
+      className={`${fredoka.variable}`}
+    >
+      <body className='flex flex-col h-screen p-3 md:p-6'>
         <AddToHomeScreen />
-        <section className="grow">
-          { children }
-        </section>
+        <section className='grow'>{children}</section>
       </body>
     </html>
   );

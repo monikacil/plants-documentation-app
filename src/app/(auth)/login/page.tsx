@@ -4,7 +4,11 @@ import AuthForm from "@/app/components/user/AuthForm";
 export default function Login() {
   return (
     <>
-      <AuthForm btnText="Login" authAction={ login } isLoginForm />
+      <AuthForm
+        btnText='Login'
+        authAction={login}
+        isLoginForm
+      />
     </>
-  )
+  );
 }

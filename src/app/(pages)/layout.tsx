@@ -2,19 +2,19 @@ import { Footer } from "flowbite-react";
 import Header from "../components/layout/Header";
 
 type Props = {
-  children: React.ReactNode
-  modal:  React.ReactNode
-}
+  children: React.ReactNode;
+  modal: React.ReactNode;
+};
 
 export default function Layout({ children, modal }: Props) {
   return (
     <>
-      <Header className="mb-7"/>
+      <Header className='mb-7' />
       <main>
-        { modal }
-        { children }
+        {modal}
+        {children}
       </main>
       <Footer />
     </>
-  )
+  );
 }
