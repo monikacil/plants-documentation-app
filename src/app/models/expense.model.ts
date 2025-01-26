@@ -8,19 +8,19 @@ const ExpenseSchema = new Schema<ExpenseDocument>(
       type: String,
       required: [true, "Product is required"],
       lowercase: true,
-      trim: true
+      trim: true,
     },
     price: {
       type: String,
       required: [true, "Price is required"],
       lowercase: true,
-      trim: true
+      trim: true,
     },
     shop: {
       type: String,
       required: [true, "Shop is required"],
       lowercase: true,
-      trim: true
+      trim: true,
     },
     date: {
       type: String,
@@ -28,9 +28,10 @@ const ExpenseSchema = new Schema<ExpenseDocument>(
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const Expense = mongoose.models?.Expense || model<ExpenseDocument>('Expense', ExpenseSchema);
+const Expense =
+  mongoose.models?.Expense || model<ExpenseDocument>("Expense", ExpenseSchema);
 export default Expense;

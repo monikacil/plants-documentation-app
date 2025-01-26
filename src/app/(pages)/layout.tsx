@@ -9,7 +9,7 @@ type Props = {
 export default function Layout({ children, modal }: Props) {
   return (
     <>
-      <Header className='mb-7' />
+      <Header className="mb-7" />
       <main>
         {modal}
         {children}

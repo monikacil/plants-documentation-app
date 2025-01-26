@@ -26,7 +26,7 @@ export default function Sort({ name }: Props) {
 
   return (
     <HiMiniChevronUpDown
-      className='text-2xl cursor-pointer hover:text-base-green-300'
+      className="text-2xl cursor-pointer hover:text-base-green-300"
       onClick={handleSort}
     />
   );

@@ -1,30 +1,30 @@
-"use server"
+"use server";
 
-import { SignJWT, jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { SessionPayload } from '@/app/lib/utils/session.helper';
+import { SignJWT, jwtVerify } from "jose";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { SessionPayload } from "@/app/lib/utils/session.helper";
 
-const COOKIE_NAME = process.env.COOKIE_NAME as string
+const COOKIE_NAME = process.env.COOKIE_NAME as string;
 
 const secretKey = process.env.AUTH_SECRET;
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)
-    .setProtectedHeader({ alg: 'HS256' })
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime('1hr')
+    .setExpirationTime("1hr")
     .sign(key);
 }
 
-export async function decrypt(session: string | undefined = '') {
+export async function decrypt(session: string | undefined = "") {
   try {
     const { payload } = await jwtVerify(session, key, {
-      algorithms: ['HS256'],
+      algorithms: ["HS256"],
     });
     return payload;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return null;
   }
@@ -38,11 +38,11 @@ export async function createSession(userId: string) {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: 'lax',
-    path: '/',
+    sameSite: "lax",
+    path: "/",
   });
 
-  redirect('/dashboard');
+  redirect("/dashboard");
 }
 
 export async function verifySession() {
@@ -50,7 +50,7 @@ export async function verifySession() {
   const session = await decrypt(cookie);
 
   if (!session?.userId) {
-    redirect('/login');
+    redirect("/login");
   }
 
   return { isAuth: true, userId: Number(session.userId) };
@@ -69,7 +69,7 @@ export async function updateSession() {
     httpOnly: true,
     secure: true,
     expires: expires,
-    sameSite: 'lax',
-    path: '/',
+    sameSite: "lax",
+    path: "/",
   });
 }

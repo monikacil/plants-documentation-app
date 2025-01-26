@@ -43,7 +43,10 @@ export default function AddToHomeScreen() {
   return (
     <>
       {displayPrompt && deferredPrompt && (
-        <AddToMobileDevice closePrompt={closePrompt} installPrompt={handleInstallPrompt} />
+        <AddToMobileDevice
+          closePrompt={closePrompt}
+          installPrompt={handleInstallPrompt}
+        />
       )}
     </>
   );

@@ -16,7 +16,7 @@ type Props = {
 
 export default function Breadcrumbs({ links }: Props) {
   return (
-    <Breadcrumb className='py-3'>
+    <Breadcrumb className="py-3">
       {links.map((el, idx) => {
         return (
           <Breadcrumb.Item

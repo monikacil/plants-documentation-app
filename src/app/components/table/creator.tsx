@@ -38,9 +38,11 @@ export function getTableHeaders(tableHeaders: TableHeaderType[]) {
     return (
       <Table.HeadCell
         key={generateUniqKey("table-header")}
-        className={`w-[${header.width ? header.width : "280px"}] bg-base-gray-800 text-white`}
+        className={`w-[${
+          header.width ? header.width : "280px"
+        }] bg-base-gray-800 text-white`}
       >
-        <div className='flex items-center'>
+        <div className="flex items-center">
           {header.title}
           {header.sortable ? <Sort name={header.dbName || ""} /> : null}
         </div>
@@ -51,13 +53,17 @@ export function getTableHeaders(tableHeaders: TableHeaderType[]) {
   return headers;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getTableBody(data: any[], url: string, headers: (string | undefined)[]) {
+export function getTableBody(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any[],
+  url: string,
+  headers: (string | undefined)[]
+) {
   if (!data || !headers) return;
   const tableBody = data.map((element, idx) => (
     <Table.Row
       key={generateUniqKey("table-body-row")}
-      className='cursor-pointer border-teal-800/30'
+      className="cursor-pointer border-teal-800/30"
     >
       <Table.Cell
         onClick={() => {
@@ -72,7 +78,7 @@ export function getTableBody(data: any[], url: string, headers: (string | undefi
           return (
             <Table.Cell
               key={generateUniqKey("table-cell")}
-              className='max-w-[280px]'
+              className="max-w-[280px]"
               onClick={() => {
                 if (url) goToDetails(url, element._id);
               }}
@@ -82,7 +88,7 @@ export function getTableBody(data: any[], url: string, headers: (string | undefi
           );
         })}
       {headers.includes("actions") ? (
-        <Table.Cell className='w-44'>
+        <Table.Cell className="w-44">
           <ActionButtons route={`${url}/${element._id}`} />
         </Table.Cell>
       ) : null}

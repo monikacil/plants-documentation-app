@@ -11,7 +11,7 @@ export default function PlantDetails({ expense }: Props) {
   const route = `/expenses/${expense?._id}`;
 
   return (
-    <div className='flex gap-2'>
+    <div className="flex gap-2">
       Expense details
       <ActionButtons route={route} />
     </div>

@@ -1,7 +1,7 @@
 import ExpenseDeleteModal from "@/app/components/expenses/ExpenseDeleteModal";
 
 type Props = {
-  params: Promise<{ slug: string; id: string }>;
+  params: Promise<{ id: string }>;
 };
 
 export default async function InterceptedPage({ params }: Props) {

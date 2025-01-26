@@ -32,7 +32,9 @@ export default function FormDatepicker({
   });
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date() || Date.parse(value || ""));
+  const [selectedDate, setSelectedDate] = useState(
+    new Date() || Date.parse(value || "")
+  );
   const handleChange = (selectedDate: Date) => {
     setSelectedDate(selectedDate);
     if (selectedDate) {
@@ -54,7 +56,7 @@ export default function FormDatepicker({
       >
         <div className={cn("flex w-full rounded-full bg-white", className)}>
           <input
-            type='text'
+            type="text"
             name={name}
             value={selectedDate.toDateString()}
             onFocus={() => setShow(true)}

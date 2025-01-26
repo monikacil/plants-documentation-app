@@ -26,10 +26,18 @@ export default async function Page({ searchParams }: Props) {
     sort = [{ key: sortBy, direction: order }];
   }
 
-  const expensesList: ExpenseDocument[] = await getExpenses(query, currentPage, limit, sort);
+  const expensesList: ExpenseDocument[] = await getExpenses(
+    query,
+    currentPage,
+    limit,
+    sort
+  );
 
   return (
-    <TableWrapper pages={totalPages} link={{ href: `/expenses/add`, text: "Add Expense" }}>
+    <TableWrapper
+      pages={totalPages}
+      link={{ href: `/expenses/add`, text: "Add Expense" }}
+    >
       <Table elementsList={expensesList}></Table>
     </TableWrapper>
   );

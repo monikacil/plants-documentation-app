@@ -11,7 +11,7 @@ type Props = {
 export default function PlantDetails({ plant, collection }: Props) {
   const route = `/plants/${collection}/${plant?._id}`;
   return (
-    <div className='flex gap-2'>
+    <div className="flex gap-2">
       <ActionButtons route={route} />
     </div>
   );

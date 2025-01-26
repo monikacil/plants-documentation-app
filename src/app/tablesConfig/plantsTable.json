@@ -15,7 +15,7 @@
         "dbName": "variety",
         "sortable": true
       },
-        {
+      {
         "title": "Actions",
         "editable": true,
         "deletable": true
@@ -132,7 +132,6 @@
         "editable": true,
         "deletable": true
       }
-
     ]
   }
 ]

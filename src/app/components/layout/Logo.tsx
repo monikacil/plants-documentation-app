@@ -36,9 +36,14 @@ export default function Logo({ className, size = "lg" }: Props) {
 
   return (
     <div
-      className={cn(`flex items-center gap-2 font-semibold text-${cssSize().textSize}`, className)}
+      className={cn(
+        `flex items-center gap-2 font-semibold text-${cssSize().textSize}`,
+        className
+      )}
     >
-      <GiMonsteraLeaf className={`text-${cssSize().logoSize} text-base-green-600`} />
+      <GiMonsteraLeaf
+        className={`text-${cssSize().logoSize} text-base-green-600`}
+      />
       <div className={`text-${cssSize().textSize}`}>PlantsDoc</div>
     </div>
   );

@@ -21,11 +21,11 @@ export default function ConfirmationModal({ children, confirmClick }: Props) {
     <>
       <p>Are you sure?</p>
       {children}
-      <footer className='flex justify-end gap-2'>
-        <BasicButton color='danger' onClick={handleConfirm}>
+      <footer className="flex justify-end gap-2">
+        <BasicButton color="danger" onClick={handleConfirm}>
           Yes
         </BasicButton>
-        <BasicButton color='primary' onClick={() => router.back()}>
+        <BasicButton color="primary" onClick={() => router.back()}>
           No
         </BasicButton>
       </footer>

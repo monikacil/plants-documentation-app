@@ -15,7 +15,7 @@ import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
 
 export const metadata: Metadata = {
   title: "Plants Documentation App",
-  description: "An simple application created for plant growing enthusiasts",
+  description: "A simple application created for plant growing enthusiasts",
   generator: "Next.js",
   manifest: "/manifest.json",
   keywords: ["nextjs", "next14", "pwa", "next-pwa"],
@@ -29,15 +29,16 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/images/web-app-manifest-192x192.png" }],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html
-      lang='en'
-      className={`${fredoka.variable}`}
-    >
-      <body className='flex flex-col h-screen p-3 md:p-6'>
+    <html lang="en" className={`${fredoka.variable}`}>
+      <body className="flex flex-col h-screen p-3 md:p-6">
         <AddToHomeScreen />
-        <section className='grow'>{children}</section>
+        <section className="grow">{children}</section>
       </body>
     </html>
   );

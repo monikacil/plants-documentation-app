@@ -8,17 +8,17 @@ const UserSchema = new Schema<UserDocument>(
       unique: true,
       required: [true, "Email is required"],
       lowercase: true,
-      trim: true
+      trim: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
-const User = mongoose.models?.User || model<UserDocument>('User', UserSchema);
+const User = mongoose.models?.User || model<UserDocument>("User", UserSchema);
 export default User;

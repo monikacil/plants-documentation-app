@@ -1,7 +1,7 @@
 export type UserAuth = {
-  email: string | null,
-  password: string | null
-}
+  email: string | null;
+  password: string | null;
+};
 
 export type UserDocument = {
   _id: string;
@@ -9,4 +9,4 @@ export type UserDocument = {
   password: string;
   createdAt: Date;
   updatedAt: Date;
-} | null
+} | null;

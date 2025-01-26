@@ -1,49 +1,53 @@
 import SoldPlant from "../../models/plants/soldPlant.model";
-import PurchasedPlant from "../../models/plants/purchasedPlant.model"
-import CollectedPlant from "../../models/plants/collectedPlant.model"
+import PurchasedPlant from "../../models/plants/purchasedPlant.model";
+import CollectedPlant from "../../models/plants/collectedPlant.model";
 
 import { Collections, PlantDocument } from "../../types/plant.types";
 
 import { decryptData, encryptData } from "../crypto";
 
 export const getAdditionalDataKey = (collection: Collections) => {
-  return collection === "sold" ? "buyer" : "seller"
-}
+  return collection === "sold" ? "buyer" : "seller";
+};
 
 export const getCollectionModel = (collection: Collections) => {
   let model;
   switch (collection) {
     case "purchased":
-      model = PurchasedPlant
+      model = PurchasedPlant;
       break;
     case "sold":
-      model = SoldPlant
+      model = SoldPlant;
       break;
     default:
-      model = CollectedPlant
+      model = CollectedPlant;
       break;
   }
 
-  return model
-}
+  return model;
+};
 
-export const dataToUpdate = ( userId: unknown, formData: FormData, collection: Collections | undefined) => {
+export const dataToUpdate = (
+  userId: unknown,
+  formData: FormData,
+  collection: Collections | undefined
+) => {
   const data = {
     _userId: userId,
     species: formData.get("species"),
     variety: formData.get("variety"),
-    images: []
-  }
+    images: [],
+  };
 
   if (!collection) {
-    return data
+    return data;
   }
 
   return Object.assign({}, data, additionalData(formData, collection));
-}
+};
 
 const additionalData = (formData: FormData, collection: Collections) => {
-  const key = getAdditionalDataKey(collection)
+  const key = getAdditionalDataKey(collection);
 
   return {
     price: formData.get("price"),
@@ -56,25 +60,28 @@ const additionalData = (formData: FormData, collection: Collections) => {
       email: formData.get("email"),
       country: formData.get("country"),
     }),
-  }
-}
+  };
+};
 
-export const uiPlantObject = (plant: PlantDocument, collection: Collections) => {
-  if (!plant) return
+export const uiPlantObject = (
+  plant: PlantDocument,
+  collection: Collections
+) => {
+  if (!plant) return;
 
   const data = {
     _id: plant._id,
     species: plant.species,
     variety: plant.variety,
-    images: plant.images
-  }
+    images: plant.images,
+  };
 
   if (collection === "collected") {
-    return data
+    return data;
   }
 
-  const key = getAdditionalDataKey(collection)
-  const decryptedData = decryptData(plant[key])
+  const key = getAdditionalDataKey(collection);
+  const decryptedData = decryptData(plant[key]);
   const additionalFields = {
     price: plant.price,
     date: plant.date,
@@ -84,7 +91,7 @@ export const uiPlantObject = (plant: PlantDocument, collection: Collections) => 
     country: decryptedData.country,
     phone: decryptedData.phone,
     email: decryptedData.email,
-  }
+  };
 
   return { ...data, ...additionalFields };
-}
+};

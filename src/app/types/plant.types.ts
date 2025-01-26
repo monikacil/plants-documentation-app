@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 
 export type ImagesDocument = {
   originalname: string;
-  filename: string,
+  filename: string;
   createdAt: Date;
   updatedAt: Date;
 } | null;
@@ -25,11 +25,21 @@ export interface PlantDocument {
 export type Collections = "collected" | "purchased" | "sold";
 
 export type PlantExtraArgs = {
-  collection: Collections,
-  _id?: string
-}
+  collection: Collections;
+  _id?: string;
+};
 
-type ClienType = { name: string, address: string, phone: string, email: string, country: string }
-type PlantOmitType = Omit<PlantDocument, "_userId" | "createdAt" | "updatedAt" | "images" | "buyer" | "seller">
+type ClienType = {
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  country: string;
+};
 
-export type PlantTableType = PlantOmitType & ClienType
+type PlantOmitType = Omit<
+  PlantDocument,
+  "_userId" | "createdAt" | "updatedAt" | "images" | "buyer" | "seller"
+>;
+
+export type PlantTableType = PlantOmitType & ClienType;

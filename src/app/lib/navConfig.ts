@@ -1,9 +1,9 @@
-import { logout } from "../actions/auth.actions"
+import { logout } from "../actions/auth.actions";
 
 export const NAVIGATION_CONFIG = [
   {
     name: "Dashboard",
-    href: "/dashboard"
+    href: "/dashboard",
   },
   {
     name: "Plants List",
@@ -11,21 +11,21 @@ export const NAVIGATION_CONFIG = [
     options: [
       {
         name: "Collection",
-        href: "/plants/collected"
+        href: "/plants/collected",
       },
       {
         name: "Sold",
-        href: "/plants/sold"
+        href: "/plants/sold",
       },
       {
         name: "Purchased",
-        href: "/plants/purchased"
-      }
-    ]
+        href: "/plants/purchased",
+      },
+    ],
   },
   {
     name: "Expenses",
-    href: "/expenses"
+    href: "/expenses",
   },
   {
     name: "Profile",
@@ -34,13 +34,13 @@ export const NAVIGATION_CONFIG = [
     options: [
       {
         name: "Profile",
-        href: "/user"
+        href: "/user",
       },
       {
         name: "Logout",
         type: "button",
-        action: logout
-      }
-    ]
-  }
-]
+        action: logout,
+      },
+    ],
+  },
+];

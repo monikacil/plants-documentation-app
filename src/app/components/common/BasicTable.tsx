@@ -21,11 +21,11 @@ type Props = {
 export default function BasicTable({ tableHeaders, tableBody }: Props) {
   return (
     <>
-      <div className='overflow-x-auto'>
+      <div className="overflow-x-auto">
         <Flowbite theme={{ theme: customTheme }}>
-          <Table className='static' hoverable>
-            <Table.Head className='tracking-widest'>{tableHeaders}</Table.Head>
-            <Table.Body className='divide-y'>{tableBody}</Table.Body>
+          <Table className="static" hoverable>
+            <Table.Head className="tracking-widest">{tableHeaders}</Table.Head>
+            <Table.Body className="divide-y">{tableBody}</Table.Body>
           </Table>
         </Flowbite>
       </div>

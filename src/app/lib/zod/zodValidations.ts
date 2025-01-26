@@ -4,7 +4,10 @@ import { Collections } from "@/app/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
 
 export async function zodAuthValidation(formData: FormData) {
-  const data = { email: formData.get("email"), password: formData.get("password") };
+  const data = {
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
   return zodUserSchema.safeParse({
     email: data.email,
     password: data.password,
@@ -26,7 +29,10 @@ export async function zodExpenseValidation(formData: FormData) {
   });
 }
 
-export async function zodPlantValidation(formData: FormData, collection: Collections) {
+export async function zodPlantValidation(
+  formData: FormData,
+  collection: Collections
+) {
   const data = {
     species: formData.get("species"),
     variety: formData.get("variety"),

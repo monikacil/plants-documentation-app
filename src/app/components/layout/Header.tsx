@@ -20,9 +20,9 @@ export default async function Header({ className }: Props) {
 
   return (
     <header className={cn("w-full flex-none h-[70px]", className)}>
-      <nav className='h-full flex items-center justify-between'>
-        <Link href='/dashboard' scroll={false} className='w-80 flex'>
-          <Logo size='xl' />
+      <nav className="h-full flex items-center justify-between">
+        <Link href="/dashboard" scroll={false} className="w-80 flex">
+          <Logo size="xl" />
         </Link>
         <Navigation isAuth={isAuth} />
       </nav>

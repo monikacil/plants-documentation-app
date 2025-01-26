@@ -25,14 +25,16 @@ const initForm: ExpenseFormType = {
 
 export default function ExpenseForm({ expense }: Props) {
   const [state, formAction, isPending] = useActionState(addExpenses, initForm);
-  const [expensesForm, setExpensesForm] = useState(expense ? expense : initForm);
+  const [expensesForm, setExpensesForm] = useState(
+    expense ? expense : initForm
+  );
 
   return (
     <>
       <Form action={formAction}>
         <>
           <Input
-            name='products'
+            name="products"
             value={expensesForm?.products}
             errors={!expensesForm.products ? state?.errors?.products : null}
             onChange={(value) => {
@@ -40,7 +42,7 @@ export default function ExpenseForm({ expense }: Props) {
             }}
           />
           <Input
-            name='price'
+            name="price"
             value={expensesForm?.price}
             errors={!expensesForm.price ? state?.errors?.price : null}
             onChange={(value) => {
@@ -48,7 +50,7 @@ export default function ExpenseForm({ expense }: Props) {
             }}
           />
           <Input
-            name='shop'
+            name="shop"
             value={expensesForm?.shop}
             errors={!expensesForm.shop ? state?.errors?.shop : null}
             onChange={(value) => {
@@ -56,7 +58,7 @@ export default function ExpenseForm({ expense }: Props) {
             }}
           />
           <FormDatepicker
-            name='date'
+            name="date"
             maxDate={new Date()}
             value={expensesForm.date}
             onChange={(value) => {
@@ -68,11 +70,16 @@ export default function ExpenseForm({ expense }: Props) {
           />
         </>
         {state?.error && (
-          <Alert color='failure' icon={HiInformationCircle}>
-            <span className='font-medium'>{state?.error}</span>
+          <Alert color="failure" icon={HiInformationCircle}>
+            <span className="font-medium">{state?.error}</span>
           </Alert>
         )}
-        <BasicButton type='submit' disabled={isPending} isProcessing={isPending} className='my-5'>
+        <BasicButton
+          type="submit"
+          disabled={isPending}
+          isProcessing={isPending}
+          className="my-5"
+        >
           Save Expense
         </BasicButton>
       </Form>

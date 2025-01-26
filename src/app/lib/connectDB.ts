@@ -1,9 +1,9 @@
-"use server"
+"use server";
 
-import mongoose from 'mongoose';
-import { MongoClient } from "mongodb"
+import mongoose from "mongoose";
+import { MongoClient } from "mongodb";
 
-const MONGODB_URI = process.env.MONGODB_URI
+const MONGODB_URI = process.env.MONGODB_URI;
 
 export const connectDB = async () => {
   try {
@@ -18,15 +18,13 @@ export const connectDB = async () => {
 };
 
 export async function getMongoDbClient() {
-
   if (!MONGODB_URI) {
-    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
+    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
   }
   try {
-    return new MongoClient(MONGODB_URI)
+    return new MongoClient(MONGODB_URI);
   } catch (error) {
     console.error(error);
-    return error
+    return error;
   }
 }
-

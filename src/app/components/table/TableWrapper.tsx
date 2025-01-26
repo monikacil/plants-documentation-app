@@ -19,12 +19,12 @@ type Props = {
 
 export default function TableWrapper({ children, pages, link }: Props) {
   return (
-    <section className='bg-white py-4 md:py-5'>
-      <nav className='flex justify-between mb-3'>
-        <Search placeholder='Search...' />
+    <section className="bg-white py-4 md:py-5">
+      <nav className="flex justify-between mb-3">
+        <Search placeholder="Search..." />
         {link ? (
           <Link href={link.href} scroll={false}>
-            <BasicButton size='md'>{link.text}</BasicButton>
+            <BasicButton size="md">{link.text}</BasicButton>
           </Link>
         ) : null}
       </nav>

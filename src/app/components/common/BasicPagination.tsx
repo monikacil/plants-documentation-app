@@ -8,8 +8,6 @@ type Props = {
 };
 
 export default function BasicPagination({ totalPages }: Props) {
-  // const [currentPage, setCurrentPage] = useState(1);
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -23,7 +21,7 @@ export default function BasicPagination({ totalPages }: Props) {
   };
 
   return (
-    <div className='flex overflow-x-auto sm:justify-center'>
+    <div className="flex overflow-x-auto sm:justify-center">
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

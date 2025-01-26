@@ -3,7 +3,7 @@ export function getErrorMessage(error: unknown, customMessage: string) {
 
   if (error instanceof Error) {
     message = error.message;
-  } else if (error && typeof error === 'object' && "message" in error) {
+  } else if (error && typeof error === "object" && "message" in error) {
     message = String(error.message);
   } else if (typeof error === "string") {
     message = error;

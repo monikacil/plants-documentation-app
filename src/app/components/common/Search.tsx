@@ -27,9 +27,9 @@ export default function Search({ placeholder }: Props) {
 
   return (
     <TextInput
-      id='table-search'
-      type='email'
-      sizing='md'
+      id="table-search"
+      type="email"
+      sizing="md"
       rightIcon={IoIosSearch}
       placeholder={placeholder}
       defaultValue={searchParams.get("query")?.toString()}

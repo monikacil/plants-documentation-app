@@ -21,9 +21,11 @@ export default function Table({ elementsList }: Props) {
 
   useEffect(() => {
     (async () => {
-      const config = await import(`@/app/tablesConfig/${pathName}Table`).then((data) => {
-        return data.default;
-      });
+      const config = await import(`@/app/tablesConfig/${pathName}Table`).then(
+        (data) => {
+          return data.default;
+        }
+      );
       if (config[0].title) {
         setHeadersConfig(config);
       } else {
@@ -36,7 +38,8 @@ export default function Table({ elementsList }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const headersByType = (list: any[]) => {
     return list.filter((el: object) => {
-      const type = Object.keys(el)[0] === subHeaderConfig ? Object.keys(el)[0] : "";
+      const type =
+        Object.keys(el)[0] === subHeaderConfig ? Object.keys(el)[0] : "";
       if (!type) return;
       return el;
     });

@@ -1,5 +1,7 @@
 {
-  "editor.formatOnPaste": true,
+  "editor.formatOnPaste": false,
   "editor.formatOnSave": true,
-  "editor.formatOnType": true
+  "editor.formatOnType": true,
+  "diffEditor.codeLens": true,
+  "javascript.format.insertSpaceAfterConstructor": false
 }

@@ -13,7 +13,13 @@ type Props = {
   onChange: (e: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
-export default function Input({ value, className, onChange, errors, ...rest }: Props) {
+export default function Input({
+  value,
+  className,
+  onChange,
+  errors,
+  ...rest
+}: Props) {
   const [showError, setShowError] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
@@ -31,7 +37,7 @@ export default function Input({ value, className, onChange, errors, ...rest }: P
   }, [value, inputValue]);
 
   return (
-    <div className='flex flex-col gap-1'>
+    <div className="flex flex-col gap-1">
       <input
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -44,7 +50,7 @@ export default function Input({ value, className, onChange, errors, ...rest }: P
           showError ? "bg-red-100 border border-danger-500" : ""
         )}
       />
-      {showError ? <ZodErrors error={errors} className='text-center' /> : ""}
+      {showError ? <ZodErrors error={errors} className="text-center" /> : ""}
     </div>
   );
 }

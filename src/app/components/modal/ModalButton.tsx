@@ -19,14 +19,14 @@ export default function ModalButton({ route }: ModalButtonProps) {
   if (route) {
     return (
       <Link href={route} scroll={false}>
-        <IoClose className='bg-base-gray-800 hover:bg-base-gray-900 text-white p-2 rounded-xl text-4xl cursor-pointer' />
+        <IoClose className="bg-base-gray-800 hover:bg-base-gray-900 text-white p-2 rounded-xl text-4xl cursor-pointer" />
       </Link>
     );
   }
 
   return (
     <IoClose
-      className='bg-base-gray-800 hover:bg-base-gray-900 text-white p-2 rounded-xl text-4xl cursor-pointer'
+      className="bg-base-gray-800 hover:bg-base-gray-900 text-white p-2 rounded-xl text-4xl cursor-pointer"
       onClick={handleClose}
     />
   );

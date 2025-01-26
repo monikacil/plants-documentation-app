@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import User from "@/app/models/user.model";
 
@@ -10,8 +10,8 @@ export const getUserByEmail = async (email: string) => {
   const userFound = await User.findOne({ email });
 
   if (!userFound) {
-    return null
-  };
+    return null;
+  }
 
-  return userFound
-}
+  return userFound;
+};

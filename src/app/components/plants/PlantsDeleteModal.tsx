@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import ConfirmationModal from "../common/ConfirmationModal";
 import ModalWrapper from "../modal/ModalWrapper";
@@ -7,24 +7,28 @@ import { deletePlant } from "@/app/actions/plant.actions";
 import { Collections } from "@/app/types/plant.types";
 
 type Props = {
-  collection: Collections,
-  id: string,
-  withRoute?: boolean
-}
+  collection: Collections;
+  id: string;
+  withRoute?: boolean;
+};
 
-export default function PlantsDeleteModal({ collection, id, withRoute = false }: Props) {
-  const route = `/plants/${ collection }`
+export default function PlantsDeleteModal({
+  collection,
+  id,
+  withRoute = false,
+}: Props) {
+  const route = `/plants/${collection}`;
 
   function handleClick() {
-    deletePlant(collection, id)
-    redirect(route)
+    deletePlant(collection, id);
+    redirect(route);
   }
 
   return (
-    <ModalWrapper title="Delete Plant" route={ withRoute ? route : undefined }>
-      <ConfirmationModal title="Delete Plant" confirmClick={ handleClick }>
+    <ModalWrapper title="Delete Plant" route={withRoute ? route : undefined}>
+      <ConfirmationModal title="Delete Plant" confirmClick={handleClick}>
         This action will remove the plant from the list.
       </ConfirmationModal>
     </ModalWrapper>
-  )
+  );
 }

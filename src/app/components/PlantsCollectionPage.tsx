@@ -15,7 +15,10 @@ type Props = {
   }>;
 };
 
-export default async function PlantsCollectionPage({ params, searchParams }: Props) {
+export default async function PlantsCollectionPage({
+  params,
+  searchParams,
+}: Props) {
   const collection = (await params).slug as Collections;
   const searchedParams = await searchParams;
   const query = searchedParams?.query || "";
@@ -24,12 +27,19 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
   const totalPages = await getPlantsPages(query, collection, limit);
   const sortBy = searchedParams?.sortBy || undefined;
   const order = searchedParams?.order || undefined;
+
   let sort;
   if (sortBy && order) {
     sort = [{ key: sortBy, direction: order }];
   }
 
-  const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort);
+  const plantsList: PlantTableType[] = await getPlants(
+    collection,
+    query,
+    currentPage,
+    limit,
+    sort
+  );
 
   return (
     <TableWrapper

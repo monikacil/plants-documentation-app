@@ -7,12 +7,12 @@ type Props = {
 
 export default function ActionButtons({ route }: Props) {
   return (
-    <div className='flex gap-2'>
+    <div className="flex gap-2">
       <Link href={`${route}/edit`} scroll={false}>
-        <BasicButton color='primary'>Edit</BasicButton>
+        <BasicButton color="primary">Edit</BasicButton>
       </Link>
       <Link href={`${route}/delete`} scroll={false}>
-        <BasicButton color='danger'>Delete</BasicButton>
+        <BasicButton color="danger">Delete</BasicButton>
       </Link>
     </div>
   );

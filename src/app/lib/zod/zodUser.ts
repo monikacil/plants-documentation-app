@@ -1,4 +1,4 @@
-import { object, string } from "zod"
+import { object, string } from "zod";
 
 export const zodUserSchema = object({
   email: string()
@@ -11,13 +11,14 @@ export const zodUserSchema = object({
     .min(8, "Password must be longer than 8 characters")
     .max(32, "Password must be less than 32 characters")
     .trim(),
-})
+});
 
-export type AuthFormState = {
+export type AuthFormState =
+  | {
       errors: {
-        email: string[] | undefined,
-        password: string[] | undefined,
-        message: string | undefined
-      }
+        email: string[] | undefined;
+        password: string[] | undefined;
+        message: string | undefined;
+      };
     }
-  | undefined
+  | undefined;

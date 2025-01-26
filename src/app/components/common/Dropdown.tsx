@@ -44,9 +44,9 @@ export default function Dropdown({ children, title, className, icon }: Props) {
           <>
             {title}
             {dropdownCollapsed ? (
-              <FaChevronUp size={15} className='ml-1' />
+              <FaChevronUp size={15} className="ml-1" />
             ) : (
-              <FaChevronDown size={15} className='ml-1' />
+              <FaChevronDown size={15} className="ml-1" />
             )}
           </>
         ) : (
@@ -54,7 +54,7 @@ export default function Dropdown({ children, title, className, icon }: Props) {
         )}
       </button>
       {dropdownCollapsed ? (
-        <div className='z-10 absolute right-0 mt-2 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44'>
+        <div className="z-10 absolute right-0 mt-2 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
           {children}
         </div>
       ) : null}
