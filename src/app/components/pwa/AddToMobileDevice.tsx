@@ -16,7 +16,7 @@ export default function AddToMobileDevice(props: Props) {
   const { installPrompt, closePrompt } = props;
 
   return (
-    <Banner className="absolute h-screen w-full z-50 bg-gray-400/60">
+    <Banner className="absolute h-screen w-full z-50 bg-gray-400/60 p-3 md:p-6">
       <div className="flex justify-between items-center w-[98%] mx-[1%] mt-3 p-4 rounded-md border-b border-gray-200 bg-gray-200">
         <div className="flex items-center">
           <BannerCollapseButton

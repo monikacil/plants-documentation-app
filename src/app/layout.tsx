@@ -36,9 +36,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fredoka.variable}`}>
-      <body className="flex flex-col h-screen p-3 md:p-6">
+      <body className="h-screen">
         <AddToHomeScreen />
-        <section className="grow">{children}</section>
+        <section className="size-full">{children}</section>
       </body>
     </html>
   );

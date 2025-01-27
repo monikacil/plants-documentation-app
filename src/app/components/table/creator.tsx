@@ -88,7 +88,7 @@ export function getTableBody(
           );
         })}
       {headers.includes("actions") ? (
-        <Table.Cell className="w-44">
+        <Table.Cell className="w-32">
           <ActionButtons route={`${url}/${element._id}`} />
         </Table.Cell>
       ) : null}

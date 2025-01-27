@@ -31,44 +31,45 @@ export default function ExpenseForm({ expense }: Props) {
 
   return (
     <>
-      <Form action={formAction}>
-        <>
-          <Input
-            name="products"
-            value={expensesForm?.products}
-            errors={!expensesForm.products ? state?.errors?.products : null}
-            onChange={(value) => {
-              setExpensesForm({ ...expensesForm, products: value });
-            }}
-          />
-          <Input
-            name="price"
-            value={expensesForm?.price}
-            errors={!expensesForm.price ? state?.errors?.price : null}
-            onChange={(value) => {
-              setExpensesForm({ ...expensesForm, price: value });
-            }}
-          />
-          <Input
-            name="shop"
-            value={expensesForm?.shop}
-            errors={!expensesForm.shop ? state?.errors?.shop : null}
-            onChange={(value) => {
-              setExpensesForm({ ...expensesForm, shop: value });
-            }}
-          />
-          <FormDatepicker
-            name="date"
-            maxDate={new Date()}
-            value={expensesForm.date}
-            onChange={(value) => {
-              setExpensesForm({
-                ...expensesForm,
-                date: value ? value.toString() : new Date().toString(),
-              });
-            }}
-          />
-        </>
+      <Form action={formAction} className="flex flex-col gap-3">
+        <Input
+          name="products"
+          placeholder="Products"
+          value={expensesForm?.products}
+          errors={!expensesForm.products ? state?.errors?.products : null}
+          onChange={(value) => {
+            setExpensesForm({ ...expensesForm, products: value });
+          }}
+        />
+        <Input
+          name="price"
+          placeholder="Price"
+          value={expensesForm?.price}
+          errors={!expensesForm.price ? state?.errors?.price : null}
+          onChange={(value) => {
+            setExpensesForm({ ...expensesForm, price: value });
+          }}
+        />
+        <Input
+          name="shop"
+          placeholder="Seller"
+          value={expensesForm?.shop}
+          errors={!expensesForm.shop ? state?.errors?.shop : null}
+          onChange={(value) => {
+            setExpensesForm({ ...expensesForm, shop: value });
+          }}
+        />
+        <FormDatepicker
+          name="date"
+          maxDate={new Date()}
+          value={expensesForm.date}
+          onChange={(value) => {
+            setExpensesForm({
+              ...expensesForm,
+              date: value ? value.toString() : new Date().toString(),
+            });
+          }}
+        />
         {state?.error && (
           <Alert color="failure" icon={HiInformationCircle}>
             <span className="font-medium">{state?.error}</span>

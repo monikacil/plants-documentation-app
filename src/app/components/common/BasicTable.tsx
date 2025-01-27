@@ -25,7 +25,9 @@ export default function BasicTable({ tableHeaders, tableBody }: Props) {
         <Flowbite theme={{ theme: customTheme }}>
           <Table className="static" hoverable>
             <Table.Head className="tracking-widest">{tableHeaders}</Table.Head>
-            <Table.Body className="divide-y">{tableBody}</Table.Body>
+            <Table.Body className="divide-y text-base-gray-900">
+              {tableBody}
+            </Table.Body>
           </Table>
         </Flowbite>
       </div>

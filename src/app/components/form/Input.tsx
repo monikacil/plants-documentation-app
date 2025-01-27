@@ -45,7 +45,7 @@ export default function Input({
         }
         {...rest}
         className={cn(
-          "w-full rounded-full border-0 py-1.5 px-2  placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm",
+          "w-full rounded-full border-0 py-2 px-4 placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm",
           className,
           showError ? "bg-red-100 border border-danger-500" : ""
         )}

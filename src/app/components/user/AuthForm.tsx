@@ -40,7 +40,7 @@ export default function AuthForm({
   }, [email, password]);
 
   return (
-    <div className="flex max-w-144 m-auto flex-1 flex-col lg:my-48 px-6 py-8 lg:py-12 lg:px-8 bg-base-gray-500 rounded-xl shadow-xl">
+    <div className="min-w-144 m-auto px-6 py-8 bg-base-gray-500 rounded-xl shadow-xl">
       <header className="sm:mx-auto sm:w-full sm:max-w-sm flex justify-center">
         <Logo size="lg" />
       </header>

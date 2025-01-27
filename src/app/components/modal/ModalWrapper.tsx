@@ -1,17 +1,13 @@
 import type { ReactNode } from "react";
 import ModalButton from "./ModalButton";
 
-type ModalWindowProps = {
+type Props = {
   children: ReactNode;
   title: string;
   route?: string;
 };
 
-export default function ModalWrapper({
-  children,
-  title,
-  route,
-}: ModalWindowProps) {
+export default function ModalWrapper({ children, title, route }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center mx-auto">
       <div className="fixed inset-0 bg-base-gray-900/60" />
