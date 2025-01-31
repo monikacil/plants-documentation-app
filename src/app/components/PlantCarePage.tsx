@@ -1,7 +1,10 @@
-import { getExpensesPages, getExpenses } from "@/app/actions/expenses.actions";
+import {
+  getPlantCarePages,
+  getPlantCares,
+} from "@/app/actions/plantCare.actions";
 import Table from "@/app/components/table/Table";
 import TableWrapper from "@/app/components/table/TableWrapper";
-import { ExpenseDocument } from "@/app/types/expenses.types";
+import { PlantCareDocument } from "@/app/types/plantCare.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 
@@ -9,8 +12,8 @@ export default async function Page({ searchParams }: SearchParams) {
   const { query, currentPage, limit, sort } = await getPageSearchParams(
     searchParams
   );
-  const totalPages = await getExpensesPages(query, limit);
-  const expensesList: ExpenseDocument[] = await getExpenses(
+  const totalPages = await getPlantCarePages(query, limit);
+  const plantCareList: PlantCareDocument[] = await getPlantCares(
     query,
     currentPage,
     limit,
@@ -20,9 +23,9 @@ export default async function Page({ searchParams }: SearchParams) {
   return (
     <TableWrapper
       pages={totalPages}
-      link={{ href: `/expenses/add`, text: "Add Expense" }}
+      link={{ href: `/plantCare/add`, text: "Add Plant Care" }}
     >
-      <Table elementsList={expensesList}></Table>
+      <Table elementsList={plantCareList}></Table>
     </TableWrapper>
   );
 }

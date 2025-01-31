@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
 export type ExpenseDocument = {
-  _id: mongoose.Schema.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId | string;
   _userId: mongoose.Schema.Types.ObjectId;
   products: string;
   price: string;
   shop: string;
-  date: string;
+  date: Date;
   createdAt: Date;
   updatedAt: Date;
 };
 
 export type ExpenseFormType = Pick<
   ExpenseDocument,
-  "products" | "price" | "shop" | "date"
+  "products" | "price" | "shop" | "date" | "_id"
 >;

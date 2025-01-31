@@ -23,7 +23,7 @@ const ExpenseSchema = new Schema<ExpenseDocument>(
       trim: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: [true, "Date is required"],
     },
   },

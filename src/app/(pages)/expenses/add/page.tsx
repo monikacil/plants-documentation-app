@@ -1,14 +1,6 @@
 import ExpensesPage from "@/app/components/ExpensesPage";
+import { SearchParams } from "@/app/types/others.types";
 
-type Props = {
-  searchParams?: Promise<{
-    query?: string;
-    page?: string;
-    sortBy?: string;
-    order?: string;
-  }>;
-};
-
-export default async function Page({ searchParams }: Props) {
+export default async function Page({ searchParams }: SearchParams) {
   return <ExpensesPage searchParams={searchParams} />;
 }

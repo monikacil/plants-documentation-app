@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "./app/lib/joseSession";
 
 // 1. Specify protected and public routes
-const protectedRoutes = ["/user", "/dashboard", "/expenses"];
+const protectedRoutes = ["/user", "/dashboard", "/expenses", "/plantCare"];
 const publicRoutes = ["/login", "/signup", "/"];
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string;

@@ -12,3 +12,12 @@ export type TableHeaderType = {
   colSpan: number | undefined;
   width: string | undefined;
 };
+
+export type SearchParams = {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+    sortBy?: string;
+    order?: string;
+  }>;
+};

@@ -24,6 +24,10 @@ export const NAVIGATION_CONFIG = [
     ],
   },
   {
+    name: "Plant Care",
+    href: "/plantCare",
+  },
+  {
     name: "Expenses",
     href: "/expenses",
   },

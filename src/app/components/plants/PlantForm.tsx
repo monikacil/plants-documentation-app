@@ -32,7 +32,7 @@ const initForm: PlantTableType = {
   species: "",
   variety: "",
   price: "",
-  date: new Date().toString(),
+  date: new Date(),
   passport: "",
   name: "",
   address: "",
@@ -43,7 +43,7 @@ const initForm: PlantTableType = {
 
 export default function PlantForm({ plant, collection, action }: Props) {
   const [state, formAction, isPending] = useActionState(
-    action.bind(null, { collection: collection, _id: plant?._id.toString() }),
+    action.bind(null, { collection: collection, id: plant?._id.toString() }),
     null
   );
   const [plantForm, setPlantForm] = useState(plant ? plant : initForm);
@@ -82,7 +82,7 @@ export default function PlantForm({ plant, collection, action }: Props) {
                   onChange={(value) => {
                     setPlantForm({
                       ...plantForm,
-                      date: value ? value.toString() : new Date().toString(),
+                      date: value ? value : new Date(),
                     });
                   }}
                 />

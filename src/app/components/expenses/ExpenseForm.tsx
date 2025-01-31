@@ -10,21 +10,32 @@ import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
 import { ExpenseFormType } from "@/app/types/expenses.types";
-import { addExpenses } from "@/app/actions/expenses.actions";
 
 type Props = {
   expense?: ExpenseFormType;
+  action: (
+    id: string | undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    prevState: any,
+    formData: FormData
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => Promise<any>;
 };
 
 const initForm: ExpenseFormType = {
+  _id: "",
   products: "",
   shop: "",
   price: "",
-  date: new Date().toString(),
+  date: new Date(),
 };
 
-export default function ExpenseForm({ expense }: Props) {
-  const [state, formAction, isPending] = useActionState(addExpenses, initForm);
+export default function ExpenseForm({ expense, action }: Props) {
+  const [state, formAction, isPending] = useActionState(
+    action.bind(null, expense?._id ? expense._id.toString() : undefined),
+    null
+  );
+
   const [expensesForm, setExpensesForm] = useState(
     expense ? expense : initForm
   );
@@ -66,7 +77,7 @@ export default function ExpenseForm({ expense }: Props) {
           onChange={(value) => {
             setExpensesForm({
               ...expensesForm,
-              date: value ? value.toString() : new Date().toString(),
+              date: value ? value : new Date(),
             });
           }}
         />

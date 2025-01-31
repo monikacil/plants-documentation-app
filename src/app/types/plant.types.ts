@@ -13,7 +13,7 @@ export interface PlantDocument {
   species: string;
   variety: string;
   price: string | undefined;
-  date: string | undefined;
+  date: Date | undefined;
   passport: string | undefined;
   buyer: string | undefined;
   seller: string | undefined;
@@ -26,7 +26,7 @@ export type Collections = "collected" | "purchased" | "sold";
 
 export type PlantExtraArgs = {
   collection: Collections;
-  _id?: string;
+  id?: string;
 };
 
 type ClienType = {

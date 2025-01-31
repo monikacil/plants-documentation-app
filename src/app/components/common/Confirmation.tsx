@@ -5,7 +5,6 @@ import BasicButton from "./BasicButton";
 
 type Props = {
   children: React.ReactNode;
-  title: string;
   confirmClick: () => void;
 };
 

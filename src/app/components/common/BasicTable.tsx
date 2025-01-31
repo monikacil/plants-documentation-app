@@ -1,5 +1,3 @@
-"use client";
-
 import { Table } from "flowbite-react";
 import { Flowbite } from "flowbite-react";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import ConfirmationModal from "../common/ConfirmationModal";
+import ConfirmationModal from "../common/Confirmation";
 import ModalWrapper from "../modal/ModalWrapper";
 import { redirect } from "next/navigation";
 import { deletePlant } from "@/app/actions/plant.actions";
@@ -26,7 +26,7 @@ export default function PlantsDeleteModal({
 
   return (
     <ModalWrapper title="Delete Plant" route={withRoute ? route : undefined}>
-      <ConfirmationModal title="Delete Plant" confirmClick={handleClick}>
+      <ConfirmationModal confirmClick={handleClick}>
         This action will remove the plant from the list.
       </ConfirmationModal>
     </ModalWrapper>

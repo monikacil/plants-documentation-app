@@ -1,6 +1,6 @@
-import ExpensesPage from "@/app/components/ExpensesPage";
+import PlantCarePage from "@/app/components/PlantCarePage";
 import { SearchParams } from "@/app/types/others.types";
 
 export default async function Page({ searchParams }: SearchParams) {
-  return <ExpensesPage searchParams={searchParams} />;
+  return <PlantCarePage searchParams={searchParams} />;
 }

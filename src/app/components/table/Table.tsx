@@ -5,7 +5,8 @@ import { getTableBody, getTableHeaders } from "./creator";
 
 import { getHeadersForBody } from "@/app/components/table/creator";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import TableSceleton from "../skeletons/TableSceleton";
 
 type Props = {
   elementsList: object[];
@@ -33,7 +34,7 @@ export default function Table({ elementsList }: Props) {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathName]);
+  }, [url]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const headersByType = (list: any[]) => {
@@ -51,7 +52,9 @@ export default function Table({ elementsList }: Props) {
   return (
     <>
       {elementsList.length ? (
-        <BasicTable tableBody={tableBody} tableHeaders={tableHeaders} />
+        <Suspense fallback={<TableSceleton />}>
+          <BasicTable tableBody={tableBody} tableHeaders={tableHeaders} />
+        </Suspense>
       ) : (
         <p>No data</p>
       )}

@@ -2,6 +2,7 @@ import { zodUserSchema } from "@/app/lib/zod/zodUser";
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
 import { Collections } from "@/app/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
+import { zodPlantCareSchema } from "./zodPlantCare";
 
 export async function zodAuthValidation(formData: FormData) {
   const data = {
@@ -62,5 +63,26 @@ export async function zodPlantValidation(
   return zodCollectedPlantSchema.safeParse({
     species: data.species,
     variety: data.variety,
+  });
+}
+
+export async function zodPlantCareValidation(formData: FormData) {
+  const data = {
+    date: formData.get("date"),
+    control: formData.get("control"),
+    pests: formData.get("pests"),
+    antiPestActions: formData.get("antiPestActions"),
+    pestControlMeasures: formData.get("pestControlMeasures"),
+    plantsCount: formData.get("plantsCount"),
+    species: formData.get("species"),
+  };
+  return zodPlantCareSchema.safeParse({
+    date: data.date,
+    control: data.control,
+    pests: data.pests,
+    antiPestActions: data.antiPestActions,
+    pestControlMeasures: data.pestControlMeasures,
+    plantsCount: data.plantsCount,
+    species: data.species,
   });
 }

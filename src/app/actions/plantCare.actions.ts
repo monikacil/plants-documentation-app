@@ -1,0 +1,188 @@
+"use server";
+
+import mongoose from "mongoose";
+import { revalidatePath } from "next/cache";
+
+import { connectDB } from "@/app/lib/connectDB";
+import { getSessionUserId } from "@/app/lib/utils/session.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+
+import { SortType } from "@/app/types/others.types";
+import PlantCare from "../models/plantCare.model";
+import { zodPlantCareValidation } from "../lib/zod/zodValidations";
+
+export const getPlantCares = async (
+  query: string,
+  currentPage: number,
+  limit: number,
+  sort?: SortType[]
+) => {
+  const userId = await getSessionUserId();
+  const sortQuery = { $sort: {} };
+
+  if (sort) {
+    sort.forEach((query) => {
+      sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {
+        [query.key]: query.direction === "asc" ? 1 : -1,
+      });
+    });
+  } else {
+    sortQuery["$sort"] = { createdAt: 1 };
+  }
+
+  try {
+    await connectDB();
+    const dbPlantCareList = await PlantCare.aggregate([
+      {
+        $match: {
+          _userId: new mongoose.Types.ObjectId(userId),
+          $or: [
+            { control: { $regex: ".*" + query + ".*", $options: "i" } },
+            { pests: { $regex: ".*" + query + ".*", $options: "i" } },
+            { actions: { $regex: ".*" + query + ".*", $options: "i" } },
+          ],
+        },
+      },
+      { $skip: (currentPage - 1) * limit },
+      { $limit: limit },
+      sortQuery,
+    ]);
+
+    if (!dbPlantCareList) return [];
+    return JSON.parse(JSON.stringify(dbPlantCareList));
+  } catch (error) {
+    return {
+      message: getErrorMessage(
+        error,
+        "Error occurred while fetching plant care data."
+      ),
+    };
+  }
+};
+
+export const addPlantCare = async (
+  id: string | undefined,
+  prevState: unknown,
+  formData: FormData
+) => {
+  if (id) return;
+  // zod validation
+  const validation = await zodPlantCareValidation(formData);
+  if (!validation.success) {
+    return {
+      errors: validation.error.flatten().fieldErrors,
+    };
+  }
+  const userId = await getSessionUserId();
+
+  const data = {
+    ...validation.data,
+    _userId: userId,
+    date: Date.parse(validation.data.date),
+    plantsCount: parseInt(validation.data.plantsCount),
+  };
+  const createdPlantCare = await new PlantCare(data);
+
+  try {
+    await connectDB();
+    const savedPlantCare = await createdPlantCare.save();
+    revalidatePath("/plantCare");
+    return JSON.parse(JSON.stringify(savedPlantCare));
+  } catch (error) {
+    return {
+      message: getErrorMessage(
+        error,
+        "Error occurred while saving plant care."
+      ),
+    };
+  }
+};
+
+export const deletePlantCare = async (id: string) => {
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    await PlantCare.deleteOne({ _id: id, _userId: userId });
+    revalidatePath("/plantCare");
+  } catch (error) {
+    return {
+      message: getErrorMessage(
+        error,
+        "Error occurred while deleting plant care."
+      ),
+    };
+  }
+};
+
+export const editPlantCare = async (
+  id: string,
+  prevState: object,
+  formData: FormData
+) => {
+  // zod validation
+  const validation = await zodPlantCareValidation(formData);
+  if (!validation.success) {
+    return {
+      errors: validation.error.flatten().fieldErrors,
+    };
+  }
+
+  const userId = await getSessionUserId();
+  const data = { _userId: userId, ...validation.data };
+
+  try {
+    await connectDB();
+    await PlantCare.findByIdAndUpdate({ _id: id, _userId: userId }, data);
+    revalidatePath("/plantCare");
+  } catch (error) {
+    return {
+      message: getErrorMessage(
+        error,
+        "Error occurred while editing plant care."
+      ),
+    };
+  }
+};
+
+export const getPlantCare = async (id: string) => {
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    const care = await PlantCare.findOne({ _id: id, _userId: userId });
+    revalidatePath("/plantCare");
+    return JSON.parse(JSON.stringify(care));
+  } catch (error) {
+    return {
+      message: getErrorMessage(
+        error,
+        "Error occurred while getting plant care."
+      ),
+    };
+  }
+};
+
+export const getPlantCarePages = async (query: string, limit: number) => {
+  const userId = await getSessionUserId();
+
+  try {
+    await connectDB();
+    const care = await PlantCare.aggregate([
+      {
+        $match: {
+          _userId: new mongoose.Types.ObjectId(userId),
+          $or: [
+            { control: { $regex: ".*" + query + ".*", $options: "i" } },
+            { pests: { $regex: ".*" + query + ".*", $options: "i" } },
+            { actions: { $regex: ".*" + query + ".*", $options: "i" } },
+          ],
+        },
+      },
+    ]);
+    return Math.ceil(care.length / limit);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return -1;
+  }
+};

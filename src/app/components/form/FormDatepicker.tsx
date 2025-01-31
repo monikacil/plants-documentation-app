@@ -11,10 +11,10 @@ import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
 
 type Props = {
   name: string;
-  value?: string | undefined;
-  maxDate?: Date | undefined;
-  minDate?: Date | undefined;
-  className?: string | undefined;
+  value?: Date;
+  maxDate?: Date;
+  minDate?: Date;
+  className?: string;
   onChange: (e: Date) => void | undefined;
 };
 
@@ -32,9 +32,7 @@ export default function FormDatepicker({
   });
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(
-    new Date() || Date.parse(value || "")
-  );
+  const [selectedDate, setSelectedDate] = useState(new Date() || value);
   const handleChange = (selectedDate: Date) => {
     setSelectedDate(selectedDate);
     if (selectedDate) {

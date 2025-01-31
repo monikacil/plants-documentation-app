@@ -88,7 +88,7 @@ export const editPlant = async (
   try {
     await connectDB();
     await collectionModel.findByIdAndUpdate(
-      { _id: extraArgs._id, _userId: userId },
+      { _id: extraArgs.id, _userId: userId },
       data
     );
     revalidatePath("/plants/[slug]");

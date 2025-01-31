@@ -1,9 +1,9 @@
 import { getPlantsPages, getPlants } from "@/app/actions/plant.actions";
 import { Collections, PlantTableType } from "@/app/types/plant.types";
 
-import { PAGINATION_LIMIT } from "@/app/lib/constants";
 import TableWrapper from "@/app/components/table/TableWrapper";
 import Table from "@/app/components/table/Table";
+import getPageSearchParams from "../lib/pagesHelper";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -20,19 +20,10 @@ export default async function PlantsCollectionPage({
   searchParams,
 }: Props) {
   const collection = (await params).slug as Collections;
-  const searchedParams = await searchParams;
-  const query = searchedParams?.query || "";
-  const currentPage = Number(searchedParams?.page) || 1;
-  const limit = PAGINATION_LIMIT;
+  const { query, currentPage, limit, sort } = await getPageSearchParams(
+    searchParams
+  );
   const totalPages = await getPlantsPages(query, collection, limit);
-  const sortBy = searchedParams?.sortBy || undefined;
-  const order = searchedParams?.order || undefined;
-
-  let sort;
-  if (sortBy && order) {
-    sort = [{ key: sortBy, direction: order }];
-  }
-
   const plantsList: PlantTableType[] = await getPlants(
     collection,
     query,

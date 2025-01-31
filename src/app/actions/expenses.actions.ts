@@ -11,6 +11,7 @@ import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 import mongoose from "mongoose";
 import { SortType } from "@/app/types/others.types";
 import Expense from "@/app/models/expense.model";
+import { ExpenseDocument } from "../types/expenses.types";
 
 export const getExpenses = async (
   query: string,
@@ -60,7 +61,12 @@ export const getExpenses = async (
   }
 };
 
-export const addExpenses = async (prevState: unknown, formData: FormData) => {
+export const addExpenses = async (
+  id: string | undefined,
+  prevState: unknown,
+  formData: FormData
+) => {
+  if (id) return;
   // zod validation
   const validation = await zodExpenseValidation(formData);
   if (!validation.success) {
@@ -99,11 +105,12 @@ export const deleteExpense = async (id: string) => {
   }
 };
 
-export const editPlant = async (
-  id: string,
+export const editExpense = async (
+  id: string | undefined,
   prevState: object,
   formData: FormData
 ) => {
+  if (!id) return;
   // zod validation
   const validation = await zodExpenseValidation(formData);
   if (!validation.success) {
@@ -126,14 +133,25 @@ export const editPlant = async (
   }
 };
 
+const uiExpenseObject = (expense: ExpenseDocument) => {
+  if (!expense) return;
+
+  return {
+    _id: expense._id,
+    products: expense.products,
+    shop: expense.shop,
+    price: expense.price,
+    date: expense.date,
+  };
+};
+
 export const getExpense = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
     await connectDB();
     const expense = await Expense.findOne({ _id: id, _userId: userId });
-    revalidatePath("/expenses");
-    return JSON.parse(JSON.stringify(expense));
+    return JSON.parse(JSON.stringify(uiExpenseObject(expense)));
   } catch (error) {
     return {
       message: getErrorMessage(error, "Error occurred while getting expense."),

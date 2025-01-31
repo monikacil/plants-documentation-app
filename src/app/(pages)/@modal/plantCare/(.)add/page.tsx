@@ -1,11 +1,11 @@
-import { addExpenses } from "@/app/actions/expenses.actions";
-import ExpenseForm from "@/app/components/expenses/ExpenseForm";
+import { addPlantCare } from "@/app/actions/plantCare.actions";
 import ModalWrapper from "@/app/components/modal/ModalWrapper";
+import PlantCareForm from "@/app/components/plantCare/PlantCareForm";
 
 export default function InterceptedPage() {
   return (
     <ModalWrapper title="Add expense">
-      <ExpenseForm action={addExpenses} />
+      <PlantCareForm action={addPlantCare} />
     </ModalWrapper>
   );
 }
