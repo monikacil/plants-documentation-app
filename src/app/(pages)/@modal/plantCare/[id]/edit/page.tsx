@@ -1,5 +1,6 @@
-import { getPlantCare } from "@/app/actions/plantCare.actions";
+import { editPlantCare, getPlantCare } from "@/app/actions/plantCare.actions";
 import ModalWrapper from "@/app/components/modal/ModalWrapper";
+import PlantCareForm from "@/app/components/plantCare/PlantCareForm";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -11,8 +12,7 @@ export default async function InterceptedPage({ params }: Props) {
 
   return (
     <ModalWrapper title="Edit Plant Care" route="/plantCare">
-      edit
-      {/* <ExpenseForm expense={expense} /> */}
+      <PlantCareForm plantCare={care} action={editPlantCare} />
     </ModalWrapper>
   );
 }

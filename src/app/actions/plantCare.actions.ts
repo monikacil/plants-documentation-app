@@ -10,6 +10,7 @@ import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 import { SortType } from "@/app/types/others.types";
 import PlantCare from "../models/plantCare.model";
 import { zodPlantCareValidation } from "../lib/zod/zodValidations";
+import { uiPlantCareObj } from "../lib/utils/plantCareActions.helper";
 
 export const getPlantCares = async (
   query: string,
@@ -49,7 +50,9 @@ export const getPlantCares = async (
     ]);
 
     if (!dbPlantCareList) return [];
-    return JSON.parse(JSON.stringify(dbPlantCareList));
+    return JSON.parse(
+      JSON.stringify(dbPlantCareList.map((el) => uiPlantCareObj(el)))
+    );
   } catch (error) {
     return {
       message: getErrorMessage(
@@ -116,10 +119,11 @@ export const deletePlantCare = async (id: string) => {
 };
 
 export const editPlantCare = async (
-  id: string,
+  id: string | undefined,
   prevState: object,
   formData: FormData
 ) => {
+  if (!id) return;
   // zod validation
   const validation = await zodPlantCareValidation(formData);
   if (!validation.success) {
@@ -129,7 +133,11 @@ export const editPlantCare = async (
   }
 
   const userId = await getSessionUserId();
-  const data = { _userId: userId, ...validation.data };
+  const data = {
+    ...validation.data,
+    date: Date.parse(validation.data.date),
+    plantsCount: parseInt(validation.data.plantsCount),
+  };
 
   try {
     await connectDB();
@@ -151,8 +159,7 @@ export const getPlantCare = async (id: string) => {
   try {
     await connectDB();
     const care = await PlantCare.findOne({ _id: id, _userId: userId });
-    revalidatePath("/plantCare");
-    return JSON.parse(JSON.stringify(care));
+    return JSON.parse(JSON.stringify(uiPlantCareObj(care)));
   } catch (error) {
     return {
       message: getErrorMessage(

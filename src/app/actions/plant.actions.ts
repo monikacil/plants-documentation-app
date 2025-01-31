@@ -13,7 +13,7 @@ import {
   dataToUpdate,
   getCollectionModel,
   uiPlantObject,
-} from "@/app/lib/utils/plantActions";
+} from "@/app/lib/utils/plantActions.helper";
 
 import {
   Collections,
