@@ -6,7 +6,7 @@ type Props = {
   params: Promise<{ id: string; slug: string }>;
 };
 
-export default async function Page({ params }: Props) {
+export default async function PlantDetailsPage({ params }: Props) {
   const collection = (await params).slug as Collections;
   const plantId = (await params).id;
   const plant: PlantDocument = await getPlant(plantId, collection);

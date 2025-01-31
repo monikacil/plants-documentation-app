@@ -8,7 +8,7 @@ import { PlantCareDocument } from "@/app/types/plantCare.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function PlantCarePage({ searchParams }: SearchParams) {
   const { query, currentPage, limit, sort } = await getPageSearchParams(
     searchParams
   );

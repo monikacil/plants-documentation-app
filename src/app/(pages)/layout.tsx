@@ -9,7 +9,7 @@ type Props = {
 export default function Layout({ children, modal }: Props) {
   return (
     <div className="size-full flex flex-col px-3 md:px-6">
-      <Header className="my-5  flex-none" />
+      <Header className="my-5 flex-none" />
       <main className="flex-auto">
         {modal}
         {children}

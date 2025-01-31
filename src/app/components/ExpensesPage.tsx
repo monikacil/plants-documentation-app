@@ -5,7 +5,7 @@ import { ExpenseDocument } from "@/app/types/expenses.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 
-export default async function Page({ searchParams }: SearchParams) {
+export default async function ExpensesPage({ searchParams }: SearchParams) {
   const { query, currentPage, limit, sort } = await getPageSearchParams(
     searchParams
   );

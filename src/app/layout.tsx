@@ -18,7 +18,15 @@ export const metadata: Metadata = {
   description: "A simple application created for plant growing enthusiasts",
   generator: "Next.js",
   manifest: "/manifest.json",
-  keywords: ["nextjs", "next14", "pwa", "next-pwa"],
+  keywords: [
+    "nextjs",
+    "next15",
+    "pwa",
+    "next-pwa",
+    "plant-app",
+    "plant-documentation",
+    "plant-collection",
+  ],
   category: "application",
   authors: [
     {
