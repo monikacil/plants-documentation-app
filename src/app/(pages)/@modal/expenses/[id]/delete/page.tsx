@@ -15,8 +15,6 @@ export default async function InterceptedPage({ params }: Props) {
       action={deleteExpense}
       route="/expenses"
       withRoute
-    >
-      psddp
-    </DeleteElementModal>
+    />
   );
 }

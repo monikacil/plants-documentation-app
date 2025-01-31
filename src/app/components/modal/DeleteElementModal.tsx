@@ -1,21 +1,25 @@
 "use client";
 
+import { Collections } from "@/app/types/plant.types";
 import Confirmation from "../common/Confirmation";
 import ModalWrapper from "./ModalWrapper";
 import { redirect } from "next/navigation";
 
 type Props = {
-  children: React.ReactNode;
   id: string;
+  slug?: Collections;
   title: string;
   route: string;
   withRoute?: boolean;
-  action: (id: string) => Promise<{ message: string } | undefined>;
+  action: (
+    id: string,
+    slug?: Collections
+  ) => Promise<{ message: string } | undefined>;
 };
 
-export default function DeleteModal({
-  children,
+export default function DeleteElementModal({
   id,
+  slug,
   title,
   route,
   withRoute = false,
@@ -25,11 +29,16 @@ export default function DeleteModal({
     <ModalWrapper title={title} route={withRoute ? route : undefined}>
       <Confirmation
         confirmClick={async () => {
-          await action(id);
+          if (slug) {
+            await action(id, slug);
+          } else {
+            await action(id);
+          }
           redirect(route);
         }}
       >
-        {children}
+        Deleting this item is irreversible, are you sure you know what you are
+        doing?
       </Confirmation>
     </ModalWrapper>
   );

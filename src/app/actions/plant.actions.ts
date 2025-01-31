@@ -52,13 +52,17 @@ export const addPlant = async (
   }
 };
 
-export const deletePlant = async (collection: Collections, plantId: string) => {
-  const collectionModel = getCollectionModel(collection);
+export const deletePlant = async (
+  id: string,
+  slug: Collections | undefined
+) => {
+  if (!slug) return;
+  const collectionModel = getCollectionModel(slug);
   const userId = await getSessionUserId();
 
   try {
     await connectDB();
-    await collectionModel.deleteOne({ _id: plantId, _userId: userId });
+    await collectionModel.deleteOne({ _id: id, _userId: userId });
     revalidatePath("/plants/[slug]");
   } catch (error) {
     return {
