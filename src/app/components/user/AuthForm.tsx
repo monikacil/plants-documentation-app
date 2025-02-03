@@ -7,7 +7,6 @@ import BasicButton from "./../common/BasicButton";
 import ZodErrors from "./../common/ZodErrors";
 import Logo from "../layout/Logo";
 import Input from "../form/Input";
-
 import { AuthFormState } from "@/app/lib/zod/zodUser";
 
 interface Props {
@@ -45,7 +44,11 @@ export default function AuthForm({
         <Logo size="lg" />
       </header>
       <section className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action={formAction} className=" flex flex-col gap-3 lg:gap-5">
+        <form
+          data-testid="auth-form"
+          action={formAction}
+          className=" flex flex-col gap-3 lg:gap-5"
+        >
           <Input
             name="email"
             type="email"

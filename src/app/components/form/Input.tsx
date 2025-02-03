@@ -37,7 +37,7 @@ export default function Input({
   }, [value, inputValue]);
 
   return (
-    <div className="flex flex-col gap-1">
+    <div data-testid="input" className="flex flex-col gap-1">
       <input
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

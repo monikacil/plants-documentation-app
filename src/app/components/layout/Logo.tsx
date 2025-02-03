@@ -36,6 +36,7 @@ export default function Logo({ className, size = "lg" }: Props) {
 
   return (
     <div
+      data-testid="main-logo"
       className={cn(
         `flex items-center gap-2 font-semibold text-${cssSize().textSize}`,
         className
