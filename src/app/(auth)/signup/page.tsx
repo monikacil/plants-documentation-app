@@ -1,5 +1,5 @@
 import { register } from "@/app/actions/auth.actions";
-import AuthForm from "@/app/components/user/AuthForm";
+import AuthForm from "@/app/components/auth/AuthForm";
 
 export default function SignUp() {
   return (

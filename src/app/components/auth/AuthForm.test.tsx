@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import AuthForm from "./AuthForm";
 import React from "react";
 import { AuthFormState } from "@/app/lib/zod/zodUser";
@@ -13,7 +14,7 @@ const initState = {
 };
 
 describe("AuthForm", () => {
-  const mockFn = jest.fn();
+  const mockFn = jest.fn(() => Promise.resolve());
   const setStateMock = jest.fn();
 
   jest
@@ -35,9 +36,10 @@ describe("AuthForm", () => {
     expect(form).toBeInTheDocument();
   });
 
-  it("renders correct number of form fields", () => {
+  it("should call the action after button click", async () => {
     render(<AuthForm btnText="Login" authAction={mockFn} />);
-    const inputs = screen.getAllByTestId("input");
-    expect(inputs.length).toEqual(2);
+    const button = screen.getByTestId("submit-btn");
+    await userEvent.click(button);
+    waitFor(() => expect(mockFn).toHaveBeenCalled());
   });
 });

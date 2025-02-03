@@ -3,8 +3,8 @@
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 
-import BasicButton from "./../common/BasicButton";
-import ZodErrors from "./../common/ZodErrors";
+import BasicButton from "../common/BasicButton";
+import ZodErrors from "../common/ZodErrors";
 import Logo from "../layout/Logo";
 import Input from "../form/Input";
 import { AuthFormState } from "@/app/lib/zod/zodUser";
@@ -74,6 +74,7 @@ export default function AuthForm({
           />
           {showError ? <ZodErrors error={state?.errors?.message} /> : ""}
           <BasicButton
+            data-testid="submit-btn"
             disabled={isPending}
             isProcessing={isPending}
             type="submit"
