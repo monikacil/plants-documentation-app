@@ -1,6 +1,6 @@
-import { addExpenses } from "@/app/actions/expenses.actions";
-import ExpenseForm from "@/app/components/expenses/ExpenseForm";
-import ModalWrapper from "@/app/components/modal/ModalWrapper";
+import { addExpenses } from "@/actions/expenses.actions";
+import ExpenseForm from "@/components/expenses/ExpenseForm";
+import ModalWrapper from "@/components/modal/ModalWrapper";
 
 export default function ParallelRoutePage() {
   return (

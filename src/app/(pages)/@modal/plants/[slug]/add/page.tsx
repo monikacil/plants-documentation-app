@@ -1,7 +1,7 @@
-import { addPlant } from "@/app/actions/plant.actions";
-import ModalWrapper from "@/app/components/modal/ModalWrapper";
-import PlantForm from "@/app/components/plants/PlantForm";
-import { Collections } from "@/app/types/plant.types";
+import { addPlant } from "@/actions/plant.actions";
+import ModalWrapper from "@/components/modal/ModalWrapper";
+import PlantForm from "@/components/plants/PlantForm";
+import { Collections } from "@/types/plant.types";
 
 type Props = {
   params: Promise<{ slug: string }>;

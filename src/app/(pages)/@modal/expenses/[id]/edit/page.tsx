@@ -1,6 +1,6 @@
-import { editExpense, getExpense } from "@/app/actions/expenses.actions";
-import ExpenseForm from "@/app/components/expenses/ExpenseForm";
-import ModalWrapper from "@/app/components/modal/ModalWrapper";
+import { editExpense, getExpense } from "@/actions/expenses.actions";
+import ExpenseForm from "@/components/expenses/ExpenseForm";
+import ModalWrapper from "@/components/modal/ModalWrapper";
 
 type Props = {
   params: Promise<{ id: string }>;

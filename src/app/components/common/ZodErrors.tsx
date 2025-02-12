@@ -1,7 +1,7 @@
-import { cn, generateUniqKey } from "@/app/lib/utils/others";
+import { cn, generateUniqKey } from "@/lib/utils/others";
 
 type Props = {
-  error: string[] | undefined;
+  error: string[] | string;
   className?: string;
 };
 

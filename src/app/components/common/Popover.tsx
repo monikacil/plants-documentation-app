@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
+import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 
 type Props = {
   children: React.ReactNode;

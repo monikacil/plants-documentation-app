@@ -1,8 +1,8 @@
-import { getPlantsPages, getPlants } from "@/app/actions/plant.actions";
-import { Collections, PlantTableType } from "@/app/types/plant.types";
+import { getPlantsPages, getPlants } from "@/actions/plant.actions";
+import { Collections, PlantTableType } from "@/types/plant.types";
 
-import TableWrapper from "@/app/components/table/TableWrapper";
-import Table from "@/app/components/table/Table";
+import TableWrapper from "@/components/table/TableWrapper";
+import Table from "@/components/table/Table";
 import getPageSearchParams from "../lib/pagesHelper";
 
 type Props = {

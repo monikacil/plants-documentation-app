@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import BasicButton from "./BasicButton";
+import Button from "./Button";
 
 type Props = {
   children: React.ReactNode;
@@ -21,12 +21,12 @@ export default function ConfirmationModal({ children, confirmClick }: Props) {
       <p>Are you sure?</p>
       {children}
       <footer className="flex justify-end gap-2">
-        <BasicButton color="danger" onClick={handleConfirm}>
+        <Button color="danger" onClick={handleConfirm}>
           Yes
-        </BasicButton>
-        <BasicButton color="primary" onClick={() => router.back()}>
+        </Button>
+        <Button color="primary" onClick={() => router.back()}>
           No
-        </BasicButton>
+        </Button>
       </footer>
     </>
   );

@@ -5,9 +5,9 @@ import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
-import { cn } from "@/app/lib/utils/others";
-import getDatepickerOptions from "@/app/lib/utils/getDatePickerOption";
-import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
+import { cn } from "@/lib/utils/others";
+import getDatepickerOptions from "@/lib/utils/getDatePickerOption";
+import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
 
 type Props = {
   name: string;
@@ -32,7 +32,7 @@ export default function FormDatepicker({
   });
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date() || value);
+  const [selectedDate, setSelectedDate] = useState(value || new Date());
   const handleChange = (selectedDate: Date) => {
     setSelectedDate(selectedDate);
     if (selectedDate) {
@@ -45,7 +45,7 @@ export default function FormDatepicker({
   });
 
   return (
-    <div ref={ref}>
+    <div data-testid="datepicker-wrapper" ref={ref}>
       <Datepicker
         options={options}
         onChange={handleChange}
@@ -54,6 +54,7 @@ export default function FormDatepicker({
       >
         <div className={cn("flex w-full rounded-full bg-white", className)}>
           <input
+            data-testid="datepicker-input"
             type="text"
             name={name}
             value={selectedDate.toDateString()}

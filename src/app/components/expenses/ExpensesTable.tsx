@@ -2,11 +2,11 @@
 
 import BasicTable from "../common/BasicTable";
 
-import headersConfig from "@/app/tablesConfig/expensesTable.json";
-import { getHeadersForBody } from "@/app/components/table/creator";
-import { ExpenseFormType } from "@/app/types/expenses.types";
+import headersConfig from "@/tablesConfig/expensesTable.json";
+import { getHeadersForBody } from "@/components/table/creator";
+import { ExpenseFormType } from "@/types/expenses.types";
 import { getTableBody, getTableHeaders } from "../table/creator";
-import { TableHeaderType } from "@/app/types/others.types";
+import { TableHeaderType } from "@/types/others.types";
 import { usePathname } from "next/navigation";
 
 type Props = {

@@ -3,19 +3,19 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-import User from "@/app/models/user.model";
+import User from "@/models/user.model";
 
 import { getUserByEmail } from "./user.actions";
 
-import { type UserDocument } from "@/app/types/user.types";
+import { type UserDocument } from "@/types/user.types";
 
-import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
-import { connectDB } from "@/app/lib/connectDB";
-import { ComparePassword, HashPassword } from "@/app/lib/bcrypt";
-import { createSession } from "@/app/lib/joseSession";
-import { AuthErrors } from "@/app/lib/zod/errors";
-import { zodAuthValidation } from "@/app/lib/zod/zodValidations";
+import { connectDB } from "@/lib/connectDB";
+import { ComparePassword, HashPassword } from "@/lib/bcrypt";
+import { createSession } from "@/lib/joseSession";
+import { AuthErrors } from "@/lib/zod/errors";
+import { zodAuthValidation } from "@/lib/zod/zodValidations";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string;
 

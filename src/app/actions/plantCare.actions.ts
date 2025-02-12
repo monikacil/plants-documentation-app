@@ -3,11 +3,11 @@
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/app/lib/connectDB";
-import { getSessionUserId } from "@/app/lib/utils/session.helper";
-import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+import { connectDB } from "@/lib/connectDB";
+import { getSessionUserId } from "@/lib/utils/session.helper";
+import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
-import { SortType } from "@/app/types/others.types";
+import { SortType } from "@/types/others.types";
 import PlantCare from "../models/plantCare.model";
 import { zodPlantCareValidation } from "../lib/zod/zodValidations";
 import { uiPlantCareObj } from "../lib/utils/plantCareActions.helper";

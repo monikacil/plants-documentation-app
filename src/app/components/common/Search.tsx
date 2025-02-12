@@ -1,9 +1,9 @@
 "use client";
 
-import { IoIosSearch } from "react-icons/io";
+import { FiSearch } from "react-icons/fi";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { TextInput } from "flowbite-react";
 import { useDebouncedCallback } from "use-debounce";
+import Input from "../form/Input";
 
 type Props = {
   placeholder?: string | undefined;
@@ -26,16 +26,16 @@ export default function Search({ placeholder }: Props) {
   }, 500);
 
   return (
-    <TextInput
-      id="table-search"
-      type="email"
-      sizing="md"
-      rightIcon={IoIosSearch}
-      placeholder={placeholder}
-      defaultValue={searchParams.get("query")?.toString()}
-      onChange={(e) => {
-        handleSearch(e.target.value);
-      }}
-    />
+    <div className="relative">
+      <div className="absolute inset-y-0 end-2 text-xl flex items-center ps-3.5 pointer-events-none text-base-gray-700">
+        <FiSearch />
+      </div>
+      <Input
+        placeholder={placeholder}
+        defaultValue={searchParams.get("query")?.toString()}
+        onChange={handleSearch}
+        className="pr-10 pl-5 py-2 bg-white text-gray-900 ring ring-inset ring-base-gray-700 focus-visible:ring-inset focus-visible:outline-base-gray-800 focus:ring-2 focus:ring-inset focus:ring-base-gray-800"
+      />
+    </div>
   );
 }

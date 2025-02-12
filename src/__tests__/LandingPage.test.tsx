@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import LandingPage from "../app/page";
+import LandingPage from "@/page";
 
 describe("LandingPage", () => {
   it("renders a landingPage main tag", () => {

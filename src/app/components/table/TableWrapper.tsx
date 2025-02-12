@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 
-import BasicButton from "../common/BasicButton";
+import Button from "../common/Button";
 import Search from "../common/Search";
-import BasicPagination from "../common/BasicPagination";
+import Pagination from "../common/Pagination";
 
 type Props = {
   children: React.ReactNode;
@@ -22,12 +22,12 @@ export default function TableWrapper({ children, pages, link }: Props) {
         <Search placeholder="Search..." />
         {link ? (
           <Link href={link.href} scroll={false}>
-            <BasicButton size="md">{link.text}</BasicButton>
+            <Button>{link.text}</Button>
           </Link>
         ) : null}
       </nav>
       {children}
-      {pages > 1 ? <BasicPagination totalPages={pages} /> : null}
+      {pages > 1 ? <Pagination totalPages={pages} /> : null}
     </section>
   );
 }

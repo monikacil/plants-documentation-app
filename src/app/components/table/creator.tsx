@@ -5,8 +5,8 @@ import { Table } from "flowbite-react";
 import Sort from "../common/Sort";
 import ActionButtons from "./ActionButtons";
 
-import { TableHeaderType } from "@/app/types/others.types";
-import { generateUniqKey } from "@/app/lib/utils/others";
+import { TableHeaderType } from "@/types/others.types";
+import { generateUniqKey } from "@/lib/utils/others";
 
 function goToDetails(url: string, id: string) {
   redirect(`${url}/${id}`);

@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import Navigation from "./Navigation";
 import Logo from "./Logo";
 
-import { cn } from "@/app/lib/utils/others";
+import { cn } from "@/lib/utils/others";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string;
 

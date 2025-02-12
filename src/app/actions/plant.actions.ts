@@ -4,23 +4,23 @@ import mongoose from "mongoose";
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/app/lib/connectDB";
-import { zodPlantValidation } from "@/app/lib/zod/zodValidations";
+import { connectDB } from "@/lib/connectDB";
+import { zodPlantValidation } from "@/lib/zod/zodValidations";
 
-import { getSessionUserId } from "@/app/lib/utils/session.helper";
-import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+import { getSessionUserId } from "@/lib/utils/session.helper";
+import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 import {
   dataToUpdate,
   getCollectionModel,
   uiPlantObject,
-} from "@/app/lib/utils/plantActions.helper";
+} from "@/lib/utils/plantActions.helper";
 
 import {
   Collections,
   PlantDocument,
   PlantExtraArgs,
-} from "@/app/types/plant.types";
-import { SortType } from "@/app/types/others.types";
+} from "@/types/plant.types";
+import { SortType } from "@/types/others.types";
 
 export const addPlant = async (
   extraArgs: PlantExtraArgs,

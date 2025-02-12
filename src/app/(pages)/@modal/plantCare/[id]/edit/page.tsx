@@ -1,6 +1,6 @@
-import { editPlantCare, getPlantCare } from "@/app/actions/plantCare.actions";
-import ModalWrapper from "@/app/components/modal/ModalWrapper";
-import PlantCareForm from "@/app/components/plantCare/PlantCareForm";
+import { editPlantCare, getPlantCare } from "@/actions/plantCare.actions";
+import ModalWrapper from "@/components/modal/ModalWrapper";
+import PlantCareForm from "@/components/plantCare/PlantCareForm";
 
 type Props = {
   params: Promise<{ id: string }>;

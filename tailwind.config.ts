@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import {content, plugin} from "flowbite-react/tailwind";
+import { content, plugin } from "flowbite-react/tailwind";
 
 const config: Config = {
   content: [
@@ -10,26 +10,26 @@ const config: Config = {
     content(),
   ],
   safelist: [
-    'text-2xl',
-    'text-3xl',
-    'text-4xl',
-    'text-5xl',
-    'text-6xl',
-    'sm:text-2xl',
-    'sm:text-3xl',
-    'sm:text-4xl',
-    'sm:text-5xl',
-    'sm:text-6xl',
-    'md:text-2xl',
-    'md:text-3xl',
-    'md:text-4xl',
-    'md:text-5xl',
-    'md:text-6xl',
-    'lg:text-2xl',
-    'lg:text-3xl',
-    'lg:text-4xl',
-    'lg:text-5xl',
-    'lg:text-6xl',
+    "text-2xl",
+    "text-3xl",
+    "text-4xl",
+    "text-5xl",
+    "text-6xl",
+    "sm:text-2xl",
+    "sm:text-3xl",
+    "sm:text-4xl",
+    "sm:text-5xl",
+    "sm:text-6xl",
+    "md:text-2xl",
+    "md:text-3xl",
+    "md:text-4xl",
+    "md:text-5xl",
+    "md:text-6xl",
+    "lg:text-2xl",
+    "lg:text-3xl",
+    "lg:text-4xl",
+    "lg:text-5xl",
+    "lg:text-6xl",
   ],
   theme: {
     extend: {
@@ -46,7 +46,7 @@ const config: Config = {
           600: "#bababa",
           700: "#8c8c8c",
           800: "#5d5d5d",
-          900: "#2f2f2f"
+          900: "#2f2f2f",
         },
         "base-green": {
           50: "#fbeded",
@@ -59,7 +59,7 @@ const config: Config = {
           600: "#799d4d",
           700: "#5a723d",
           800: "#3c4c29",
-          900: "#1e2614"
+          900: "#1e2614",
         },
         danger: {
           500: "#ef4444",
@@ -68,6 +68,14 @@ const config: Config = {
         warning: {
           500: "#ffa53e",
           600: "#cc8432",
+        },
+        primary: {
+          500: "#96be66",
+          600: "#799d4d",
+        },
+        info: {
+          500: "#5d5d5d",
+          600: "#2f2f2f",
         },
       },
       spacing: {
@@ -79,8 +87,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    plugin(),
-  ],
+  plugins: [plugin()],
 };
 export default config;

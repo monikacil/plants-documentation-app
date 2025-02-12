@@ -1,7 +1,7 @@
 "use client";
 
 import ActionButtons from "../table/ActionButtons";
-import { ExpenseDocument } from "@/app/types/expenses.types";
+import { ExpenseDocument } from "@/types/expenses.types";
 
 type Props = {
   expense?: ExpenseDocument;

@@ -3,11 +3,11 @@
 import { useActionState, useEffect, useState } from "react";
 import Link from "next/link";
 
-import BasicButton from "../common/BasicButton";
-import ZodErrors from "../common/ZodErrors";
-import Logo from "../layout/Logo";
-import Input from "../form/Input";
-import { AuthFormState } from "@/app/lib/zod/zodUser";
+import Button from "./common/Button";
+import ZodErrors from "./common/ZodErrors";
+import Logo from "./layout/Logo";
+import Input from "./form/Input";
+import { AuthFormState } from "@/lib/zod/zodUser";
 
 interface Props {
   btnText: string;
@@ -31,6 +31,7 @@ export default function AuthForm({
   useEffect(() => {
     if (state.errors) {
       setShowError(true);
+      console.log(state.errors);
     }
   }, [state.errors]);
 
@@ -73,15 +74,9 @@ export default function AuthForm({
             }}
           />
           {showError ? <ZodErrors error={state?.errors?.message} /> : ""}
-          <BasicButton
-            data-testid="submit-btn"
-            disabled={isPending}
-            isProcessing={isPending}
-            type="submit"
-            fullSized={true}
-          >
+          <Button data-testid="submit-btn" disabled={isPending} type="submit">
             {btnText}
-          </BasicButton>
+          </Button>
           {isLoginForm ? (
             <Link
               href="/"

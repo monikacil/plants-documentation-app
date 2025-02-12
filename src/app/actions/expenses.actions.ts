@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/app/lib/connectDB";
-import { zodExpenseValidation } from "@/app/lib/zod/zodValidations";
+import { connectDB } from "@/lib/connectDB";
+import { zodExpenseValidation } from "@/lib/zod/zodValidations";
 
-import { getSessionUserId } from "@/app/lib/utils/session.helper";
-import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+import { getSessionUserId } from "@/lib/utils/session.helper";
+import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
 import mongoose from "mongoose";
-import { SortType } from "@/app/types/others.types";
-import Expense from "@/app/models/expense.model";
+import { SortType } from "@/types/others.types";
+import Expense from "@/models/expense.model";
 import { ExpenseDocument } from "../types/expenses.types";
 
 export const getExpenses = async (

@@ -1,6 +1,6 @@
-import { zodUserSchema } from "@/app/lib/zod/zodUser";
+import { zodUserSchema } from "@/lib/zod/zodUser";
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
-import { Collections } from "@/app/types/plant.types";
+import { Collections } from "@/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
 import { zodPlantCareSchema } from "./zodPlantCare";
 

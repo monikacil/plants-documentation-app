@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { getCookie } from "cookies-next/server";
 
-import { decrypt } from "@/app/lib/joseSession";
+import { decrypt } from "@/lib/joseSession";
 
 const COOKIE_NAME = process.env.COOKIE_NAME as string;
 

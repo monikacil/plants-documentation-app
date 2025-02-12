@@ -20,7 +20,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/app/*"]
     }
   },
   "include": [
@@ -30,7 +30,8 @@
     ".next/types/**/*.ts",
     "./src/middleware.ts",
     "next.config.js",
-    "next.config.mjs"
+    "next.config.mjs",
+    "src/app/components/form/FormDatePicker"
   ],
   "exclude": ["node_modules"]
 }

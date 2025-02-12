@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "./app/lib/joseSession";
+import { decrypt } from "@/lib/joseSession";
 
 // 1. Specify protected and public routes
 const protectedRoutes = ["/user", "/dashboard", "/expenses", "/plantCare"];

@@ -1,7 +1,7 @@
-import { getExpensesPages, getExpenses } from "@/app/actions/expenses.actions";
-import Table from "@/app/components/table/Table";
-import TableWrapper from "@/app/components/table/TableWrapper";
-import { ExpenseDocument } from "@/app/types/expenses.types";
+import { getExpensesPages, getExpenses } from "@/actions/expenses.actions";
+import Table from "@/components/table/Table";
+import TableWrapper from "@/components/table/TableWrapper";
+import { ExpenseDocument } from "@/types/expenses.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 

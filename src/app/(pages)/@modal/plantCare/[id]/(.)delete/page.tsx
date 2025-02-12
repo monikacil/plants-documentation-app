@@ -1,5 +1,5 @@
-import { deletePlantCare } from "@/app/actions/plantCare.actions";
-import DeleteElementModal from "@/app/components/modal/DeleteElementModal";
+import { deletePlantCare } from "@/actions/plantCare.actions";
+import DeleteElementModal from "@/components/modal/DeleteElementModal";
 
 type Props = {
   params: Promise<{ id: string }>;

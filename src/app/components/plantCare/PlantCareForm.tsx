@@ -5,11 +5,11 @@ import { HiInformationCircle } from "react-icons/hi";
 import { Alert } from "flowbite-react";
 import Form from "next/form";
 
-import BasicButton from "../common/BasicButton";
+import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { PlantCareFormType } from "@/app/types/plantCare.types";
+import { PlantCareFormType } from "@/types/plantCare.types";
 
 type Props = {
   plantCare?: PlantCareFormType;
@@ -123,14 +123,9 @@ export default function ExpenseForm({ plantCare, action }: Props) {
             <span className="font-medium">{state?.error}</span>
           </Alert>
         )}
-        <BasicButton
-          type="submit"
-          disabled={isPending}
-          isProcessing={isPending}
-          className="my-5"
-        >
+        <Button type="submit" disabled={isPending} className="my-5">
           Save Plant Care
-        </BasicButton>
+        </Button>
       </Form>
     </>
   );

@@ -3,7 +3,7 @@
 import BasicTable from "../common/BasicTable";
 import { getTableBody, getTableHeaders } from "./creator";
 
-import { getHeadersForBody } from "@/app/components/table/creator";
+import { getHeadersForBody } from "@/components/table/creator";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import TableSceleton from "../skeletons/TableSceleton";
@@ -22,7 +22,7 @@ export default function Table({ elementsList }: Props) {
 
   useEffect(() => {
     (async () => {
-      const config = await import(`@/app/tablesConfig/${pathName}Table`).then(
+      const config = await import(`@/tablesConfig/${pathName}Table`).then(
         (data) => {
           return data.default;
         }

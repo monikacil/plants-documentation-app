@@ -3,7 +3,7 @@
 import ConfirmationModal from "../common/Confirmation";
 import ModalWrapper from "../modal/ModalWrapper";
 import { redirect } from "next/navigation";
-import { deletePlantCare } from "@/app/actions/plantCare.actions";
+import { deletePlantCare } from "@/actions/plantCare.actions";
 
 type Props = {
   id: string;

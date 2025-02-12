@@ -1,4 +1,4 @@
-import PlantsCollectionPage from "@/app/components/PlantsCollectionPage";
+import PlantsCollectionPage from "@/components/PlantsCollectionPage";
 
 type Props = {
   params: Promise<{ slug: string }>;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FaPenToSquare, FaRegTrashCan } from "react-icons/fa6";
 
-import BasicButton from "../common/BasicButton";
+import Button from "../common/Button";
 import Popover from "../common/Popover";
 
 type Props = {
@@ -13,16 +13,16 @@ export default function ActionButtons({ route }: Props) {
     <div className="flex gap-2">
       <Link href={`${route}/edit`} scroll={false}>
         <Popover content={<p>Edit</p>}>
-          <BasicButton color="primary" className="px-0">
+          <Button color="primary" className="px-2">
             <FaPenToSquare />
-          </BasicButton>
+          </Button>
         </Popover>
       </Link>
       <Link href={`${route}/delete`} scroll={false}>
         <Popover content={<p>Delete</p>}>
-          <BasicButton color="danger">
+          <Button color="danger" className="px-2">
             <FaRegTrashCan />
-          </BasicButton>
+          </Button>
         </Popover>
       </Link>
     </div>

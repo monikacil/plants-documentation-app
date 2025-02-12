@@ -1,10 +1,7 @@
-import {
-  getPlantCarePages,
-  getPlantCares,
-} from "@/app/actions/plantCare.actions";
-import Table from "@/app/components/table/Table";
-import TableWrapper from "@/app/components/table/TableWrapper";
-import { PlantCareDocument } from "@/app/types/plantCare.types";
+import { getPlantCarePages, getPlantCares } from "@/actions/plantCare.actions";
+import Table from "@/components/table/Table";
+import TableWrapper from "@/components/table/TableWrapper";
+import { PlantCareDocument } from "@/types/plantCare.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 

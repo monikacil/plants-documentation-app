@@ -6,8 +6,8 @@ import { FaBars, FaCircleUser } from "react-icons/fa6";
 
 import Dropdown from "../common/Dropdown";
 import { usePathname } from "next/navigation";
-import { NAVIGATION_CONFIG } from "@/app/lib/navConfig";
-import { generateUniqKey } from "@/app/lib/utils/others";
+import { NAVIGATION_CONFIG } from "@/lib/navConfig";
+import { generateUniqKey } from "@/lib/utils/others";
 
 export default function Navigation({ isAuth }: { isAuth: boolean }) {
   const pathname = usePathname();

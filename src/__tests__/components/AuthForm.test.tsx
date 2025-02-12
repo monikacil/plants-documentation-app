@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AuthForm from "./AuthForm";
+import AuthForm from "@/components/AuthForm";
 import React from "react";
-import { AuthFormState } from "@/app/lib/zod/zodUser";
+import { AuthFormState } from "@/lib/zod/zodUser";
 
 const initState = {
   errors: {

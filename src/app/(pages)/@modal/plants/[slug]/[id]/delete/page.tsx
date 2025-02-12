@@ -1,7 +1,7 @@
-import { Collections } from "@/app/types/plant.types";
+import { Collections } from "@/types/plant.types";
 
-import { deletePlant } from "@/app/actions/plant.actions";
-import DeleteElementModal from "@/app/components/modal/DeleteElementModal";
+import { deletePlant } from "@/actions/plant.actions";
+import DeleteElementModal from "@/components/modal/DeleteElementModal";
 
 type Props = {
   params: Promise<{ slug: string; id: string }>;

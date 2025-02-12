@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import Logo from "./components/layout/Logo";
-import BasicButton from "./components/common/BasicButton";
+import Button from "./components/common/Button";
 
 import landingImg from "./../../public/images/landing-page-img.png";
 
@@ -17,9 +17,7 @@ export default function LandingPage() {
           </article>
           <p className="mt-10 md:mt-14 flex justify-center md:justify-start">
             <Link href="/signup" scroll={false}>
-              <BasicButton color="primary" wide>
-                Explore
-              </BasicButton>
+              <Button>Explore</Button>
             </Link>
           </p>
         </div>

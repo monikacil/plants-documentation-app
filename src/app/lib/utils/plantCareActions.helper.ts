@@ -1,4 +1,4 @@
-import { PlantCareDocument } from "@/app/types/plantCare.types";
+import { PlantCareDocument } from "@/types/plantCare.types";
 
 export function uiPlantCareObj(plantCare: PlantCareDocument) {
   return {

@@ -1,13 +1,13 @@
 "use client";
 
-import { Pagination } from "flowbite-react";
+import { Pagination as FlowbitePagination } from "flowbite-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
   totalPages: number;
 };
 
-export default function BasicPagination({ totalPages }: Props) {
+export default function Pagination({ totalPages }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
@@ -22,7 +22,7 @@ export default function BasicPagination({ totalPages }: Props) {
 
   return (
     <div className="flex overflow-x-auto sm:justify-center">
-      <Pagination
+      <FlowbitePagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={(page: number) => createPageURL(page)}

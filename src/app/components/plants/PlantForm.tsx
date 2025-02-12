@@ -7,10 +7,10 @@ import {
   Collections,
   PlantExtraArgs,
   PlantTableType,
-} from "@/app/types/plant.types";
+} from "@/types/plant.types";
 
 import Input from "../form/Input";
-import BasicButton from "../common/BasicButton";
+import Button from "../common/Button";
 import FormDatepicker from "../form/FormDatepicker";
 import { Alert } from "flowbite-react";
 import { HiInformationCircle } from "react-icons/hi";
@@ -126,7 +126,6 @@ export default function PlantForm({ plant, collection, action }: Props) {
                   }}
                 />
                 <Input
-                  className="col-span-1"
                   name="country"
                   placeholder="Country"
                   value={plantForm?.country}
@@ -162,14 +161,9 @@ export default function PlantForm({ plant, collection, action }: Props) {
             <span className="font-medium">{state?.error}</span>
           </Alert>
         )}
-        <BasicButton
-          type="submit"
-          disabled={isPending}
-          isProcessing={isPending}
-          className="mt-5"
-        >
+        <Button type="submit" disabled={isPending} className="mt-5">
           Save Plant
-        </BasicButton>
+        </Button>
       </Form>
     </>
   );
