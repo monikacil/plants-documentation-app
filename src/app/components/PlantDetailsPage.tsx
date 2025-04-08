@@ -13,7 +13,10 @@ export default async function PlantDetailsPage({ params }: Props) {
 
   return (
     <>
-      <PlantDetails plant={plant} collection={collection} />
+      <PlantDetails
+        plant={plant}
+        collection={collection}
+      />
     </>
   );
 }

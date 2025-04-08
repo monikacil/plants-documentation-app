@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/lib/connectDB";
+import { dbConnect } from "@/lib/dbConnect";
 import { zodPlantValidation } from "@/lib/zod/zodValidations";
 
 import { getSessionUserId } from "@/lib/utils/session.helper";
@@ -41,7 +41,7 @@ export const addPlant = async (
   const createdPlant = new collectionModel(plant);
 
   try {
-    await connectDB();
+    await dbConnect();
     const savedPlant = await createdPlant.save();
     revalidatePath("/plants/[slug]");
     return JSON.parse(JSON.stringify(savedPlant));
@@ -61,7 +61,7 @@ export const deletePlant = async (
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     await collectionModel.deleteOne({ _id: id, _userId: userId });
     revalidatePath("/plants/[slug]");
   } catch (error) {
@@ -90,7 +90,7 @@ export const editPlant = async (
   const data = dataToUpdate(userId, formData, extraArgs.collection);
 
   try {
-    await connectDB();
+    await dbConnect();
     await collectionModel.findByIdAndUpdate(
       { _id: extraArgs.id, _userId: userId },
       data
@@ -127,7 +127,7 @@ export const getPlants = async (
   }
 
   try {
-    await connectDB();
+    await dbConnect();
     const dbPlantsList = await collectionModel.aggregate([
       {
         $match: {
@@ -167,7 +167,7 @@ export const getPlant = async (
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const dbPlant = await collectionModel.findOne({ _id: id, _userId: userId });
     return JSON.parse(JSON.stringify(uiPlantObject(dbPlant, collection)));
   } catch (error) {
@@ -189,7 +189,7 @@ export const getPlantsPages = async (
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const dbPlantsList = await collectionModel.aggregate([
       {
         $match: {

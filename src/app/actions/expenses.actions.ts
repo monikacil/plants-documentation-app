@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/lib/connectDB";
+import { dbConnect } from "@/lib/dbConnect";
 import { zodExpenseValidation } from "@/lib/zod/zodValidations";
 
 import { getSessionUserId } from "@/lib/utils/session.helper";
@@ -33,7 +33,7 @@ export const getExpenses = async (
   }
 
   try {
-    await connectDB();
+    await dbConnect();
     const dbExpensesList = await Expense.aggregate([
       {
         $match: {
@@ -80,7 +80,7 @@ export const addExpenses = async (
   const createdExpense = await new Expense(data);
 
   try {
-    await connectDB();
+    await dbConnect();
     const savedExpense = await createdExpense.save();
     revalidatePath("/expenses");
     return JSON.parse(JSON.stringify(savedExpense));
@@ -95,7 +95,7 @@ export const deleteExpense = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     await Expense.deleteOne({ _id: id, _userId: userId });
     revalidatePath("/expenses");
   } catch (error) {
@@ -123,7 +123,7 @@ export const editExpense = async (
   const data = { _userId: userId, ...validation.data };
 
   try {
-    await connectDB();
+    await dbConnect();
     await Expense.findByIdAndUpdate({ _id: id, _userId: userId }, data);
     revalidatePath("/expenses");
   } catch (error) {
@@ -149,7 +149,7 @@ export const getExpense = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const expense = await Expense.findOne({ _id: id, _userId: userId });
     return JSON.parse(JSON.stringify(uiExpenseObject(expense)));
   } catch (error) {
@@ -163,7 +163,7 @@ export const getExpensesPages = async (query: string, limit: number) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const expenses = await Expense.aggregate([
       {
         $match: {

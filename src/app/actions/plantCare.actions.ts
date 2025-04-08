@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
-import { connectDB } from "@/lib/connectDB";
+import { dbConnect } from "@/lib/dbConnect";
 import { getSessionUserId } from "@/lib/utils/session.helper";
 import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
@@ -32,7 +32,7 @@ export const getPlantCares = async (
   }
 
   try {
-    await connectDB();
+    await dbConnect();
     const dbPlantCareList = await PlantCare.aggregate([
       {
         $match: {
@@ -87,7 +87,7 @@ export const addPlantCare = async (
   const createdPlantCare = await new PlantCare(data);
 
   try {
-    await connectDB();
+    await dbConnect();
     const savedPlantCare = await createdPlantCare.save();
     revalidatePath("/plantCare");
     return JSON.parse(JSON.stringify(savedPlantCare));
@@ -105,7 +105,7 @@ export const deletePlantCare = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     await PlantCare.deleteOne({ _id: id, _userId: userId });
     revalidatePath("/plantCare");
   } catch (error) {
@@ -140,7 +140,7 @@ export const editPlantCare = async (
   };
 
   try {
-    await connectDB();
+    await dbConnect();
     await PlantCare.findByIdAndUpdate({ _id: id, _userId: userId }, data);
     revalidatePath("/plantCare");
   } catch (error) {
@@ -157,7 +157,7 @@ export const getPlantCare = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const care = await PlantCare.findOne({ _id: id, _userId: userId });
     return JSON.parse(JSON.stringify(uiPlantCareObj(care)));
   } catch (error) {
@@ -174,7 +174,7 @@ export const getPlantCarePages = async (query: string, limit: number) => {
   const userId = await getSessionUserId();
 
   try {
-    await connectDB();
+    await dbConnect();
     const care = await PlantCare.aggregate([
       {
         $match: {

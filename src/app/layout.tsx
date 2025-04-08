@@ -12,6 +12,8 @@ const fredoka = Fredoka({
 
 // Layout components
 import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
+// Auth Provider
+import { AuthProvider } from "./AuthProvider";
 
 export const metadata: Metadata = {
   title: "Plants Documentation App",
@@ -37,17 +39,18 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/images/web-app-manifest-192x192.png" }],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fredoka.variable}`}>
-      <body className="h-screen">
-        <AddToHomeScreen />
-        <section className="size-full">{children}</section>
-      </body>
-    </html>
+    <AuthProvider>
+      <html
+        lang='en'
+        className={`${fredoka.variable}`}
+      >
+        <body className='h-screen'>
+          <AddToHomeScreen />
+          <section className='size-full'>{children}</section>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

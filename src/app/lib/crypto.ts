@@ -1,3 +1,5 @@
+"use server";
+
 import AES from "crypto-js/aes";
 import { enc } from "crypto-js";
 

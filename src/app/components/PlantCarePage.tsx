@@ -6,16 +6,9 @@ import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 
 export default async function PlantCarePage({ searchParams }: SearchParams) {
-  const { query, currentPage, limit, sort } = await getPageSearchParams(
-    searchParams
-  );
+  const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
   const totalPages = await getPlantCarePages(query, limit);
-  const plantCareList: PlantCareDocument[] = await getPlantCares(
-    query,
-    currentPage,
-    limit,
-    sort
-  );
+  const plantCareList: PlantCareDocument[] = await getPlantCares(query, currentPage, limit, sort);
 
   return (
     <TableWrapper

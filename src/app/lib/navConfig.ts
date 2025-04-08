@@ -1,5 +1,3 @@
-import { logout } from "../actions/auth.actions";
-
 export const NAVIGATION_CONFIG = [
   {
     name: "Dashboard",
@@ -33,18 +31,6 @@ export const NAVIGATION_CONFIG = [
   },
   {
     name: "Profile",
-    type: "dropdown",
-    icon: true,
-    options: [
-      {
-        name: "Profile",
-        href: "/user",
-      },
-      {
-        name: "Logout",
-        type: "button",
-        action: logout,
-      },
-    ],
+    href: "/user",
   },
 ];

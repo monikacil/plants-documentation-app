@@ -1,4 +1,4 @@
-export function getErrorMessage(error: unknown, customMessage: string) {
+export function getErrorMessage(error: unknown, customMessage: string = "An error occurred.") {
   let message: string;
 
   if (error instanceof Error) {

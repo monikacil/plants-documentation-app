@@ -15,6 +15,9 @@ const config: Config = {
   globals: {
     Uint8Array: Uint8Array,
   },
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/app/$1", // Map @ to the src folder
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

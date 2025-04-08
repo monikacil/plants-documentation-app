@@ -1,4 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
+
 import { UserDocument } from "../types/user.types";
 
 const UserSchema = new Schema<UserDocument>(
@@ -15,9 +16,6 @@ const UserSchema = new Schema<UserDocument>(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
 );
 
 const User = mongoose.models?.User || model<UserDocument>("User", UserSchema);

@@ -1,56 +1,52 @@
-import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "@/lib/joseSession";
+import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
+import { NextResponse, NextRequest } from "next/server";
 
-// 1. Specify protected and public routes
-const protectedRoutes = ["/user", "/dashboard", "/expenses", "/plantCare"];
-const publicRoutes = ["/login", "/signup", "/"];
-
-const COOKIE_NAME = process.env.COOKIE_NAME as string;
-
-export default async function middleware(req: NextRequest) {
-  // 2. Check if the current route is protected or public
-  const path = req.nextUrl.pathname;
-
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
-
-  // 3. Decrypt the session from the cookie
-  const cookie = req.cookies.get(COOKIE_NAME)?.value;
-  const session = await decrypt(cookie);
-
-  // 4. Redirect
-  if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  }
-
-  if (!session?.userId && req.nextUrl.pathname.startsWith("/plants")) {
-    return NextResponse.redirect(new URL("/login", req.nextUrl));
-  }
-
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    !req.nextUrl.pathname.startsWith("/plants")
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-  }
-
-  if (
-    !isPublicRoute &&
-    session?.userId &&
-    req.nextUrl.pathname.startsWith("/plants")
-  ) {
-    NextResponse.next();
-  }
-
-  return NextResponse.next();
+interface KindeAuth {
+  user: Record<string, unknown> | null;
+  token: string | null;
 }
+
+interface MiddlewareRequest {
+  kindeAuth: KindeAuth;
+}
+
+export default withAuth(
+  async function middleware(req: NextRequest & MiddlewareRequest) {
+    if (req.method === "HEAD") {
+      return NextResponse.next();
+    }
+    const { kindeAuth } = req;
+
+    const publicPaths = ["/"];
+    const isPublicPath = publicPaths.includes(req.nextUrl.pathname);
+
+
+    // Explicitly handle the home page ("/")
+    if (isPublicPath && kindeAuth.user) {
+      console.log(22)
+      // Redirect to dashboard if authenticated
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+
+    // Redirect to login (home page) if not authenticated and accessing protected routes
+    if (!kindeAuth.user) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+
+    // Allow access to authenticated users for protected routes
+    return NextResponse.next();
+  },
+  {
+    // Specify public paths that don't require authentication
+    publicPaths: ["/"],
+    isReturnToCurrentPage: true,
+  }
+);
+
 
 export const config = {
   matcher: [
-    "/",
-    "/login",
-    "/signup",
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
-  ],
+    '/',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|images|manifest.json).*)',],
 };

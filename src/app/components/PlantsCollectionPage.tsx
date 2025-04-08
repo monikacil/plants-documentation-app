@@ -15,22 +15,11 @@ type Props = {
   }>;
 };
 
-export default async function PlantsCollectionPage({
-  params,
-  searchParams,
-}: Props) {
+export default async function PlantsCollectionPage({ params, searchParams }: Props) {
   const collection = (await params).slug as Collections;
-  const { query, currentPage, limit, sort } = await getPageSearchParams(
-    searchParams
-  );
+  const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
   const totalPages = await getPlantsPages(query, collection, limit);
-  const plantsList: PlantTableType[] = await getPlants(
-    collection,
-    query,
-    currentPage,
-    limit,
-    sort
-  );
+  const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort);
 
   return (
     <TableWrapper

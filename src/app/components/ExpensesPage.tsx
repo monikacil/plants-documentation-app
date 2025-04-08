@@ -6,16 +6,9 @@ import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 
 export default async function ExpensesPage({ searchParams }: SearchParams) {
-  const { query, currentPage, limit, sort } = await getPageSearchParams(
-    searchParams
-  );
+  const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
   const totalPages = await getExpensesPages(query, limit);
-  const expensesList: ExpenseDocument[] = await getExpenses(
-    query,
-    currentPage,
-    limit,
-    sort
-  );
+  const expensesList: ExpenseDocument[] = await getExpenses(query, currentPage, limit, sort);
 
   return (
     <TableWrapper
