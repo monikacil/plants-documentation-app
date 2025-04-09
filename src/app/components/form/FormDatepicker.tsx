@@ -18,6 +18,12 @@ type Props = {
   onChange: (e: Date) => void | undefined;
 };
 
+type HandleChangeEvent = {
+  target: {
+    value: Date;
+  };
+};
+
 export default function FormDatepicker({
   name,
   value,
@@ -33,10 +39,11 @@ export default function FormDatepicker({
 
   const [show, setShow] = useState(false);
   const [selectedDate, setSelectedDate] = useState(value || new Date());
-  const handleChange = (selectedDate: Date) => {
-    setSelectedDate(selectedDate);
-    if (selectedDate) {
-      onChange(selectedDate);
+
+  const handleChange = (date: HandleChangeEvent["target"]["value"]) => {
+    if (selectedDate !== date) {
+      setSelectedDate(date);
+      onChange(date);
     }
   };
 
@@ -45,17 +52,20 @@ export default function FormDatepicker({
   });
 
   return (
-    <div data-testid="datepicker-wrapper" ref={ref}>
+    <div
+      data-testid='datepicker-wrapper'
+      ref={ref}
+    >
       <Datepicker
         options={options}
-        onChange={handleChange}
+        onChange={(date) => handleChange(date)}
         show={show}
         setShow={(state) => setShow(state)}
       >
         <div className={cn("flex w-full rounded-full bg-white", className)}>
           <input
-            data-testid="datepicker-input"
-            type="text"
+            data-testid='datepicker-input'
+            type='text'
             name={name}
             value={selectedDate.toDateString()}
             onFocus={() => setShow(true)}

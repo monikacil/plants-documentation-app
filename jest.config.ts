@@ -16,7 +16,7 @@ const config: Config = {
     Uint8Array: Uint8Array,
   },
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/app/$1", // Map @ to the src folder
+    "^@/(.*)$": "<rootDir>/src/app/$1", // Map @ to the app folder
   },
 };
 

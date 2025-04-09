@@ -1,23 +1,25 @@
-import { cn, generateUniqKey } from "@/lib/utils/others";
+import { cn } from "@/lib/utils/others";
+import { ZodError } from "zod";
 
-type Props = {
-  error: string[] | string;
+type ZodErrorsProps = {
+  error: ZodError | null;
   className?: string;
 };
 
-export default function ZodErrors({ error, className }: Props) {
-  if (!error) return null;
-  if (typeof error === "string") {
-    return (
-      <div className={cn("text-xs text-danger-500", className)}>{error}</div>
-    );
+export default function ZodErrors({ error, className }: ZodErrorsProps) {
+  if (!error) {
+    return null;
   }
-  return error.map((err: string) => (
+
+  return (
     <div
-      key={generateUniqKey("zod-error")}
+      role='alert'
       className={cn("text-xs text-danger-500", className)}
     >
-      {err}
+      {error.issues.map((issue, index) => (
+        <p key={index}>{issue.message}</p>
+      ))}
+      <p className='text-xs text-gray-500'>Total issues: {error.issues.length}</p>
     </div>
-  ));
+  );
 }

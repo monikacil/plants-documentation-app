@@ -2,15 +2,17 @@ import Image from "next/image";
 
 import Logo from "./components/layout/Logo";
 
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import landingImg from "./../../public/images/landing-page-img.png";
 import { RegisterLink, LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Button from "./components/common/Button";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 
 export default async function LandingPage() {
   const { isAuthenticated } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
+  const isUserAuthenticated = isAuthenticated ? await isAuthenticated() : false; // For debugging purposes, you can log the authentication status to the console or use it in your component logic.
+  console.log(isUserAuthenticated);
 
   return (
     <main className='h-full text-xl p-3 md:p-6'>

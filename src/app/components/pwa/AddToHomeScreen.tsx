@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import useUserAgent from "@/components/layout/UseUserAgent";
+import useUserAgent from "@/lib/UseUserAgent";
 import AddToMobileDevice from "./AddToMobileDevice";
 
 export default function AddToHomeScreen() {

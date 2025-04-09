@@ -30,7 +30,10 @@ export default function Navigation() {
   };
 
   return (
-    <div className='flex gap-2 align-middle'>
+    <div
+      className='flex gap-2 align-middle'
+      data-testid='nav-wrapper'
+    >
       <button
         type='button'
         className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-base-500 rounded-lg md:hidden hover:bg-base-100 focus:outline-none focus:ring-2 focus:ring-base-200'
@@ -116,7 +119,10 @@ export default function Navigation() {
             key={generateUniqKey(`logout-btn`)}
             className='hover:text-base-green-700 rounded-lg'
           >
-            <LogoutLink className='block px-4 py-2 hover:text-base-green-700 rounded-lg'>
+            <LogoutLink
+              data-testid='logout-link'
+              className='block px-4 py-2 hover:text-base-green-700 rounded-lg'
+            >
               Logout
             </LogoutLink>
           </li>

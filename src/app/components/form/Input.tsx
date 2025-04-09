@@ -2,26 +2,20 @@
 
 import { InputHTMLAttributes, useEffect, useState } from "react";
 
-import ZodErrors from "../common/ZodErrors";
+import ZodErrors from "./../common/ZodErrors";
 
 import { cn } from "@/lib/utils/others";
+import type { ZodError } from "zod";
 
 type Props = {
   value?: string | number;
   label?: string;
   className?: string;
-  errors?: string[] | string;
+  errors?: ZodError[] | string[];
   onChange: (e: string) => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
-export default function Input({
-  value,
-  label,
-  className,
-  onChange,
-  errors,
-  ...rest
-}: Props) {
+export default function Input({ value, label, className, onChange, errors, ...rest }: Props) {
   const [showError, setShowError] = useState(errors ? true : false);
   const [inputValue, setInputValue] = useState(value);
 
@@ -40,10 +34,10 @@ export default function Input({
   }, [value, inputValue]);
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className='flex flex-col gap-1'>
       {label ?? <label>{label}</label>}
       <input
-        data-testid="input"
+        data-testid='input'
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChange(e.currentTarget.value);
@@ -56,12 +50,18 @@ export default function Input({
           className
         )}
       />
-      <div data-testid="zod-error">
-        {showError && errors ? (
-          <ZodErrors error={errors} className="text-center" />
-        ) : (
-          ""
-        )}
+      <div data-testid='zod-error'>
+        {showError && errors
+          ? errors.map((error, index) => {
+              return (
+                <ZodErrors
+                  error={error as ZodError}
+                  className='text-center'
+                  key={index}
+                />
+              );
+            })
+          : ""}
       </div>
     </div>
   );
