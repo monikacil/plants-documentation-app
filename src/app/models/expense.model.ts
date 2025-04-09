@@ -3,7 +3,7 @@ import { ExpenseDocument } from "../types/expenses.types";
 
 const ExpenseSchema = new Schema<ExpenseDocument>(
   {
-    _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    _userId: { type: String, required: true },
     products: {
       type: String,
       required: [true, "Product is required"],
@@ -23,7 +23,7 @@ const ExpenseSchema = new Schema<ExpenseDocument>(
       trim: true,
     },
     date: {
-      type: Date,
+      type: String,
       required: [true, "Date is required"],
     },
   },

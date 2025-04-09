@@ -8,7 +8,7 @@ const ImageSchema = new Schema<ImagesDocument>({
 
 const SoldPlantSchema = new Schema<PlantDocument>(
   {
-    _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    _userId: { type: String, required: true },
     species: {
       type: String,
       required: [true, "Species is required"],

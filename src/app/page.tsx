@@ -12,7 +12,6 @@ import Link from "next/link";
 export default async function LandingPage() {
   const { isAuthenticated } = getKindeServerSession();
   const isUserAuthenticated = isAuthenticated ? await isAuthenticated() : false; // For debugging purposes, you can log the authentication status to the console or use it in your component logic.
-  console.log(isUserAuthenticated);
 
   return (
     <main className='h-full text-xl p-3 md:p-6'>

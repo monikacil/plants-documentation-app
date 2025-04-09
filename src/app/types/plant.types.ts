@@ -9,7 +9,7 @@ export type ImagesDocument = {
 
 export interface PlantDocument {
   _id: Schema.Types.ObjectId | string;
-  _userId: Schema.Types.ObjectId;
+  _userId: string;
   species: string;
   variety: string;
   price: string | undefined;

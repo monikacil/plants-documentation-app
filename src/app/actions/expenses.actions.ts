@@ -8,7 +8,6 @@ import { zodExpenseValidation } from "@/lib/zod/zodValidations";
 import { getSessionUserId } from "@/lib/utils/session.helper";
 import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
-import mongoose from "mongoose";
 import { SortType } from "@/types/others.types";
 import Expense from "@/models/expense.model";
 import { ExpenseDocument } from "../types/expenses.types";
@@ -37,7 +36,7 @@ export const getExpenses = async (
     const dbExpensesList = await Expense.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { products: { $regex: ".*" + query + ".*", $options: "i" } },
             { price: { $regex: ".*" + query + ".*", $options: "i" } },
@@ -49,13 +48,13 @@ export const getExpenses = async (
       { $limit: limit },
       sortQuery,
     ]);
-    if (!dbExpensesList) return [];
+    if (!dbExpensesList.length) return [];
     return JSON.parse(JSON.stringify(dbExpensesList));
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while fetching plants data."
+        "Error occurred while fetching expenses data."
       ),
     };
   }
@@ -141,7 +140,7 @@ const uiExpenseObject = (expense: ExpenseDocument) => {
     products: expense.products,
     shop: expense.shop,
     price: expense.price,
-    date: expense.date,
+    date: expense.date?.toLocaleDateString(),
   };
 };
 
@@ -167,7 +166,7 @@ export const getExpensesPages = async (query: string, limit: number) => {
     const expenses = await Expense.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { products: { $regex: ".*" + query + ".*", $options: "i" } },
             { shop: { $regex: ".*" + query + ".*", $options: "i" } },

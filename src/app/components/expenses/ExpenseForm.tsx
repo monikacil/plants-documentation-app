@@ -36,16 +36,18 @@ export default function ExpenseForm({ expense, action }: Props) {
     null
   );
 
-  const [expensesForm, setExpensesForm] = useState(
-    expense ? expense : initForm
-  );
+  const [expensesForm, setExpensesForm] = useState(expense ? expense : initForm);
 
   return (
     <>
-      <Form action={formAction} className="flex flex-col gap-3">
+      <Form
+        action={formAction}
+        className='flex flex-col gap-3'
+        data-testid='expense-form'
+      >
         <Input
-          name="products"
-          placeholder="Products"
+          name='products'
+          placeholder='Products'
           value={expensesForm?.products}
           errors={!expensesForm.products ? state?.errors?.products : null}
           onChange={(value) => {
@@ -53,8 +55,8 @@ export default function ExpenseForm({ expense, action }: Props) {
           }}
         />
         <Input
-          name="price"
-          placeholder="Price"
+          name='price'
+          placeholder='Price'
           value={expensesForm?.price}
           errors={!expensesForm.price ? state?.errors?.price : null}
           onChange={(value) => {
@@ -62,8 +64,8 @@ export default function ExpenseForm({ expense, action }: Props) {
           }}
         />
         <Input
-          name="shop"
-          placeholder="Seller"
+          name='shop'
+          placeholder='Seller'
           value={expensesForm?.shop}
           errors={!expensesForm.shop ? state?.errors?.shop : null}
           onChange={(value) => {
@@ -71,9 +73,9 @@ export default function ExpenseForm({ expense, action }: Props) {
           }}
         />
         <FormDatepicker
-          name="date"
+          name='date'
           maxDate={new Date()}
-          value={expensesForm.date}
+          value={expensesForm.date instanceof Date ? expensesForm.date : new Date()}
           onChange={(value) => {
             setExpensesForm({
               ...expensesForm,
@@ -82,11 +84,18 @@ export default function ExpenseForm({ expense, action }: Props) {
           }}
         />
         {state?.error && (
-          <Alert color="failure" icon={HiInformationCircle}>
-            <span className="font-medium">{state?.error}</span>
+          <Alert
+            color='failure'
+            icon={HiInformationCircle}
+          >
+            <span className='font-medium'>{state?.error}</span>
           </Alert>
         )}
-        <Button type="submit" disabled={isPending} className="my-5">
+        <Button
+          type='submit'
+          disabled={isPending}
+          className='my-5'
+        >
           Save Expense
         </Button>
       </Form>

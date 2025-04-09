@@ -38,11 +38,9 @@ export function getTableHeaders(tableHeaders: TableHeaderType[]) {
     return (
       <Table.HeadCell
         key={generateUniqKey("table-header")}
-        className={`w-[${
-          header.width ? header.width : "280px"
-        }] bg-base-gray-800 text-white`}
+        className={`w-[${header.width ? header.width : "280px"}] bg-base-gray-800 text-white`}
       >
-        <div className="flex items-center">
+        <div className='flex items-center'>
           {header.title}
           {header.sortable ? <Sort name={header.dbName || ""} /> : null}
         </div>
@@ -63,7 +61,7 @@ export function getTableBody(
   const tableBody = data.map((element, idx) => (
     <Table.Row
       key={generateUniqKey("table-body-row")}
-      className="cursor-pointer border-teal-800/30"
+      className='cursor-pointer border-teal-800/30'
     >
       <Table.Cell
         onClick={() => {
@@ -78,17 +76,17 @@ export function getTableBody(
           return (
             <Table.Cell
               key={generateUniqKey("table-cell")}
-              className="max-w-[280px]"
+              className='max-w-[280px]'
               onClick={() => {
                 if (url) goToDetails(url, element._id);
               }}
             >
-              {hEl[1] as string}
+              {hEl[1] && hEl[1] instanceof Date ? hEl[1].toLocaleDateString() : (hEl[1] as string)}
             </Table.Cell>
           );
         })}
       {headers.includes("actions") ? (
-        <Table.Cell className="w-32">
+        <Table.Cell className='w-32'>
           <ActionButtons route={`${url}/${element._id}`} />
         </Table.Cell>
       ) : null}

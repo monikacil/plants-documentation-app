@@ -1,6 +1,5 @@
 "use server";
 
-import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
 import { dbConnect } from "@/lib/dbConnect";
@@ -36,7 +35,7 @@ export const getPlantCares = async (
     const dbPlantCareList = await PlantCare.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { control: { $regex: ".*" + query + ".*", $options: "i" } },
             { pests: { $regex: ".*" + query + ".*", $options: "i" } },
@@ -178,7 +177,7 @@ export const getPlantCarePages = async (query: string, limit: number) => {
     const care = await PlantCare.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { control: { $regex: ".*" + query + ".*", $options: "i" } },
             { pests: { $regex: ".*" + query + ".*", $options: "i" } },

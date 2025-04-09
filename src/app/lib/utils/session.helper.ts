@@ -1,11 +1,5 @@
 "use server";
-
-import { cookies } from "next/headers";
-import { getCookie } from "cookies-next/server";
-
-import { decrypt } from "@/lib/joseSession";
-
-const COOKIE_NAME = process.env.COOKIE_NAME as string;
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export type SessionPayload = {
   userId: string | number;
@@ -13,8 +7,8 @@ export type SessionPayload = {
 };
 
 export const getSessionUserId = async () => {
-  const cookie = await getCookie(COOKIE_NAME, { cookies });
-  const session = await decrypt(cookie);
-  if (!session) return;
-  return session.userId as string;
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user) return;
+  return user.id as string;
 };

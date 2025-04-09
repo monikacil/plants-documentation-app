@@ -1,7 +1,5 @@
 "use server";
 
-import mongoose from "mongoose";
-
 import { revalidatePath } from "next/cache";
 
 import { dbConnect } from "@/lib/dbConnect";
@@ -37,8 +35,9 @@ export const addPlant = async (
 
   const collectionModel = getCollectionModel(extraArgs.collection);
   const userId = await getSessionUserId();
-  const plant = dataToUpdate(userId, formData, extraArgs?.collection);
+  const plant = await dataToUpdate(userId, formData, extraArgs?.collection);
   const createdPlant = new collectionModel(plant);
+  console.log("Created plant:", createdPlant);
 
   try {
     await dbConnect();
@@ -131,7 +130,7 @@ export const getPlants = async (
     const dbPlantsList = await collectionModel.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { species: { $regex: ".*" + query + ".*", $options: "i" } },
             { variety: { $regex: ".*" + query + ".*", $options: "i" } },
@@ -144,9 +143,9 @@ export const getPlants = async (
     ]);
     if (!dbPlantsList) return [];
 
-    const plants = dbPlantsList.map((plant: PlantDocument) => {
-      return uiPlantObject(plant, collection);
-    });
+    const plants = await Promise.all(dbPlantsList.map(async (plant: PlantDocument) => {
+      return await uiPlantObject(plant, collection);
+    }));
 
     return JSON.parse(JSON.stringify(plants));
   } catch (error) {
@@ -193,7 +192,7 @@ export const getPlantsPages = async (
     const dbPlantsList = await collectionModel.aggregate([
       {
         $match: {
-          _userId: new mongoose.Types.ObjectId(userId),
+          _userId: userId,
           $or: [
             { species: { $regex: ".*" + query + ".*", $options: "i" } },
             { variety: { $regex: ".*" + query + ".*", $options: "i" } },

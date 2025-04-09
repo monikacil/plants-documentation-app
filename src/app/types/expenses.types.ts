@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 export type ExpenseDocument = {
   _id: mongoose.Schema.Types.ObjectId | string;
-  _userId: mongoose.Schema.Types.ObjectId;
+  _userId: string;
   products: string;
   price: string;
   shop: string;
-  date: Date;
+  date: Date | undefined;
   createdAt: Date;
   updatedAt: Date;
 };

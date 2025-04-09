@@ -3,7 +3,7 @@ import { PlantCareDocument } from "../types/plantCare.types";
 
 const PlantCareSchema = new Schema<PlantCareDocument>(
   {
-    _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    _userId: { type: String, required: true },
     date: {
       type: Date,
       required: [true, "Date is required"],

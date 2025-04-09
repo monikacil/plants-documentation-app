@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export type PlantCareDocument = {
   _id: mongoose.Schema.Types.ObjectId | string;
-  _userId: mongoose.Schema.Types.ObjectId;
+  _userId: string;
   date: Date;
   control: string;
   pests: string;

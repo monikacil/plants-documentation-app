@@ -38,12 +38,14 @@ export default function FormDatepicker({
   });
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(value || new Date());
-
+  const [selectedDate, setSelectedDate] = useState(
+    value instanceof Date && !isNaN(value.getTime()) ? value : new Date()
+  );
   const handleChange = (date: HandleChangeEvent["target"]["value"]) => {
-    if (selectedDate !== date) {
-      setSelectedDate(date);
-      onChange(date);
+    const parsedDate = date instanceof Date ? date : new Date(date);
+    if (!isNaN(parsedDate.getTime()) && selectedDate.getTime() !== parsedDate.getTime()) {
+      setSelectedDate(parsedDate);
+      onChange(parsedDate);
     }
   };
 
@@ -67,7 +69,8 @@ export default function FormDatepicker({
             data-testid='datepicker-input'
             type='text'
             name={name}
-            value={selectedDate.toDateString()}
+            placeholder='Select date'
+            value={selectedDate instanceof Date ? selectedDate.toDateString() : selectedDate}
             onFocus={() => setShow(true)}
             readOnly
             className={cn(

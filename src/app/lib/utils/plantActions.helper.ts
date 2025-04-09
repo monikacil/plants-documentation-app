@@ -1,8 +1,8 @@
-import SoldPlant from "../../models/plants/soldPlant.model";
-import PurchasedPlant from "../../models/plants/purchasedPlant.model";
-import CollectedPlant from "../../models/plants/collectedPlant.model";
+import SoldPlant from "@/models/plants/soldPlant.model";
+import PurchasedPlant from "@/models/plants/purchasedPlant.model";
+import CollectedPlant from "@/models/plants/collectedPlant.model";
 
-import { Collections, PlantDocument } from "../../types/plant.types";
+import { Collections, PlantDocument } from "@/types/plant.types";
 
 import { decryptData, encryptData } from "../crypto";
 
@@ -27,10 +27,10 @@ export const getCollectionModel = (collection: Collections) => {
   return model;
 };
 
-export const dataToUpdate = (
-  userId: unknown,
+export const dataToUpdate = async (
+  userId: string | undefined,
   formData: FormData,
-  collection: Collections | undefined
+  collection: Collections
 ) => {
   const data = {
     _userId: userId,
@@ -39,21 +39,21 @@ export const dataToUpdate = (
     images: [],
   };
 
-  if (!collection) {
+  if (collection === "collected") {
     return data;
   }
 
-  return Object.assign({}, data, additionalData(formData, collection));
+  return Object.assign({}, data, await additionalData(formData, collection));
 };
 
-const additionalData = (formData: FormData, collection: Collections) => {
+const additionalData = async (formData: FormData, collection: Collections) => {
   const key = getAdditionalDataKey(collection);
 
   return {
     price: formData.get("price"),
     date: formData.get("date"),
     passport: formData.get("passport"),
-    [key]: encryptData({
+    [key]: await encryptData({
       name: formData.get("name"),
       address: formData.get("address"),
       phone: formData.get("phone"),
@@ -63,7 +63,7 @@ const additionalData = (formData: FormData, collection: Collections) => {
   };
 };
 
-export const uiPlantObject = (
+export const uiPlantObject = async (
   plant: PlantDocument,
   collection: Collections
 ) => {
@@ -81,7 +81,8 @@ export const uiPlantObject = (
   }
 
   const key = getAdditionalDataKey(collection);
-  const decryptedData = decryptData(plant[key]);
+  const decryptedData = await decryptData(plant[key]);
+
   const additionalFields = {
     price: plant.price,
     date: plant.date,

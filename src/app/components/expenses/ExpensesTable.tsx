@@ -16,18 +16,19 @@ type Props = {
 
 export default function ExpensesTable({ expensesList, details = true }: Props) {
   const headers = headersConfig as TableHeaderType[];
+  const path = usePathname();
+  const url = details ? path : "";
   const tableHeaders = getTableHeaders(headers);
   const headersList = getHeadersForBody(headers);
-  const path = usePathname();
-
-  const url = details ? path : "";
-
   const tableBody = getTableBody(expensesList, url, headersList);
 
   return (
     <>
       {expensesList.length ? (
-        <BasicTable tableBody={tableBody} tableHeaders={tableHeaders} />
+        <BasicTable
+          tableBody={tableBody}
+          tableHeaders={tableHeaders}
+        />
       ) : (
         <p>No data</p>
       )}
