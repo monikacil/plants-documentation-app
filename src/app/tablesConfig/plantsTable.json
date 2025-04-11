@@ -1,137 +1,160 @@
 [
   {
-    "collected": [
-      {
-        "title": "No.",
-        "width": "115px"
-      },
-      {
-        "title": "Species",
-        "dbName": "species",
-        "sortable": true
-      },
-      {
-        "title": "Variety",
-        "dbName": "variety",
-        "sortable": true
-      },
-      {
-        "title": "Actions",
-        "editable": true,
-        "deletable": true
-      }
-    ]
+    "collected": {
+      "hasPagination": true,
+      "hasSearch": true,
+      "hasDetails": true,
+      "url": "/plants/collected/",
+      "headers": [
+        {
+          "title": "No.",
+          "dbName": "index",
+          "width": "115px"
+        },
+        {
+          "title": "Species",
+          "dbName": "species",
+          "sortable": true
+        },
+        {
+          "title": "Variety",
+          "dbName": "variety",
+          "sortable": true
+        },
+        {
+          "title": "Actions",
+          "dbName": "actions",
+          "editable": true,
+          "deletable": true
+        }
+      ]
+    }
   },
   {
-    "purchased": [
-      {
-        "title": "No.",
-        "width": "115px"
-      },
-      {
-        "title": "Species",
-        "dbName": "species",
-        "sortable": true
-      },
-      {
-        "title": "Variety",
-        "dbName": "variety",
-        "sortable": true
-      },
-      {
-        "title": "Price",
-        "dbName": "price",
-        "sortable": true
-      },
-      {
-        "title": "Date",
-        "dbName": "date"
-      },
-      {
-        "title": "Passport Number",
-        "dbName": "passport"
-      },
-      {
-        "title": "Seller Name",
-        "dbName": "name"
-      },
-      {
-        "title": "Seller Address",
-        "dbName": "address"
-      },
-      {
-        "title": "Country",
-        "dbName": "country"
-      },
-      {
-        "title": "Phone Number",
-        "dbName": "phone"
-      },
-      {
-        "title": "Email",
-        "dbName": "email"
-      },
-      {
-        "title": "Actions",
-        "editable": true,
-        "deletable": true
-      }
-    ]
+    "purchased": {
+      "hasPagination": true,
+      "hasSearch": true,
+      "hasDetails": true,
+      "url": "/plants/purchased/",
+      "headers": [
+        {
+          "title": "No.",
+          "width": "115px"
+        },
+        {
+          "title": "Species",
+          "dbName": "species",
+          "sortable": true
+        },
+        {
+          "title": "Variety",
+          "dbName": "variety",
+          "sortable": true
+        },
+        {
+          "title": "Price",
+          "dbName": "price",
+          "sortable": true
+        },
+        {
+          "title": "Date",
+          "dbName": "date"
+        },
+        {
+          "title": "Passport Number",
+          "dbName": "passport"
+        },
+        {
+          "title": "Seller Name",
+          "dbName": "name"
+        },
+        {
+          "title": "Seller Address",
+          "dbName": "address"
+        },
+        {
+          "title": "Country",
+          "dbName": "country"
+        },
+        {
+          "title": "Phone Number",
+          "dbName": "phone"
+        },
+        {
+          "title": "Email",
+          "dbName": "email"
+        },
+        {
+          "title": "Actions",
+          "dbName": "actions",
+          "editable": true,
+          "deletable": true
+        }
+      ]
+    }
   },
   {
-    "sold": [
-      {
-        "title": "No.",
-        "width": "115px"
-      },
-      {
-        "title": "Species",
-        "dbName": "species",
-        "sortable": true
-      },
-      {
-        "title": "Variety",
-        "dbName": "variety",
-        "sortable": true
-      },
-      {
-        "title": "Price",
-        "dbName": "price",
-        "sortable": true
-      },
-      {
-        "title": "Date",
-        "dbName": "date"
-      },
-      {
-        "title": "Passport Number",
-        "dbName": "passport"
-      },
-      {
-        "title": "Buyer Name",
-        "dbName": "name"
-      },
-      {
-        "title": "Buyer Address",
-        "dbName": "address"
-      },
-      {
-        "title": "Country",
-        "dbName": "country"
-      },
-      {
-        "title": "Phone Number",
-        "dbName": "phone"
-      },
-      {
-        "title": "Email",
-        "dbName": "email"
-      },
-      {
-        "title": "Actions",
-        "editable": true,
-        "deletable": true
-      }
-    ]
+    "sold": {
+      "hasPagination": true,
+      "hasSearch": true,
+      "hasDetails": true,
+      "url": "/plants/sold/",
+      "headers": [
+        {
+          "title": "No.",
+          "width": "115px",
+          "dbName": "index"
+        },
+        {
+          "title": "Species",
+          "dbName": "species",
+          "sortable": true
+        },
+        {
+          "title": "Variety",
+          "dbName": "variety",
+          "sortable": true
+        },
+        {
+          "title": "Price",
+          "dbName": "price",
+          "sortable": true
+        },
+        {
+          "title": "Date",
+          "dbName": "date"
+        },
+        {
+          "title": "Passport Number",
+          "dbName": "passport"
+        },
+        {
+          "title": "Buyer Name",
+          "dbName": "name"
+        },
+        {
+          "title": "Buyer Address",
+          "dbName": "address"
+        },
+        {
+          "title": "Country",
+          "dbName": "country"
+        },
+        {
+          "title": "Phone Number",
+          "dbName": "phone"
+        },
+        {
+          "title": "Email",
+          "dbName": "email"
+        },
+        {
+          "title": "Actions",
+          "dbName": "actions",
+          "editable": true,
+          "deletable": true
+        }
+      ]
+    }
   }
 ]

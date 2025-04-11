@@ -1,32 +1,40 @@
-[
-  {
-    "title": "No.",
-    "width": "115px"
-  },
-  {
-    "title": "Products",
-    "dbName": "products",
-    "sortable": true
-  },
-  {
-    "title": "Price",
-    "dbName": "price",
-    "sortable": true,
-    "width": "250px"
-  },
-  {
-    "title": "Shop",
-    "dbName": "shop",
-    "sortable": true
-  },
-  {
-    "title": "Date",
-    "dbName": "date",
-    "sortable": true
-  },
-  {
-    "title": "Actions",
-    "deletable": true,
-    "editable": true
-  }
-]
+{
+  "hasPagination": true,
+  "hasSearch": true,
+  "hasDetails": true,
+  "url": "/expenses/",
+  "headers":[
+    {
+      "title": "No.",
+      "dbName": "index",
+      "width": "115px"
+    },
+    {
+      "title": "Products",
+      "dbName": "products",
+      "sortable": true
+    },
+    {
+      "title": "Price",
+      "dbName": "price",
+      "sortable": true,
+      "width": "250px"
+    },
+    {
+      "title": "Shop",
+      "dbName": "shop",
+      "sortable": true
+    },
+    {
+      "title": "Date",
+      "dbName": "date",
+      "sortable": true
+    },
+    {
+      "title": "Actions",
+      "dbName": "actions",
+      "deletable": true,
+      "editable": true
+    }
+  ]
+}

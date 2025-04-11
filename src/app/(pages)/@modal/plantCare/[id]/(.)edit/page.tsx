@@ -11,8 +11,11 @@ export default async function InterceptedPage({ params }: Props) {
   const care = await getPlantCare(id);
 
   return (
-    <ModalWrapper title="Edit Plant Care">
-      <PlantCareForm plantCare={care} action={editPlantCare} />
+    <ModalWrapper title='Edit Plant Care'>
+      <PlantCareForm
+        plantCare={care}
+        action={editPlantCare}
+      />
     </ModalWrapper>
   );
 }

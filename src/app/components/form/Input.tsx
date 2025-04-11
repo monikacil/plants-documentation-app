@@ -22,7 +22,6 @@ export default function Input({ value, label, className, onChange, errors, ...re
   useEffect(() => {
     if (errors) {
       setShowError(true);
-      console.log(errors);
     }
   }, [errors]);
 

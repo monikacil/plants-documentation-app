@@ -48,6 +48,7 @@ export const getExpenses = async (
       { $limit: limit },
       sortQuery,
     ]);
+
     if (!dbExpensesList.length) return [];
     return JSON.parse(JSON.stringify(dbExpensesList));
   } catch (error) {
@@ -80,9 +81,8 @@ export const addExpenses = async (
 
   try {
     await dbConnect();
-    const savedExpense = await createdExpense.save();
+    await createdExpense.save();
     revalidatePath("/expenses");
-    return JSON.parse(JSON.stringify(savedExpense));
   } catch (error) {
     return {
       message: getErrorMessage(error, "Error occurred while saving expense."),
@@ -140,7 +140,7 @@ const uiExpenseObject = (expense: ExpenseDocument) => {
     products: expense.products,
     shop: expense.shop,
     price: expense.price,
-    date: expense.date?.toLocaleDateString(),
+    date: expense.date,
   };
 };
 

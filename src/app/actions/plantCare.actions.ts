@@ -10,6 +10,7 @@ import { SortType } from "@/types/others.types";
 import PlantCare from "../models/plantCare.model";
 import { zodPlantCareValidation } from "../lib/zod/zodValidations";
 import { uiPlantCareObj } from "../lib/utils/plantCareActions.helper";
+import type { PlantCareDocument } from "@/types/plantCare.types";
 
 export const getPlantCares = async (
   query: string,
@@ -49,9 +50,10 @@ export const getPlantCares = async (
     ]);
 
     if (!dbPlantCareList) return [];
-    return JSON.parse(
-      JSON.stringify(dbPlantCareList.map((el) => uiPlantCareObj(el)))
-    );
+    const plantsCare = await Promise.all(dbPlantCareList.map(async (plantCare: PlantCareDocument) => {
+      return await uiPlantCareObj(plantCare);
+    }));
+    return JSON.parse(JSON.stringify(plantsCare));
   } catch (error) {
     return {
       message: getErrorMessage(
@@ -75,21 +77,15 @@ export const addPlantCare = async (
       errors: validation.error.flatten().fieldErrors,
     };
   }
-  const userId = await getSessionUserId();
 
-  const data = {
-    ...validation.data,
-    _userId: userId,
-    date: Date.parse(validation.data.date),
-    plantsCount: parseInt(validation.data.plantsCount),
-  };
+  const userId = await getSessionUserId();
+  const data = { _userId: userId, ...validation.data };
   const createdPlantCare = await new PlantCare(data);
 
   try {
     await dbConnect();
-    const savedPlantCare = await createdPlantCare.save();
+    await createdPlantCare.save();
     revalidatePath("/plantCare");
-    return JSON.parse(JSON.stringify(savedPlantCare));
   } catch (error) {
     return {
       message: getErrorMessage(
@@ -132,11 +128,7 @@ export const editPlantCare = async (
   }
 
   const userId = await getSessionUserId();
-  const data = {
-    ...validation.data,
-    date: Date.parse(validation.data.date),
-    plantsCount: parseInt(validation.data.plantsCount),
-  };
+  const data = { _userId: userId, ...validation.data };
 
   try {
     await dbConnect();
@@ -158,7 +150,7 @@ export const getPlantCare = async (id: string) => {
   try {
     await dbConnect();
     const care = await PlantCare.findOne({ _id: id, _userId: userId });
-    return JSON.parse(JSON.stringify(uiPlantCareObj(care)));
+    return JSON.parse(JSON.stringify(await uiPlantCareObj(care)));
   } catch (error) {
     return {
       message: getErrorMessage(

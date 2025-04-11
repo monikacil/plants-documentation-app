@@ -7,9 +7,7 @@ const NEXT_SECRET_KEY = process.env.NEXT_SECRET_KEY as string;
 
 export const encryptData = async (data: string | object) => {
   const jsonData = JSON.stringify(data);
-  console.log("Stringified data:", jsonData);
   const encrypted = AES.encrypt(jsonData, NEXT_SECRET_KEY).toString();
-  console.log("Encrypted data:", encrypted);
   return encrypted;
 };
 

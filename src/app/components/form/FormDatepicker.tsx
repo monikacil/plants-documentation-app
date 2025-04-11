@@ -38,15 +38,10 @@ export default function FormDatepicker({
   });
 
   const [show, setShow] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(
-    value instanceof Date && !isNaN(value.getTime()) ? value : new Date()
-  );
+  const [selectedDate, setSelectedDate] = useState(value instanceof Date ? value : new Date());
   const handleChange = (date: HandleChangeEvent["target"]["value"]) => {
-    const parsedDate = date instanceof Date ? date : new Date(date);
-    if (!isNaN(parsedDate.getTime()) && selectedDate.getTime() !== parsedDate.getTime()) {
-      setSelectedDate(parsedDate);
-      onChange(parsedDate);
-    }
+    setSelectedDate(date);
+    onChange(date);
   };
 
   const ref = useOutsideClick(() => {
@@ -70,7 +65,7 @@ export default function FormDatepicker({
             type='text'
             name={name}
             placeholder='Select date'
-            value={selectedDate instanceof Date ? selectedDate.toDateString() : selectedDate}
+            value={selectedDate.toDateString()}
             onFocus={() => setShow(true)}
             readOnly
             className={cn(

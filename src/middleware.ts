@@ -23,7 +23,6 @@ export default withAuth(
 
     // Explicitly handle the home page ("/")
     if (isPublicPath && kindeAuth.user) {
-      console.log(22)
       // Redirect to dashboard if authenticated
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }

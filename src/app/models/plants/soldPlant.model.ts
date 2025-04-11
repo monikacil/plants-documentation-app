@@ -28,7 +28,7 @@ const SoldPlantSchema = new Schema<PlantDocument>(
       lowercase: true,
     },
     date: {
-      type: String,
+      type: Date,
     },
     passport: {
       type: String,

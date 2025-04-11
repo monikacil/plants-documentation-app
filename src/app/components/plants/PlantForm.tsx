@@ -3,11 +3,7 @@
 import { useActionState, useState } from "react";
 import Form from "next/form";
 
-import {
-  Collections,
-  PlantExtraArgs,
-  PlantTableType,
-} from "@/types/plant.types";
+import { Collections, PlantExtraArgs, PlantTableType } from "@/types/plant.types";
 
 import Input from "../form/Input";
 import Button from "../common/Button";
@@ -51,10 +47,10 @@ export default function PlantForm({ plant, collection, action }: Props) {
   return (
     <>
       <Form action={formAction}>
-        <div className="grid lg:grid-cols-2 gap-4 mb-3">
+        <div className='grid lg:grid-cols-2 gap-4 mb-3'>
           <Input
-            name="species"
-            placeholder="Species"
+            name='species'
+            placeholder='Species'
             value={plantForm?.species}
             errors={!plantForm.species ? state?.errors?.species : null}
             onChange={(value) => {
@@ -62,8 +58,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
             }}
           />
           <Input
-            name="variety"
-            placeholder="Variety"
+            name='variety'
+            placeholder='Variety'
             value={plantForm?.variety}
             errors={!plantForm.variety ? state?.errors?.variety : null}
             onChange={(value) => {
@@ -73,10 +69,10 @@ export default function PlantForm({ plant, collection, action }: Props) {
         </div>
         {collection !== "collected" ? (
           <>
-            <div className="lg:grid lg:grid-cols-2 gap-4">
-              <div className="grid grid-cols-2 gap-2">
+            <div className='lg:grid lg:grid-cols-2 gap-4'>
+              <div className='grid grid-cols-2 gap-2'>
                 <FormDatepicker
-                  name="date"
+                  name='date'
                   maxDate={new Date()}
                   value={plantForm.date}
                   onChange={(value) => {
@@ -87,8 +83,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
                   }}
                 />
                 <Input
-                  name="price"
-                  placeholder="Price"
+                  name='price'
+                  placeholder='Price'
                   value={plantForm?.price}
                   errors={!plantForm.price ? state?.errors?.price : null}
                   onChange={(value) => {
@@ -97,8 +93,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
                 />
               </div>
               <Input
-                name="passport"
-                placeholder="Passport number"
+                name='passport'
+                placeholder='Passport number'
                 value={plantForm?.passport}
                 errors={!plantForm.passport ? state?.errors?.passport : null}
                 onChange={(value) => {
@@ -106,19 +102,19 @@ export default function PlantForm({ plant, collection, action }: Props) {
                 }}
               />
               <Input
-                name="name"
-                placeholder="Name"
+                name='name'
+                placeholder='Name'
                 value={plantForm?.name}
                 errors={!plantForm.name ? state?.errors?.name : null}
                 onChange={(value) => {
                   setPlantForm({ ...plantForm, name: value });
                 }}
               />
-              <div className="grid grid-cols-4 gap-2">
+              <div className='grid grid-cols-4 gap-2'>
                 <Input
-                  className="col-span-3"
-                  name="address"
-                  placeholder="Address"
+                  className='col-span-3'
+                  name='address'
+                  placeholder='Address'
                   value={plantForm?.address}
                   errors={!plantForm.address ? state?.errors?.address : null}
                   onChange={(value) => {
@@ -126,8 +122,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
                   }}
                 />
                 <Input
-                  name="country"
-                  placeholder="Country"
+                  name='country'
+                  placeholder='Country'
                   value={plantForm?.country}
                   errors={!plantForm.country ? state?.errors?.country : null}
                   onChange={(value) => {
@@ -136,8 +132,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
                 />
               </div>
               <Input
-                name="phone"
-                placeholder="Phone Number"
+                name='phone'
+                placeholder='Phone Number'
                 value={plantForm?.phone}
                 errors={!plantForm.phone ? state?.errors?.phone : null}
                 onChange={(value) => {
@@ -145,8 +141,8 @@ export default function PlantForm({ plant, collection, action }: Props) {
                 }}
               />
               <Input
-                name="email"
-                placeholder="Email"
+                name='email'
+                placeholder='Email'
                 value={plantForm?.email}
                 errors={!plantForm.email ? state?.errors?.email : null}
                 onChange={(value) => {
@@ -157,11 +153,18 @@ export default function PlantForm({ plant, collection, action }: Props) {
           </>
         ) : null}
         {state?.error && (
-          <Alert color="failure" icon={HiInformationCircle}>
-            <span className="font-medium">{state?.error}</span>
+          <Alert
+            color='failure'
+            icon={HiInformationCircle}
+          >
+            <span className='font-medium'>{state?.error}</span>
           </Alert>
         )}
-        <Button type="submit" disabled={isPending} className="mt-5">
+        <Button
+          type='submit'
+          disabled={isPending}
+          className='mt-5'
+        >
           Save Plant
         </Button>
       </Form>

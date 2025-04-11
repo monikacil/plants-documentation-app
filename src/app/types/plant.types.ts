@@ -13,7 +13,7 @@ export interface PlantDocument {
   species: string;
   variety: string;
   price: string | undefined;
-  date: Date | undefined;
+  date: Date;
   passport: string | undefined;
   buyer: string | undefined;
   seller: string | undefined;

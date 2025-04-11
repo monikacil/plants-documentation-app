@@ -1,6 +1,6 @@
 import { PlantCareDocument } from "@/types/plantCare.types";
 
-export function uiPlantCareObj(plantCare: PlantCareDocument) {
+export async function uiPlantCareObj(plantCare: PlantCareDocument) {
   return {
     _id: plantCare._id,
     date: plantCare.date,

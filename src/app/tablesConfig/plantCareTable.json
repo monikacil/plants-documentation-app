@@ -1,46 +1,54 @@
-[
-  {
-    "title": "No.",
-    "width": "115px"
-  },
-  {
-    "title": "Date",
-    "dbName": "date",
-    "sortable": true
-  },
-  {
-    "title": "Control",
-    "dbName": "control",
-    "sortable": true
-  },
-  {
-    "title": "Pests",
-    "dbName": "pests",
-    "sortable": true
-  },
-  {
-    "title": "Anti-pest Actions",
-    "dbName": "antiPestActions",
-    "sortable": true
-  },
-  {
-    "title": "Pest Control Measures",
-    "dbName": "pestControlMeasures",
-    "sortable": true
-  },
-  {
-    "title": "Plants Count",
-    "dbName": "plantsCount",
-    "sortable": true
-  },
-  {
-    "title": "Species",
-    "dbName": "species",
-    "sortable": true
-  },
-  {
-    "title": "Actions",
-    "deletable": true,
-    "editable": true
-  }
-]
+{
+  "hasPagination": true,
+  "hasSearch": true,
+  "hasDetails": true,
+  "url": "/plantCare/",
+  "headers": [
+    {
+      "title": "No.",
+      "width": "115px",
+      "dbName": "index"
+    },
+    {
+      "title": "Date",
+      "dbName": "date",
+      "sortable": true
+    },
+    {
+      "title": "Control",
+      "dbName": "control",
+      "sortable": true
+    },
+    {
+      "title": "Pests",
+      "dbName": "pests",
+      "sortable": true
+    },
+    {
+      "title": "Anti-pest Actions",
+      "dbName": "antiPestActions",
+      "sortable": true
+    },
+    {
+      "title": "Pest Control Measures",
+      "dbName": "pestControlMeasures",
+      "sortable": true
+    },
+    {
+      "title": "Plants Count",
+      "dbName": "plantsCount",
+      "sortable": true
+    },
+    {
+      "title": "Species",
+      "dbName": "species",
+      "sortable": true
+    },
+    {
+      "title": "Actions",
+      "dbName": "actions",
+      "editable": true,
+      "deletable": true
+    }
+  ]
+}

@@ -13,8 +13,12 @@ export default async function ParallelRoutePage({ params }: Props) {
   const plant: PlantTableType = await getPlant(id, slug);
 
   return (
-    <ModalWrapper title="Edit Plant">
-      <PlantForm plant={plant} collection={slug} action={editPlant} />
+    <ModalWrapper title='Edit Plant'>
+      <PlantForm
+        plant={plant}
+        collection={slug}
+        action={editPlant}
+      />
     </ModalWrapper>
   );
 }

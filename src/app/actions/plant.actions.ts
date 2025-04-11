@@ -37,7 +37,6 @@ export const addPlant = async (
   const userId = await getSessionUserId();
   const plant = await dataToUpdate(userId, formData, extraArgs?.collection);
   const createdPlant = new collectionModel(plant);
-  console.log("Created plant:", createdPlant);
 
   try {
     await dbConnect();
@@ -86,7 +85,7 @@ export const editPlant = async (
   const collectionModel = getCollectionModel(extraArgs.collection);
   const userId = await getSessionUserId();
 
-  const data = dataToUpdate(userId, formData, extraArgs.collection);
+  const data = await dataToUpdate(userId, formData, extraArgs.collection);
 
   try {
     await dbConnect();
@@ -168,7 +167,15 @@ export const getPlant = async (
   try {
     await dbConnect();
     const dbPlant = await collectionModel.findOne({ _id: id, _userId: userId });
-    return JSON.parse(JSON.stringify(uiPlantObject(dbPlant, collection)));
+    if (!dbPlant) {
+      throw new Error("Plant not found");
+    }
+
+    const uiPlant = await uiPlantObject(dbPlant, collection);
+    if (!uiPlant) {
+      throw new Error("Failed to transform plant object");
+    }
+    return JSON.parse(JSON.stringify(uiPlant));
   } catch (error) {
     return {
       message: getErrorMessage(

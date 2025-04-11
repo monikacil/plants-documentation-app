@@ -6,7 +6,7 @@ export type ExpenseDocument = {
   products: string;
   price: string;
   shop: string;
-  date: Date | undefined;
+  date: Date;
   createdAt: Date;
   updatedAt: Date;
 };

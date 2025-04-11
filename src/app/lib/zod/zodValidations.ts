@@ -1,19 +1,7 @@
-import { zodUserSchema } from "@/lib/zod/zodUser";
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
 import { Collections } from "@/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
 import { zodPlantCareSchema } from "./zodPlantCare";
-
-export async function zodAuthValidation(formData: FormData) {
-  const data = {
-    email: formData.get("email"),
-    password: formData.get("password"),
-  };
-  return zodUserSchema.safeParse({
-    email: data.email,
-    password: data.password,
-  });
-}
 
 export async function zodExpenseValidation(formData: FormData) {
   const data = {

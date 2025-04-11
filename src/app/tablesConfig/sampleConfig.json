@@ -1,22 +1,39 @@
-[
-  {
-    "title": "Header cell 1",
-    "sortable": true,
-    "width": "115px"
-  },
-  {
-    "title": "Header cell 2",
-    "dbName": "youre-data-dbName",
-    "sortable": true
-  },
-  {
-    "title": "Header cell 3",
-    "dbName": "youre-data-dbName",
-    "sortable": true
-  },
-  {
-    "title": "Actions",
-    "editable": true,
-    "deletable": true
-  }
-]
+{
+  "hasPagination": true,
+  "hasSearch": true,
+  "hasDetails": true,
+  "url": "/url/to/your/api/",
+  "headers":[
+    {
+      "title": "No.",
+      "dbName": "index",
+      "width": "115px"
+    },
+    {
+      "title": "Header cell 1",
+      "dbName": "youre-data-dbName",
+      "sortable": true
+    },
+    {
+      "title": "Header cell 1",
+      "sortable": true,
+      "width": "115px"
+    },
+    {
+      "title": "Header cell 2",
+      "dbName": "youre-data-dbName",
+      "sortable": true
+    },
+    {
+      "title": "Header cell 3",
+      "dbName": "youre-data-dbName",
+      "sortable": true
+    },
+    {
+      "title": "Actions",
+      "editable": true,
+      "deletable": true
+    }
+  ]
+}
+

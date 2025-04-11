@@ -75,7 +75,7 @@ export default function ExpenseForm({ expense, action }: Props) {
         <FormDatepicker
           name='date'
           maxDate={new Date()}
-          value={expensesForm.date instanceof Date ? expensesForm.date : new Date()}
+          value={expensesForm.date}
           onChange={(value) => {
             setExpensesForm({
               ...expensesForm,

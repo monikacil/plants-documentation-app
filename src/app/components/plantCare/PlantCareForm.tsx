@@ -33,7 +33,7 @@ const initForm: PlantCareFormType = {
   date: new Date(),
 };
 
-export default function ExpenseForm({ plantCare, action }: Props) {
+export default function PlantCareForm({ plantCare, action }: Props) {
   const [state, formAction, isPending] = useActionState(
     action.bind(null, plantCare?._id ? plantCare._id.toString() : undefined),
     null
@@ -43,21 +43,24 @@ export default function ExpenseForm({ plantCare, action }: Props) {
 
   return (
     <>
-      <Form action={formAction} className="flex flex-col gap-3">
+      <Form
+        action={formAction}
+        className='flex flex-col gap-3'
+      >
         <FormDatepicker
-          name="date"
+          name='date'
           maxDate={new Date()}
-          value={careForm.date}
+          value={careForm?.date}
           onChange={(value) => {
             setCareForm({
               ...careForm,
-              date: value ? value : new Date(),
+              date: value,
             });
           }}
         />
         <Input
-          name="control"
-          placeholder="Control"
+          name='control'
+          placeholder='Control'
           value={careForm?.control}
           errors={!careForm.control ? state?.errors?.control : null}
           onChange={(value) => {
@@ -65,8 +68,8 @@ export default function ExpenseForm({ plantCare, action }: Props) {
           }}
         />
         <Input
-          name="pests"
-          placeholder="Pests"
+          name='pests'
+          placeholder='Pests'
           value={careForm?.pests}
           errors={!careForm.pests ? state?.errors?.pests : null}
           onChange={(value) => {
@@ -74,34 +77,28 @@ export default function ExpenseForm({ plantCare, action }: Props) {
           }}
         />
         <Input
-          name="antiPestActions"
-          placeholder="Anti-pest actions"
+          name='antiPestActions'
+          placeholder='Anti-pest actions'
           value={careForm?.antiPestActions}
-          errors={
-            !careForm.antiPestActions ? state?.errors?.antiPestActions : null
-          }
+          errors={!careForm.antiPestActions ? state?.errors?.antiPestActions : null}
           onChange={(value) => {
             setCareForm({ ...careForm, antiPestActions: value });
           }}
         />
         <Input
-          name="pestControlMeasures"
-          placeholder="Pest control measures"
+          name='pestControlMeasures'
+          placeholder='Pest control measures'
           value={careForm?.pestControlMeasures}
-          errors={
-            !careForm.pestControlMeasures
-              ? state?.errors?.pestControlMeasures
-              : null
-          }
+          errors={!careForm.pestControlMeasures ? state?.errors?.pestControlMeasures : null}
           onChange={(value) => {
             setCareForm({ ...careForm, pestControlMeasures: value });
           }}
         />
         <Input
-          name="plantsCount"
-          type="number"
+          name='plantsCount'
+          type='number'
           min={1}
-          placeholder="Plants Count"
+          placeholder='Plants Count'
           value={careForm?.plantsCount}
           errors={!careForm.plantsCount ? state?.errors?.plantsCount : null}
           onChange={(value) => {
@@ -109,8 +106,8 @@ export default function ExpenseForm({ plantCare, action }: Props) {
           }}
         />
         <Input
-          name="species"
-          placeholder="Species"
+          name='species'
+          placeholder='Species'
           value={careForm?.species}
           errors={!careForm.species ? state?.errors?.species : null}
           onChange={(value) => {
@@ -119,11 +116,18 @@ export default function ExpenseForm({ plantCare, action }: Props) {
         />
 
         {state?.error && (
-          <Alert color="failure" icon={HiInformationCircle}>
-            <span className="font-medium">{state?.error}</span>
+          <Alert
+            color='failure'
+            icon={HiInformationCircle}
+          >
+            <span className='font-medium'>{state?.error}</span>
           </Alert>
         )}
-        <Button type="submit" disabled={isPending} className="my-5">
+        <Button
+          type='submit'
+          disabled={isPending}
+          className='my-5'
+        >
           Save Plant Care
         </Button>
       </Form>
