@@ -1,6 +1,6 @@
 import { object, string } from "zod";
 
-export const zodPlantCareSchema = object({
+export const zodPlantProtectionSchema = object({
   date: string(),
   control: string()
     .trim()
@@ -8,13 +8,13 @@ export const zodPlantCareSchema = object({
       message: "Control form required",
     }),
   pests: string().trim(),
-  antiPestActions: string()
+  actionTaken: string()
     .trim()
     .refine((val) => val.length > 1, {
       message: "Actions required",
     }),
-  pestControlMeasures: string().trim(),
-  plantsCount: string().trim(),
+  exterminator: string().trim(),
+  amount: string().trim(),
   species: string()
     .trim()
     .refine((val) => val.length > 1, {
@@ -22,15 +22,15 @@ export const zodPlantCareSchema = object({
     }),
 });
 
-export type ZodPlantCaresFormState =
+export type ZodPlantProtectionFormState =
   | {
     errors: {
       date: string | undefined;
       control: string | undefined;
       pests: string | undefined;
-      antiPestActions: string | undefined;
-      pestControlMeasures: string | undefined;
-      plantsCount: string | undefined;
+      actionTaken: string | undefined;
+      exterminator: string | undefined;
+      amount: string | undefined;
       species: string | undefined;
       message: string | undefined;
     };

@@ -1,7 +1,7 @@
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
 import { Collections } from "@/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
-import { zodPlantCareSchema } from "./zodPlantCare";
+import { zodPlantProtectionSchema } from "./zodPlantProtection";
 
 export async function zodExpenseValidation(formData: FormData) {
   const data = {
@@ -54,23 +54,23 @@ export async function zodPlantValidation(
   });
 }
 
-export async function zodPlantCareValidation(formData: FormData) {
+export async function zodPlantProtectionValidation(formData: FormData) {
   const data = {
     date: formData.get("date"),
     control: formData.get("control"),
     pests: formData.get("pests"),
-    antiPestActions: formData.get("antiPestActions"),
-    pestControlMeasures: formData.get("pestControlMeasures"),
-    plantsCount: formData.get("plantsCount"),
+    actionTaken: formData.get("actionTaken"),
+    exterminator: formData.get("exterminator"),
+    amount: formData.get("amount"),
     species: formData.get("species"),
   };
-  return zodPlantCareSchema.safeParse({
+  return zodPlantProtectionSchema.safeParse({
     date: data.date,
     control: data.control,
     pests: data.pests,
-    antiPestActions: data.antiPestActions,
-    pestControlMeasures: data.pestControlMeasures,
-    plantsCount: data.plantsCount,
+    actionTaken: data.actionTaken,
+    exterminator: data.exterminator,
+    amount: data.amount,
     species: data.species,
   });
 }

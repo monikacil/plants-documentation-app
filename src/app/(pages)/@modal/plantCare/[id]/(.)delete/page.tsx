@@ -1,4 +1,4 @@
-import { deletePlantCare } from "@/actions/plantCare.actions";
+import { deletePlantProtection } from "@/actions/plantProtection.actions";
 import DeleteElementModal from "@/components/modal/DeleteElementModal";
 
 type Props = {
@@ -11,9 +11,9 @@ export default async function InterceptedPage({ params }: Props) {
   return (
     <DeleteElementModal
       id={id}
-      title="Delete Plant Care"
-      action={deletePlantCare}
-      route="/plantCare"
+      title='Delete Plant Protection'
+      action={deletePlantProtection}
+      route='/plant-protection'
     />
   );
 }

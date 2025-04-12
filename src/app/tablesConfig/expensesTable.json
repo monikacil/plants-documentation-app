@@ -1,13 +1,12 @@
 {
   "hasPagination": true,
   "hasSearch": true,
-  "hasDetails": true,
+  "hasDetails": false,
   "url": "/expenses/",
   "headers":[
     {
       "title": "No.",
-      "dbName": "index",
-      "width": "115px"
+      "dbName": "index"
     },
     {
       "title": "Products",
@@ -17,8 +16,7 @@
     {
       "title": "Price",
       "dbName": "price",
-      "sortable": true,
-      "width": "250px"
+      "sortable": true
     },
     {
       "title": "Shop",

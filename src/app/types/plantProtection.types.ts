@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
-export type PlantCareDocument = {
+export type PlantProtectionDocument = {
   _id: mongoose.Schema.Types.ObjectId | string;
   _userId: string;
   date: Date;
   control: string;
   pests: string;
-  antiPestActions: string;
-  pestControlMeasures: string;
-  plantsCount: number;
+  actionTaken: string;
+  exterminator: string;
+  amount: number;
   species: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
-export type PlantCareFormType = Omit<
-  PlantCareDocument,
+export type PlantProtectionFormType = Omit<
+  PlantProtectionDocument,
   "_userId" | "createdAt" | "updatedAt"
 >;

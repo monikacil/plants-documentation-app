@@ -1,7 +1,8 @@
 "use client";
 
-import { HiMiniChevronUpDown } from "react-icons/hi2";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
 
 type Props = {
   name: string;
@@ -12,22 +13,31 @@ export default function Sort({ name }: Props) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  const [order, setOrder] = useState("asc");
+
   const handleSort = () => {
     const params = new URLSearchParams(searchParams);
-    const order = params.get("order");
     params.set("sortBy", name);
-    if (!order) {
-      params.set("order", "asc");
-    } else {
-      params.set("order", order === "asc" ? "desc" : "asc");
-    }
+
+    params.set("order", order === "asc" ? "desc" : "asc");
+    setOrder(order === "asc" ? "desc" : "asc");
+
     replace(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <HiMiniChevronUpDown
-      className="text-2xl cursor-pointer hover:text-base-green-300"
-      onClick={handleSort}
-    />
+    <>
+      {order === "asc" ? (
+        <FaCaretDown
+          className='text-2xl ml-3 cursor-pointer hover:text-base-gray-500'
+          onClick={handleSort}
+        />
+      ) : (
+        <FaCaretUp
+          className='text-2xl ml-3 cursor-pointer hover:text-base-gray-500'
+          onClick={handleSort}
+        />
+      )}
+    </>
   );
 }

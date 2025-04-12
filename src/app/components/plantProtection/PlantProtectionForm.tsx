@@ -9,10 +9,10 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { PlantCareFormType } from "@/types/plantCare.types";
+import { PlantProtectionFormType } from "@/types/plantProtection.types";
 
 type Props = {
-  plantCare?: PlantCareFormType;
+  plantProtection?: PlantProtectionFormType;
   action: (
     id: string | undefined,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,24 +22,26 @@ type Props = {
   ) => Promise<any>;
 };
 
-const initForm: PlantCareFormType = {
+const initForm: PlantProtectionFormType = {
   _id: "",
   control: "",
   pests: "",
-  antiPestActions: "",
-  pestControlMeasures: "",
-  plantsCount: 1,
+  actionTaken: "",
+  exterminator: "",
+  amount: 1,
   species: "",
   date: new Date(),
 };
 
-export default function PlantCareForm({ plantCare, action }: Props) {
+export default function PlantprotectionForm({ plantProtection, action }: Props) {
   const [state, formAction, isPending] = useActionState(
-    action.bind(null, plantCare?._id ? plantCare._id.toString() : undefined),
+    action.bind(null, plantProtection?._id ? plantProtection._id.toString() : undefined),
     null
   );
 
-  const [careForm, setCareForm] = useState(plantCare ? plantCare : initForm);
+  const [protectionForm, setprotectionForm] = useState(
+    plantProtection ? plantProtection : initForm
+  );
 
   return (
     <>
@@ -50,10 +52,10 @@ export default function PlantCareForm({ plantCare, action }: Props) {
         <FormDatepicker
           name='date'
           maxDate={new Date()}
-          value={careForm?.date}
+          value={protectionForm?.date}
           onChange={(value) => {
-            setCareForm({
-              ...careForm,
+            setprotectionForm({
+              ...protectionForm,
               date: value,
             });
           }}
@@ -61,57 +63,56 @@ export default function PlantCareForm({ plantCare, action }: Props) {
         <Input
           name='control'
           placeholder='Control'
-          value={careForm?.control}
-          errors={!careForm.control ? state?.errors?.control : null}
+          value={protectionForm?.control}
+          errors={!protectionForm.control ? state?.errors?.control : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, control: value });
+            setprotectionForm({ ...protectionForm, control: value });
           }}
         />
         <Input
           name='pests'
           placeholder='Pests'
-          value={careForm?.pests}
-          errors={!careForm.pests ? state?.errors?.pests : null}
+          value={protectionForm?.pests}
+          errors={!protectionForm.pests ? state?.errors?.pests : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, pests: value });
+            setprotectionForm({ ...protectionForm, pests: value });
           }}
         />
         <Input
-          name='antiPestActions'
+          name='actionTaken'
           placeholder='Anti-pest actions'
-          value={careForm?.antiPestActions}
-          errors={!careForm.antiPestActions ? state?.errors?.antiPestActions : null}
+          value={protectionForm?.actionTaken}
+          errors={!protectionForm.actionTaken ? state?.errors?.actionTaken : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, antiPestActions: value });
+            setprotectionForm({ ...protectionForm, actionTaken: value });
           }}
         />
         <Input
-          name='pestControlMeasures'
-          placeholder='Pest control measures'
-          value={careForm?.pestControlMeasures}
-          errors={!careForm.pestControlMeasures ? state?.errors?.pestControlMeasures : null}
+          name='exterminator'
+          placeholder='Pest Exterminator'
+          value={protectionForm?.exterminator}
+          errors={!protectionForm.exterminator ? state?.errors?.exterminator : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, pestControlMeasures: value });
+            setprotectionForm({ ...protectionForm, exterminator: value });
           }}
         />
         <Input
-          name='plantsCount'
+          name='amount'
           type='number'
           min={1}
-          placeholder='Plants Count'
-          value={careForm?.plantsCount}
-          errors={!careForm.plantsCount ? state?.errors?.plantsCount : null}
+          value={protectionForm?.amount}
+          errors={!protectionForm.amount ? state?.errors?.amount : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, plantsCount: parseInt(value) });
+            setprotectionForm({ ...protectionForm, amount: parseInt(value) });
           }}
         />
         <Input
           name='species'
           placeholder='Species'
-          value={careForm?.species}
-          errors={!careForm.species ? state?.errors?.species : null}
+          value={protectionForm?.species}
+          errors={!protectionForm.species ? state?.errors?.species : null}
           onChange={(value) => {
-            setCareForm({ ...careForm, species: value });
+            setprotectionForm({ ...protectionForm, species: value });
           }}
         />
 
@@ -128,7 +129,7 @@ export default function PlantCareForm({ plantCare, action }: Props) {
           disabled={isPending}
           className='my-5'
         >
-          Save Plant Care
+          Save Plant Protection
         </Button>
       </Form>
     </>

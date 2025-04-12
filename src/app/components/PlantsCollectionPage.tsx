@@ -24,6 +24,8 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
   const collectionTableConfig =
     tableConfig.find((config) => config[collection])?.[collection] || null; // Fallback to null if not found
 
+  console.log(collectionTableConfig);
+
   if (!collectionTableConfig) {
     throw new Error(`No configuration found for collection: ${collection}`);
   }
@@ -36,6 +38,7 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
 
   return (
     <TableWrapper
+      title='Plants'
       pages={totalPages}
       link={{ href: `/plants/${collection}/add`, text: "Add Plant" }}
     >

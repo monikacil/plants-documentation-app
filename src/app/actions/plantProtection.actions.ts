@@ -7,12 +7,12 @@ import { getSessionUserId } from "@/lib/utils/session.helper";
 import { getErrorMessage } from "@/lib/utils/getErrorMessage";
 
 import { SortType } from "@/types/others.types";
-import PlantCare from "../models/plantCare.model";
-import { zodPlantCareValidation } from "../lib/zod/zodValidations";
-import { uiPlantCareObj } from "../lib/utils/plantCareActions.helper";
-import type { PlantCareDocument } from "@/types/plantCare.types";
+import { zodPlantProtectionValidation } from "../lib/zod/zodValidations";
+import type { PlantProtectionDocument } from "@/types/plantProtection.types";
+import PlantProtection from "@/models/plantProtection.model";
+import { uiPlantProtectionObj } from "@/lib/utils/plantProtectionActions.helper";
 
-export const getPlantCares = async (
+export const getPlantProtections = async (
   query: string,
   currentPage: number,
   limit: number,
@@ -33,7 +33,7 @@ export const getPlantCares = async (
 
   try {
     await dbConnect();
-    const dbPlantCareList = await PlantCare.aggregate([
+    const dbPlantProtectionList = await PlantProtection.aggregate([
       {
         $match: {
           _userId: userId,
@@ -49,29 +49,30 @@ export const getPlantCares = async (
       sortQuery,
     ]);
 
-    if (!dbPlantCareList) return [];
-    const plantsCare = await Promise.all(dbPlantCareList.map(async (plantCare: PlantCareDocument) => {
-      return await uiPlantCareObj(plantCare);
+    if (!dbPlantProtectionList) return [];
+    const plantsProtection = await Promise.all(dbPlantProtectionList.map(async (plantProtection: PlantProtectionDocument) => {
+      return await uiPlantProtectionObj(plantProtection);
     }));
-    return JSON.parse(JSON.stringify(plantsCare));
+    return JSON.parse(JSON.stringify(plantsProtection));
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while fetching plant care data."
+        "Error occurred while fetching plant Protection data."
       ),
     };
   }
 };
 
-export const addPlantCare = async (
+export const addPlantProtection = async (
   id: string | undefined,
   prevState: unknown,
   formData: FormData
 ) => {
+  console.log(276712371253)
   if (id) return;
   // zod validation
-  const validation = await zodPlantCareValidation(formData);
+  const validation = await zodPlantProtectionValidation(formData);
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,
@@ -80,47 +81,49 @@ export const addPlantCare = async (
 
   const userId = await getSessionUserId();
   const data = { _userId: userId, ...validation.data };
-  const createdPlantCare = await new PlantCare(data);
+  const createdPlantProtection = await new PlantProtection(data);
+
+  console.log(data)
 
   try {
     await dbConnect();
-    await createdPlantCare.save();
-    revalidatePath("/plantCare");
+    await createdPlantProtection.save();
+    revalidatePath("/plantProtection");
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while saving plant care."
+        "Error occurred while saving plant Protection."
       ),
     };
   }
 };
 
-export const deletePlantCare = async (id: string) => {
+export const deletePlantProtection = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
     await dbConnect();
-    await PlantCare.deleteOne({ _id: id, _userId: userId });
-    revalidatePath("/plantCare");
+    await PlantProtection.deleteOne({ _id: id, _userId: userId });
+    revalidatePath("/plantProtection");
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while deleting plant care."
+        "Error occurred while deleting plant Protection."
       ),
     };
   }
 };
 
-export const editPlantCare = async (
+export const editPlantProtection = async (
   id: string | undefined,
   prevState: object,
   formData: FormData
 ) => {
   if (!id) return;
   // zod validation
-  const validation = await zodPlantCareValidation(formData);
+  const validation = await zodPlantProtectionValidation(formData);
   if (!validation.success) {
     return {
       errors: validation.error.flatten().fieldErrors,
@@ -132,41 +135,41 @@ export const editPlantCare = async (
 
   try {
     await dbConnect();
-    await PlantCare.findByIdAndUpdate({ _id: id, _userId: userId }, data);
-    revalidatePath("/plantCare");
+    await PlantProtection.findByIdAndUpdate({ _id: id, _userId: userId }, data);
+    revalidatePath("/plant-protection");
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while editing plant care."
+        "Error occurred while editing plant protection."
       ),
     };
   }
 };
 
-export const getPlantCare = async (id: string) => {
+export const getPlantProtection = async (id: string) => {
   const userId = await getSessionUserId();
 
   try {
     await dbConnect();
-    const care = await PlantCare.findOne({ _id: id, _userId: userId });
-    return JSON.parse(JSON.stringify(await uiPlantCareObj(care)));
+    const Protection = await PlantProtection.findOne({ _id: id, _userId: userId });
+    return JSON.parse(JSON.stringify(await uiPlantProtectionObj(Protection)));
   } catch (error) {
     return {
       message: getErrorMessage(
         error,
-        "Error occurred while getting plant care."
+        "Error occurred while getting plant protection."
       ),
     };
   }
 };
 
-export const getPlantCarePages = async (query: string, limit: number) => {
+export const getPlantProtectionPages = async (query: string, limit: number) => {
   const userId = await getSessionUserId();
 
   try {
     await dbConnect();
-    const care = await PlantCare.aggregate([
+    const Protection = await PlantProtection.aggregate([
       {
         $match: {
           _userId: userId,
@@ -178,7 +181,7 @@ export const getPlantCarePages = async (query: string, limit: number) => {
         },
       },
     ]);
-    return Math.ceil(care.length / limit);
+    return Math.ceil(Protection.length / limit);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return -1;

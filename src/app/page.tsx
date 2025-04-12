@@ -14,7 +14,7 @@ export default async function LandingPage() {
   const isUserAuthenticated = isAuthenticated ? await isAuthenticated() : false; // For debugging purposes, you can log the authentication status to the console or use it in your component logic.
 
   return (
-    <main className='h-full text-xl p-3 md:p-6'>
+    <main className='h-full text-xl'>
       <section className='h-full flex flex-col md:flex-row gap-10 items-center justify-center p-5 md:p-20 bg-base-gray-500 rounded-3xl'>
         <div className='flex flex-col justify-center md:justify-start w-1/2 lg:pl-14 xl:pl-36 text-2xl lg:text-3xl xl:text-5xl text-center md:text-left'>
           <Logo className='pb-10 self-center md:self-start' />

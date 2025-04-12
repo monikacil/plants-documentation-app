@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
-import { PlantCareDocument } from "../types/plantCare.types";
+import { PlantProtectionDocument } from "../types/plantProtection.types";
 
-const PlantCareSchema = new Schema<PlantCareDocument>(
+const PlantProtectionSchema = new Schema<PlantProtectionDocument>(
   {
     _userId: { type: String, required: true },
     date: {
@@ -19,21 +19,21 @@ const PlantCareSchema = new Schema<PlantCareDocument>(
       lowercase: true,
       trim: true,
     },
-    antiPestActions: {
+    actionTaken: {
       type: String,
-      required: [true, "Anti-pest actions are required"],
+      required: [true, "Actions taken are required"],
       lowercase: true,
       trim: true,
     },
-    pestControlMeasures: {
+    exterminator: {
       type: String,
-      required: [true, "Pest control measures are required"],
+      required: [true, "Pest exterminator are required"],
       lowercase: true,
       trim: true,
     },
-    plantsCount: {
+    amount: {
       type: Number,
-      required: [true, "Plants count is required"],
+      required: [true, "Plant amount is required"],
     },
     species: {
       type: String,
@@ -47,7 +47,7 @@ const PlantCareSchema = new Schema<PlantCareDocument>(
   }
 );
 
-const PlantCare =
+const PlantProtection =
   mongoose.models?.PlantCare ||
-  model<PlantCareDocument>("PlantCare", PlantCareSchema);
-export default PlantCare;
+  model<PlantProtectionDocument>("PlantCare", PlantProtectionSchema);
+export default PlantProtection;

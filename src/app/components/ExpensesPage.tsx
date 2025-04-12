@@ -19,6 +19,7 @@ export default async function ExpensesPage({ searchParams }: SearchParams) {
 
   return (
     <TableWrapper
+      title='List of Expenses'
       pages={totalPages}
       link={{ href: `/expenses/add`, text: "Add Expense" }}
     >

@@ -1,11 +1,11 @@
-import { addPlantCare } from "@/actions/plantCare.actions";
+import { addPlantProtection } from "@/actions/plantProtection.actions";
 import ModalWrapper from "@/components/modal/ModalWrapper";
-import PlantCareForm from "@/components/plantCare/PlantCareForm";
+import PlantProtectionForm from "@/components/plantProtection/PlantProtectionForm";
 
 export default function InterceptedPage() {
   return (
-    <ModalWrapper title="Add Plant Care">
-      <PlantCareForm action={addPlantCare} />
+    <ModalWrapper title='Add Plant Protection'>
+      <PlantProtectionForm action={addPlantProtection} />
     </ModalWrapper>
   );
 }

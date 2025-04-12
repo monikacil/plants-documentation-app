@@ -1,12 +1,11 @@
 {
   "hasPagination": true,
   "hasSearch": true,
-  "hasDetails": true,
-  "url": "/plantCare/",
+  "hasDetails": false,
+  "url": "/plant-protection/",
   "headers": [
     {
       "title": "No.",
-      "width": "115px",
       "dbName": "index"
     },
     {
@@ -16,28 +15,24 @@
     },
     {
       "title": "Control",
-      "dbName": "control",
-      "sortable": true
+      "dbName": "control"
     },
     {
       "title": "Pests",
-      "dbName": "pests",
-      "sortable": true
+      "dbName": "pests"
     },
     {
-      "title": "Anti-pest Actions",
-      "dbName": "antiPestActions",
-      "sortable": true
+      "title": "Actions Taken",
+      "dbName": "actionTaken"
     },
     {
-      "title": "Pest Control Measures",
-      "dbName": "pestControlMeasures",
-      "sortable": true
+      "title": "Pests Exterminator",
+      "dbName": "exterminator"
     },
     {
-      "title": "Plants Count",
-      "dbName": "plantsCount",
-      "sortable": true
+      "title": "Amount",
+      "dbName": "amount",
+      "width": "120px"
     },
     {
       "title": "Species",

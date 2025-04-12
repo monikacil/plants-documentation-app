@@ -22,8 +22,8 @@ export const NAVIGATION_CONFIG = [
     ],
   },
   {
-    name: "Plant Care",
-    href: "/plantCare",
+    name: "Plant Protection",
+    href: "/plant-protection",
   },
   {
     name: "Expenses",

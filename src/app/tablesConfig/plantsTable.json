@@ -8,8 +8,7 @@
       "headers": [
         {
           "title": "No.",
-          "dbName": "index",
-          "width": "115px"
+          "dbName": "index"
         },
         {
           "title": "Species",
@@ -39,7 +38,7 @@
       "headers": [
         {
           "title": "No.",
-          "width": "115px"
+          "dbName": "index"
         },
         {
           "title": "Species",
@@ -102,7 +101,6 @@
       "headers": [
         {
           "title": "No.",
-          "width": "115px",
           "dbName": "index"
         },
         {

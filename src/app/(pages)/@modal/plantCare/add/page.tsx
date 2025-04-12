@@ -1,11 +1,14 @@
-import { addPlantCare } from "@/actions/plantCare.actions";
+import { addPlantProtection } from "@/actions/plantProtection.actions";
 import ModalWrapper from "@/components/modal/ModalWrapper";
-import PlantCareForm from "@/components/plantCare/PlantCareForm";
+import PlantProtectionForm from "@/components/plantProtection/PlantProtectionForm";
 
 export default function ParallelRoutePage() {
   return (
-    <ModalWrapper title="Add Plant Care" route="/plantCare">
-      <PlantCareForm action={addPlantCare} />
+    <ModalWrapper
+      title='Add Plant Protection'
+      route='/plant-protection'
+    >
+      <PlantProtectionForm action={addPlantProtection} />
     </ModalWrapper>
   );
 }
