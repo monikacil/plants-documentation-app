@@ -1,6 +1,6 @@
-import { getPlant } from "@/actions/plant.actions";
-import PlantDetails from "@/components/plants/PlantDetails";
-import { Collections, PlantDocument } from "@/types/plant.types";
+import { getPlant } from "@/app/actions/plant.actions";
+import PlantDetails from "@/app/components/plants/PlantDetails";
+import { Collections, PlantDocument } from "@/app/types/plant.types";
 
 type Props = {
   params: Promise<{ id: string; slug: string }>;

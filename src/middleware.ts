@@ -1,51 +1,25 @@
-import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server"
+import NextAuth from 'next-auth';
+import authConfig from "./auth.config"
 
-interface KindeAuth {
-  user: Record<string, unknown> | null;
-  token: string | null;
-}
+const PUBLIC_ROUTES = ["/", "/signin"]
 
-interface MiddlewareRequest {
-  kindeAuth: KindeAuth;
-}
+const { auth } = NextAuth(authConfig)
+export default auth(async function middleware(req) {
+  const { nextUrl } = req;
 
-export default withAuth(
-  async function middleware(req: NextRequest & MiddlewareRequest) {
-    if (req.method === "HEAD") {
-      return NextResponse.next();
-    }
-    const { kindeAuth } = req;
+  const isAuthenticated = !!req.auth;
+  const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
 
-    const publicPaths = ["/"];
-    const isPublicPath = publicPaths.includes(req.nextUrl.pathname);
+  if (isPublicRoute && isAuthenticated)
+    return Response.redirect(new URL("/dashboard", nextUrl));
 
+  if (!isAuthenticated && !isPublicRoute)
+    return Response.redirect(new URL("/", nextUrl));
 
-    // Explicitly handle the home page ("/")
-    if (isPublicPath && kindeAuth.user) {
-      // Redirect to dashboard if authenticated
-      return NextResponse.redirect(new URL("/dashboard", req.url));
-    }
-
-    // Redirect to login (home page) if not authenticated and accessing protected routes
-    if (!kindeAuth.user) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-
-    // Allow access to authenticated users for protected routes
-    return NextResponse.next();
-  },
-  {
-    // Specify public paths that don't require authentication
-    publicPaths: ["/"],
-    isReturnToCurrentPage: true,
-  }
-);
-
+  return NextResponse.next()
+})
 
 export const config = {
-  matcher: [
-    '/',
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    '/((?!api|_next/static|_next/image|favicon.ico|images|manifest.json).*)',],
-};
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+}

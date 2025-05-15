@@ -2,14 +2,14 @@
 
 import { redirect } from "next/navigation";
 import { Table } from "flowbite-react";
-import Sort from "@/components/common/Sort";
-import { generateUniqKey } from "@/lib/utils/others";
+import Sort from "@/app/components/common/Sort";
+import { generateUniqKey } from "@/app/lib/utils/others";
 import ActionButtons from "./ActionButtons";
 
 // type Props = {
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
 //   tableConfig: any;
-//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
 //   data: any[];
 // };
 
@@ -92,7 +92,7 @@ type Props = {
     url?: string;
     hasDetails: boolean;
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   data: any[];
 };
 

@@ -9,16 +9,16 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { PlantProtectionFormType } from "@/types/plantProtection.types";
+import { PlantProtectionFormType } from "@/app/types/protection.ts";
 
 type Props = {
   plantProtection?: PlantProtectionFormType;
   action: (
     id: string | undefined,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
     prevState: any,
     formData: FormData
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   ) => Promise<any>;
 };
 

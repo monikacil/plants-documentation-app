@@ -1,9 +1,9 @@
-import { getExpensesPages, getExpenses } from "@/actions/expenses.actions";
-import TableWrapper from "@/components/table/TableWrapper";
-import { ExpenseDocument } from "@/types/expenses.types";
+import { getExpensesPages, getExpenses } from "@/app/actions/expenses.actions";
+import TableWrapper from "@/app/components/table/TableWrapper";
+import { ExpenseDocument } from "@/app/types/expenses.types";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
-import tableConfig from "@/tablesConfig/expensesTable.json";
+import tableConfig from "@/app/tablesConfig/expensesTable.json";
 import TableGenerator from "./table/TableGenerator";
 
 export default async function ExpensesPage({ searchParams }: SearchParams) {

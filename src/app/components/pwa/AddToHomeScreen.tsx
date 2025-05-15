@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 
-import useUserAgent from "@/lib/UseUserAgent";
+import useUserAgent from "@/app/lib/UseUserAgent";
 import AddToMobileDevice from "./AddToMobileDevice";
 
 export default function AddToHomeScreen() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const { isMobile, isStandalone, isIOS } = useUserAgent();
 

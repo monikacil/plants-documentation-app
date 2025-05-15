@@ -1,45 +1,15 @@
 import { Schema } from "mongoose";
 
-export type ImagesDocument = {
-  originalname: string;
-  filename: string;
-  createdAt: Date;
-  updatedAt: Date;
-} | null;
-
-export interface PlantDocument {
-  _id: Schema.Types.ObjectId | string;
-  _userId: string;
+export type PlantDocument = {
+  _id: Schema.Types.ObjectId;
+  _userId: Schema.Types.ObjectId;
   species: string;
   variety: string;
-  price: string | undefined;
+  price: string | null;
   date: Date;
-  passport: string | undefined;
-  buyer: string | undefined;
-  seller: string | undefined;
-  images: ImagesDocument[] | undefined;
+  passport: string | null;
+  _buyerId: Schema.Types.ObjectId | null;
+  _sellerId: Schema.Types.ObjectId | null;
   createdAt: Date;
   updatedAt: Date;
 }
-
-export type Collections = "collected" | "purchased" | "sold";
-
-export type PlantExtraArgs = {
-  collection: Collections;
-  id?: string;
-};
-
-type ClienType = {
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  country: string;
-};
-
-type PlantOmitType = Omit<
-  PlantDocument,
-  "_userId" | "createdAt" | "updatedAt" | "images" | "buyer" | "seller"
->;
-
-export type PlantTableType = PlantOmitType & ClienType;

@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import Form from "next/form";
 
-import { Collections, PlantExtraArgs, PlantTableType } from "@/types/plant.types";
+import { Collections, PlantExtraArgs, PlantTableType } from "@/app/types/plant.types";
 
 import Input from "../form/Input";
 import Button from "../common/Button";
@@ -16,10 +16,10 @@ type Props = {
   collection: Collections;
   action: (
     extraArgs: PlantExtraArgs,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
     prevState: any,
     formData: FormData
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   ) => Promise<any>;
 };
 

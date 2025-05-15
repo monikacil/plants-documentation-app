@@ -3,9 +3,8 @@ import Link from "next/link";
 import Navigation from "./Navigation";
 import Logo from "./Logo";
 
-import { cn } from "@/lib/utils/others";
+import { cn } from "@/app/lib/utils/others";
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import AddToHomeScreen from "../pwa/AddToHomeScreen";
 
 type Props = {
@@ -13,8 +12,7 @@ type Props = {
 };
 
 export default async function Header({ className }: Props) {
-  const { isAuthenticated } = getKindeServerSession();
-  const isUserAuthenticated = await isAuthenticated();
+  const isUserAuthenticated = false;
 
   return (
     <header className={cn("w-full py-4", className)}>

@@ -10,10 +10,9 @@ const fredoka = Fredoka({
   variable: "--font-fredoka",
 });
 
-// Layout components
-// import AddToHomeScreen from "./components/pwa/AddToHomeScreen";
 // Auth Provider
-import { AuthProvider } from "./AuthProvider";
+import { SessionProvider } from "next-auth/react";
+
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
@@ -43,19 +42,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <html
-        lang='en'
-        className={`${fredoka.variable}`}
-      >
-        <body className='h-screen px-3 md:px-6'>
-          <div className='flex flex-col h-full'>
-            <Header className='flex-none' />
-            <section className='flex-auto'>{children}</section>
-            <Footer className='flex-none' />
-          </div>
-        </body>
-      </html>
-    </AuthProvider>
+    <html
+      lang='en'
+      className={`${fredoka.variable}`}
+    >
+      <body className='h-screen px-3 md:px-6'>
+        <div className='flex flex-col h-full'>
+          <Header className='flex-none' />
+          <section className='flex-auto'>{children}</section>
+          <Footer className='flex-none' />
+        </div>
+      </body>
+    </html>
   );
 }

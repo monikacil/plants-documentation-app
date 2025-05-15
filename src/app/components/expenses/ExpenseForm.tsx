@@ -9,16 +9,16 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { ExpenseFormType } from "@/types/expenses.types";
+import { ExpenseFormType } from "@/app/types/expenses.types";
 
 type Props = {
   expense?: ExpenseFormType;
   action: (
     id: string | undefined,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
     prevState: any,
     formData: FormData
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   ) => Promise<any>;
 };
 

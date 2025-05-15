@@ -4,7 +4,7 @@ import { InputHTMLAttributes, useEffect, useState } from "react";
 
 import ZodErrors from "./../common/ZodErrors";
 
-import { cn } from "@/lib/utils/others";
+import { cn } from "@/app/lib/utils/others";
 import type { ZodError } from "zod";
 
 type Props = {

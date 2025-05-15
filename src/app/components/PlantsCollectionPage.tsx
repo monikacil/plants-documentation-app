@@ -1,10 +1,10 @@
-import { getPlantsPages, getPlants } from "@/actions/plant.actions";
-import { Collections, PlantTableType } from "@/types/plant.types";
+import { getPlantsPages, getPlants } from "@/app/actions/plant.actions";
+import { Collections, PlantTableType } from "@/app/types/plant.types";
 
-import TableWrapper from "@/components/table/TableWrapper";
+import TableWrapper from "@/app/components/table/TableWrapper";
 import getPageSearchParams from "../lib/pagesHelper";
 import TableGenerator from "./table/TableGenerator";
-import tableConfig from "@/tablesConfig/plantsTable.json";
+import tableConfig from "@/app/tablesConfig/plantsTable.json";
 
 type Props = {
   params: Promise<{ slug: string }>;

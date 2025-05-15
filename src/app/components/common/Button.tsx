@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils/others";
+import { cn } from "@/app/lib/utils/others";
 import { ComponentPropsWithoutRef } from "react";
 
 const colors = {
@@ -23,7 +23,7 @@ type Props = ComponentPropsWithoutRef<"button"> & {
   color?: "primary" | "warning" | "danger" | "info";
   type?: "submit" | "button";
   className?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   onClick?: (e: any) => void | Promise<any>;
 };
 

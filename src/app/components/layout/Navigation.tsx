@@ -6,9 +6,8 @@ import { FaBars, FaCircleUser } from "react-icons/fa6";
 
 import Dropdown from "../common/Dropdown";
 import { usePathname } from "next/navigation";
-import { NAVIGATION_CONFIG } from "@/lib/navConfig";
-import { generateUniqKey } from "@/lib/utils/others";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import { NAVIGATION_CONFIG } from "@/app/lib/navConfig";
+import { generateUniqKey } from "@/app/lib/utils/others";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -119,12 +118,7 @@ export default function Navigation() {
             key={generateUniqKey(`logout-btn`)}
             className='hover:text-base-green-700 rounded-lg'
           >
-            <LogoutLink
-              data-testid='logout-link'
-              className='block px-4 py-2 hover:text-base-green-700 rounded-lg'
-            >
-              Logout
-            </LogoutLink>
+            Logout
           </li>
         </ul>
       </section>

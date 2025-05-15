@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
+import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
-import { cn } from "@/lib/utils/others";
+import { cn } from "@/app/lib/utils/others";
 
 type Props = {
   children: React.ReactNode;

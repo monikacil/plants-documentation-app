@@ -1,5 +1,5 @@
 import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
-import { Collections } from "@/types/plant.types";
+import { Collections } from "@/app/types/plant.types";
 import { zodExpenseSchema } from "./zodExpense";
 import { zodPlantProtectionSchema } from "./zodPlantProtection";
 

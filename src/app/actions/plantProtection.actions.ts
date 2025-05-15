@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/lib/dbConnect";
-import { getSessionUserId } from "@/lib/utils/session.helper";
-import { getErrorMessage } from "@/lib/utils/getErrorMessage";
+import { dbConnect } from "@/app/lib/db.ts";
+import { getSessionUserId } from "@/app/lib/utils/session.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
-import { SortType } from "@/types/others.types";
+import { SortType } from "@/app/types/others.types";
 import { zodPlantProtectionValidation } from "../lib/zod/zodValidations";
-import type { PlantProtectionDocument } from "@/types/plantProtection.types";
-import PlantProtection from "@/models/plantProtection.model";
-import { uiPlantProtectionObj } from "@/lib/utils/plantProtectionActions.helper";
+import type { PlantProtectionDocument } from "@/app/types/protection.ts";
+import PlantProtection from "@/app/models/protections.ts";
+import { uiPlantProtectionObj } from "@/app/lib/utils/plantProtectionActions.helper";
 
 export const getPlantProtections = async (
   query: string,
@@ -182,7 +182,7 @@ export const getPlantProtectionPages = async (query: string, limit: number) => {
       },
     ]);
     return Math.ceil(Protection.length / limit);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @/app/typescript-eslint/no-unused-vars
   } catch (error) {
     return -1;
   }

@@ -1,10 +1,10 @@
-import TableWrapper from "@/components/table/TableWrapper";
-import { PlantProtectionDocument } from "@/types/plantProtection.types";
+import TableWrapper from "@/app/components/table/TableWrapper";
+import { PlantProtectionDocument } from "@/app/types/protection.ts";
 import { SearchParams } from "../types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
-import tableConfig from "@/tablesConfig/plantProtectionTable.json";
+import tableConfig from "@/app/tablesConfig/plantProtectionTable.json";
 import TableGenerator from "./table/TableGenerator";
-import { getPlantProtectionPages, getPlantProtections } from "@/actions/plantProtection.actions";
+import { getPlantProtectionPages, getPlantProtections } from "@/app/actions/plantProtection.actions";
 
 export default async function PlantProtectionPage({ searchParams }: SearchParams) {
   const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
@@ -21,8 +21,6 @@ export default async function PlantProtectionPage({ searchParams }: SearchParams
       return { ...ProtectionPlantProtection, date: new Date(ProtectionPlantProtection.date) };
     })
   );
-
-  console.log(tableConfig);
 
   return (
     <TableWrapper

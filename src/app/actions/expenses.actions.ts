@@ -2,14 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/lib/dbConnect";
-import { zodExpenseValidation } from "@/lib/zod/zodValidations";
+import { dbConnect } from "@/app/lib/db.ts";
+import { zodExpenseValidation } from "@/app/lib/zod/zodValidations";
 
-import { getSessionUserId } from "@/lib/utils/session.helper";
-import { getErrorMessage } from "@/lib/utils/getErrorMessage";
+import { getSessionUserId } from "@/app/lib/utils/session.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
-import { SortType } from "@/types/others.types";
-import Expense from "@/models/expense.model";
+import { SortType } from "@/app/types/others.types";
+import Expense from "@/app/models/expense.model";
 import { ExpenseDocument } from "../types/expenses.types";
 
 export const getExpenses = async (
@@ -175,7 +175,7 @@ export const getExpensesPages = async (query: string, limit: number) => {
       },
     ]);
     return Math.ceil(expenses.length / limit);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @/app/typescript-eslint/no-unused-vars
   } catch (error) {
     return -1;
   }

@@ -2,23 +2,16 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/lib/dbConnect";
-import { zodPlantValidation } from "@/lib/zod/zodValidations";
+import { dbConnect } from "@/app/lib/db.ts";
+import { zodPlantValidation } from "@/app/lib/zod/zodValidations";
 
-import { getSessionUserId } from "@/lib/utils/session.helper";
-import { getErrorMessage } from "@/lib/utils/getErrorMessage";
-import {
-  dataToUpdate,
-  getCollectionModel,
-  uiPlantObject,
-} from "@/lib/utils/plantActions.helper";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
+
 
 import {
-  Collections,
   PlantDocument,
-  PlantExtraArgs,
-} from "@/types/plant.types";
-import { SortType } from "@/types/others.types";
+} from "@/app/types/plant.types";
+import { SortType } from "@/app/types/others.types";
 
 export const addPlant = async (
   extraArgs: PlantExtraArgs,
@@ -208,7 +201,7 @@ export const getPlantsPages = async (
       },
     ]);
     return Math.ceil(dbPlantsList.length / limit);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @/app/typescript-eslint/no-unused-vars
   } catch (error) {
     return -1;
   }

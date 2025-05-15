@@ -3,7 +3,7 @@
 import { Breadcrumb } from "flowbite-react";
 import { HiHome } from "react-icons/hi";
 
-import { generateUniqKey } from "@/lib/utils/others";
+import { generateUniqKey } from "@/app/lib/utils/others";
 
 type Link = {
   name: string;

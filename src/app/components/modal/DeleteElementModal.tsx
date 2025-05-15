@@ -1,6 +1,6 @@
 "use client";
 
-import { Collections } from "@/types/plant.types";
+import { Collections } from "@/app/types/plant.types";
 import Confirmation from "../common/Confirmation";
 import ModalWrapper from "./ModalWrapper";
 import { redirect } from "next/navigation";

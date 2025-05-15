@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/others";
+import { cn } from "@/app/lib/utils/others";
 import { ZodError } from "zod";
 
 type ZodErrorsProps = {

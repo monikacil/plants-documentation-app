@@ -1,6 +1,6 @@
 "use client";
 
-import { Collections, PlantDocument } from "@/types/plant.types";
+import { Collections, PlantDocument } from "@/app/types/plant.types";
 import ActionButtons from "../table/ActionButtons";
 
 type Props = {

@@ -12,18 +12,18 @@ const nextConfig = {
     });
     return config;
   },
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
   experimental: {
     staleTimes: {
       dynamic: 60,
       static: 300,
-    },
-    turbo: {
-      rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
-        },
-      },
     },
   },
   images: {

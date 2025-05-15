@@ -5,9 +5,9 @@ import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
-import { cn } from "@/lib/utils/others";
-import getDatepickerOptions from "@/lib/utils/getDatePickerOption";
-import { useOutsideClick } from "@/lib/hooks/useOutsideClick";
+import { cn } from "@/app/lib/utils/others";
+import getDatepickerOptions from "@/app/lib/utils/getDatePickerOption";
+import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
 
 type Props = {
   name: string;
