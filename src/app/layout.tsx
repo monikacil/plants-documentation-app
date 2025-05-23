@@ -3,18 +3,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Fredoka } from "next/font/google";
-// Sour_Gummy, Balsamiq_Sans, Comic_Neue
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-fredoka",
 });
-
-// Auth Provider
-import { SessionProvider } from "next-auth/react";
-
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Plants Documentation App",
@@ -43,16 +39,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang='en'
-      className={`${fredoka.variable}`}
+      lang="en"
+      className={ `${ fredoka.variable }` }
     >
-      <body className='h-screen px-3 md:px-6'>
-        <div className='flex flex-col h-full'>
-          <Header className='flex-none' />
-          <section className='flex-auto'>{children}</section>
-          <Footer className='flex-none' />
-        </div>
-      </body>
+    <body className="h-screen px-3 md:px-14 lg:px-28">
+    <div className="flex flex-col h-full">
+      <Header className="flex-none"/>
+      <section className="flex-auto">
+        { children }
+      </section>
+      <Footer className="flex-none"/>
+    </div>
+    </body>
     </html>
   );
 }

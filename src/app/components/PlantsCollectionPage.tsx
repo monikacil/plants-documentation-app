@@ -1,5 +1,5 @@
-import { getPlantsPages, getPlants } from "@/app/actions/plant.actions";
-import { Collections, PlantTableType } from "@/app/types/plant.types";
+import { getPlants, getPlantsPages } from "@/app/actions/plant.actions";
+import { Collections, PlantTableType } from "@/app/mongoose/types/plant.types";
 
 import TableWrapper from "@/app/components/table/TableWrapper";
 import getPageSearchParams from "../lib/pagesHelper";
@@ -22,12 +22,12 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
   const totalPages = await getPlantsPages(query, collection, limit);
   const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort);
   const collectionTableConfig =
-    tableConfig.find((config) => config[collection])?.[collection] || null; // Fallback to null if not found
+    tableConfig.find((config) => config[ collection ])?.[ collection ] || null; // Fallback to null if not found
 
   console.log(collectionTableConfig);
 
   if (!collectionTableConfig) {
-    throw new Error(`No configuration found for collection: ${collection}`);
+    throw new Error(`No configuration found for collection: ${ collection }`);
   }
 
   const plants = await Promise.all(
@@ -39,13 +39,13 @@ export default async function PlantsCollectionPage({ params, searchParams }: Pro
   return (
     <TableWrapper
       title='Plants'
-      pages={totalPages}
-      link={{ href: `/plants/${collection}/add`, text: "Add Plant" }}
+      pages={ totalPages }
+      link={ { href: `/plants/${ collection }/add`, text: "Add Plant" } }
     >
       <TableGenerator
-        tableConfig={collectionTableConfig}
-        data={plants}
-      ></TableGenerator>{" "}
+        tableConfig={ collectionTableConfig }
+        data={ plants }
+      ></TableGenerator>{ " " }
     </TableWrapper>
   );
 }

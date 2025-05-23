@@ -31,8 +31,7 @@
     ".next/types/**/*.ts",
     "./src/middleware.ts",
     "next.config.js",
-    "next.config.mjs",
-    "src/app/components/form/FormDatePicker"
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }

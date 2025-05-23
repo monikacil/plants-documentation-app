@@ -1,5 +1,6 @@
-import mongoose, { Schema, model } from "mongoose";
-import { ProtectionDocument } from "../types/protection.ts";
+import mongoose, { model, Schema } from "mongoose";
+
+import { ProtectionDocument } from "@/app/mongoose/types/protection.types.ts";
 
 const ProtectionSchema = new Schema<ProtectionDocument>(
   {
@@ -47,7 +48,5 @@ const ProtectionSchema = new Schema<ProtectionDocument>(
   }
 );
 
-const PlantProtection =
-  mongoose.models?.PlantProtection ||
-  model<ProtectionDocument>("PlantProtection", ProtectionSchema);
+const PlantProtection = mongoose.models?.PlantProtection || model<ProtectionDocument>("PlantProtection", ProtectionSchema);
 export default PlantProtection;

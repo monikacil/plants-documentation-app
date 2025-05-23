@@ -1,6 +1,6 @@
 "use client";
 
-import { Collections } from "@/app/types/plant.types";
+import { Collections } from "@/app/mongoose/types/plant.types";
 import Confirmation from "../common/Confirmation";
 import ModalWrapper from "./ModalWrapper";
 import { redirect } from "next/navigation";
@@ -18,24 +18,24 @@ type Props = {
 };
 
 export default function DeleteElementModal({
-  id,
-  slug,
-  title,
-  route,
-  withRoute = false,
-  action,
-}: Props) {
+                                             id,
+                                             slug,
+                                             title,
+                                             route,
+                                             withRoute = false,
+                                             action,
+                                           }: Props) {
   return (
-    <ModalWrapper title={title} route={withRoute ? route : undefined}>
+    <ModalWrapper title={ title } route={ withRoute ? route : undefined }>
       <Confirmation
-        confirmClick={async () => {
+        confirmClick={ async () => {
           if (slug) {
             await action(id, slug);
           } else {
             await action(id);
           }
           redirect(route);
-        }}
+        } }
       >
         Deleting this item is irreversible, are you sure you know what you are
         doing?

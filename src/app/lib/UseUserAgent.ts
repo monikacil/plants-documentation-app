@@ -1,4 +1,4 @@
-"client component";
+"use client";
 
 import { useEffect, useState } from "react";
 
@@ -16,7 +16,7 @@ export default function UseUserAgent() {
       // Check if user agent is mobile
       const isIOS = userAgentString.match(/iPhone|iPad|iPod/i);
       const isAndroid = userAgentString.match(/Android/i);
-      setIsIOS(isIOS ? true : false);
+      setIsIOS(!!isIOS);
       const isMobile = isIOS || isAndroid;
       setIsMobile(!!isMobile);
 

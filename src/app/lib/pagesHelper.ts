@@ -1,13 +1,13 @@
-import { PAGINATION_LIMIT } from "./constants";
+const PAGINATION_LIMIT = 10;
 
 export default async function getPageSearchParams(
   searchParams:
     | Promise<{
-        query?: string;
-        page?: string;
-        sortBy?: string;
-        order?: string;
-      }>
+    query?: string;
+    page?: string;
+    sortBy?: string;
+    order?: string;
+  }>
     | undefined
 ) {
   const searchedParams = await searchParams;

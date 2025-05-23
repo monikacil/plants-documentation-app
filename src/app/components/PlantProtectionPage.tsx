@@ -1,6 +1,6 @@
 import TableWrapper from "@/app/components/table/TableWrapper";
-import { PlantProtectionDocument } from "@/app/types/protection.ts";
-import { SearchParams } from "../types/others.types";
+import { PlantProtectionDocument } from "@/app/mongoose/types/protection.types.ts";
+import { SearchParams } from "@/app/mongoose/types/others.types";
 import getPageSearchParams from "../lib/pagesHelper";
 import tableConfig from "@/app/tablesConfig/plantProtectionTable.json";
 import TableGenerator from "./table/TableGenerator";
@@ -25,12 +25,12 @@ export default async function PlantProtectionPage({ searchParams }: SearchParams
   return (
     <TableWrapper
       title='List of Plant Protection'
-      pages={totalPages}
-      link={{ href: `/plant-protection/add`, text: "Add Plant Protection" }}
+      pages={ totalPages }
+      link={ { href: `/plant-protection/add`, text: "Add Plant Protection" } }
     >
       <TableGenerator
-        tableConfig={tableConfig}
-        data={plantProtection}
+        tableConfig={ tableConfig }
+        data={ plantProtection }
       ></TableGenerator>
     </TableWrapper>
   );

@@ -2,15 +2,15 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/app/lib/db.ts";
+import { connectDb } from "@/app/mongoose/db.ts";
 import { zodExpenseValidation } from "@/app/lib/zod/zodValidations";
 
 import { getSessionUserId } from "@/app/lib/utils/session.helper";
 import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
-import { SortType } from "@/app/types/others.types";
-import Expense from "@/app/models/expense.model";
-import { ExpenseDocument } from "../types/expenses.types";
+import { SortType } from "@/app/mongoose/types/others.types";
+import Expense from "@/app/mongoose/models/expense.model";
+import { ExpenseDocument } from "@/app/mongoose/types/expenses.types";
 
 export const getExpenses = async (
   query: string,
@@ -23,12 +23,12 @@ export const getExpenses = async (
 
   if (sort) {
     sort.forEach((query) => {
-      sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {
-        [query.key]: query.direction === "asc" ? 1 : -1,
+      sortQuery[ "$sort" ] = Object.assign(sortQuery[ "$sort" ], {
+        [ query.key ]: query.direction === "asc" ? 1 : -1,
       });
     });
   } else {
-    sortQuery["$sort"] = { createdAt: 1 };
+    sortQuery[ "$sort" ] = { createdAt: 1 };
   }
 
   try {

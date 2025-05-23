@@ -45,21 +45,3 @@ export const zodPlantSchema = object({
     }),
   country: string().trim(),
 });
-
-export type ZodPlantFormState =
-  | {
-    errors: {
-      species: string | undefined;
-      variety: string | undefined;
-      price: string | undefined;
-      date: string | undefined;
-      passport: string | undefined;
-      name: string | undefined;
-      address: string | undefined;
-      phone: string | undefined;
-      email: string | undefined;
-      country: string | undefined;
-      messages: string | undefined;
-    };
-  }
-  | undefined;

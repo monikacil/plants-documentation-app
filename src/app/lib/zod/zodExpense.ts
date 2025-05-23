@@ -18,15 +18,3 @@ export const zodExpenseSchema = object({
     }),
   date: string(),
 });
-
-export type ZodExpenseFormState =
-  | {
-    errors: {
-      product: string | undefined;
-      price: string | undefined;
-      shop: string | undefined;
-      date: string | undefined;
-      message: string | undefined;
-    };
-  }
-  | undefined;

@@ -2,14 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/app/lib/db.ts";
+import { dbConnect } from "@/app/mongoose/db.ts";
 import { getSessionUserId } from "@/app/lib/utils/session.helper";
 import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
-import { SortType } from "@/app/types/others.types";
+import { SortType } from "@/app/mongoose/types/others.types";
 import { zodPlantProtectionValidation } from "../lib/zod/zodValidations";
-import type { PlantProtectionDocument } from "@/app/types/protection.ts";
-import PlantProtection from "@/app/models/protections.ts";
+import type { PlantProtectionDocument } from "@/app/mongoose/types/protection.types.ts";
+import PlantProtection from "@/app/mongoose/models/protections.model.ts";
 import { uiPlantProtectionObj } from "@/app/lib/utils/plantProtectionActions.helper";
 
 export const getPlantProtections = async (
@@ -23,12 +23,12 @@ export const getPlantProtections = async (
 
   if (sort) {
     sort.forEach((query) => {
-      sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {
-        [query.key]: query.direction === "asc" ? 1 : -1,
+      sortQuery[ "$sort" ] = Object.assign(sortQuery[ "$sort" ], {
+        [ query.key ]: query.direction === "asc" ? 1 : -1,
       });
     });
   } else {
-    sortQuery["$sort"] = { createdAt: 1 };
+    sortQuery[ "$sort" ] = { createdAt: 1 };
   }
 
   try {
@@ -88,7 +88,7 @@ export const addPlantProtection = async (
   try {
     await dbConnect();
     await createdPlantProtection.save();
-    revalidatePath("/plantProtection");
+    revalidatePath("/plant-protection");
   } catch (error) {
     return {
       message: getErrorMessage(
@@ -105,7 +105,7 @@ export const deletePlantProtection = async (id: string) => {
   try {
     await dbConnect();
     await PlantProtection.deleteOne({ _id: id, _userId: userId });
-    revalidatePath("/plantProtection");
+    revalidatePath("/plant-protection");
   } catch (error) {
     return {
       message: getErrorMessage(

@@ -2,16 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 
-import { dbConnect } from "@/app/lib/db.ts";
+import { dbConnect } from "@/app/mongoose/db.ts";
 import { zodPlantValidation } from "@/app/lib/zod/zodValidations";
 
 import { getErrorMessage } from "@/app/lib/utils/getErrorMessage";
 
 
-import {
-  PlantDocument,
-} from "@/app/types/plant.types";
-import { SortType } from "@/app/types/others.types";
+import { PlantDocument, } from "@/app/mongoose/types/plant.types";
+import { SortType } from "@/app/mongoose/types/others.types";
 
 export const addPlant = async (
   extraArgs: PlantExtraArgs,
@@ -109,12 +107,12 @@ export const getPlants = async (
   if (sort) {
     sort.forEach((query) => {
       if (!query) return;
-      sortQuery["$sort"] = Object.assign(sortQuery["$sort"], {
-        [query.key]: query.direction === "asc" ? 1 : -1,
+      sortQuery[ "$sort" ] = Object.assign(sortQuery[ "$sort" ], {
+        [ query.key ]: query.direction === "asc" ? 1 : -1,
       });
     });
   } else {
-    sortQuery["$sort"] = { createdAt: -1 };
+    sortQuery[ "$sort" ] = { createdAt: -1 };
   }
 
   try {

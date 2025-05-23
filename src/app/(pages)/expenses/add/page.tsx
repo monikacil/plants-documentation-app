@@ -1,6 +1,6 @@
 import ExpensesPage from "@/app/components/ExpensesPage";
-import { SearchParams } from "@/app/types/others.types";
+import { SearchParams } from "@/app/mongoose/types/others.types";
 
 export default async function Page({ searchParams }: SearchParams) {
-  return <ExpensesPage searchParams={searchParams} />;
+  return <ExpensesPage searchParams={ searchParams }/>;
 }

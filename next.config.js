@@ -26,14 +26,6 @@ const nextConfig = {
       static: 300,
     },
   },
-  images: {
-    localPatterns: [
-      {
-        pathname: "/public/images/**",
-        search: "",
-      },
-    ],
-  },
 };
 
 export default withPWA({

@@ -9,16 +9,14 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { ExpenseFormType } from "@/app/types/expenses.types";
+import { ExpenseFormType } from "@/app/mongoose/types/expenses.types";
 
 type Props = {
   expense?: ExpenseFormType;
   action: (
     id: string | undefined,
-    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
-    prevState: any,
+    prevState: FormData,
     formData: FormData
-    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   ) => Promise<any>;
 };
 
@@ -41,59 +39,59 @@ export default function ExpenseForm({ expense, action }: Props) {
   return (
     <>
       <Form
-        action={formAction}
+        action={ formAction }
         className='flex flex-col gap-3'
         data-testid='expense-form'
       >
         <Input
           name='products'
           placeholder='Products'
-          value={expensesForm?.products}
-          errors={!expensesForm.products ? state?.errors?.products : null}
-          onChange={(value) => {
+          value={ expensesForm?.products }
+          errors={ !expensesForm.products ? state?.errors?.products : null }
+          onChange={ (value) => {
             setExpensesForm({ ...expensesForm, products: value });
-          }}
+          } }
         />
         <Input
           name='price'
           placeholder='Price'
-          value={expensesForm?.price}
-          errors={!expensesForm.price ? state?.errors?.price : null}
-          onChange={(value) => {
+          value={ expensesForm?.price }
+          errors={ !expensesForm.price ? state?.errors?.price : null }
+          onChange={ (value) => {
             setExpensesForm({ ...expensesForm, price: value });
-          }}
+          } }
         />
         <Input
           name='shop'
           placeholder='Seller'
-          value={expensesForm?.shop}
-          errors={!expensesForm.shop ? state?.errors?.shop : null}
-          onChange={(value) => {
+          value={ expensesForm?.shop }
+          errors={ !expensesForm.shop ? state?.errors?.shop : null }
+          onChange={ (value) => {
             setExpensesForm({ ...expensesForm, shop: value });
-          }}
+          } }
         />
         <FormDatepicker
           name='date'
-          maxDate={new Date()}
-          value={expensesForm.date}
-          onChange={(value) => {
+          maxDate={ new Date() }
+          value={ expensesForm.date }
+          onChange={ (value) => {
             setExpensesForm({
               ...expensesForm,
               date: value ? value : new Date(),
             });
-          }}
+          } }
         />
-        {state?.error && (
+        { state?.error && (
           <Alert
             color='failure'
-            icon={HiInformationCircle}
+            icon={ HiInformationCircle }
           >
-            <span className='font-medium'>{state?.error}</span>
+            <span className='font-medium'>{ state?.error }</span>
           </Alert>
-        )}
+        ) }
         <Button
           type='submit'
-          disabled={isPending}
+          disabled={ isPending }
           className='my-5'
         >
           Save Expense

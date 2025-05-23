@@ -1,9 +1,13 @@
-import mongoose, { Schema, model } from "mongoose";
-import { ExpenseDocument } from "../types/expenses.types";
+import mongoose, { model, Schema } from "mongoose";
+
+import { ExpenseDocument } from "@/app/mongoose/types/expenses.types.ts";
 
 const ExpenseSchema = new Schema<ExpenseDocument>(
   {
-    _userId: { type: String, required: true },
+    _userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
     products: {
       type: String,
       required: [true, "Product is required"],
@@ -32,6 +36,5 @@ const ExpenseSchema = new Schema<ExpenseDocument>(
   }
 );
 
-const Expense =
-  mongoose.models?.Expense || model<ExpenseDocument>("Expense", ExpenseSchema);
+const Expense = mongoose.models?.Expense || model<ExpenseDocument>("Expense", ExpenseSchema);
 export default Expense;

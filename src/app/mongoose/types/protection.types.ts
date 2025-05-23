@@ -1,7 +1,4 @@
-import mongoose from "mongoose";
-
 export type ProtectionDocument = {
-  _id: mongoose.Schema.Types.ObjectId | string;
   _userId: string;
   date: Date;
   control: string;
@@ -13,8 +10,3 @@ export type ProtectionDocument = {
   createdAt: Date;
   updatedAt: Date;
 };
-
-export type ProtectionFormType = Omit<
-  ProtectionDocument,
-  "_userId" | "createdAt" | "updatedAt"
->;

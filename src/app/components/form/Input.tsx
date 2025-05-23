@@ -43,7 +43,7 @@ export default function Input({ value, label, className, onChange, errors, ...re
         }}
         {...rest}
         className={cn(
-          `w-full rounded-full border-0 py-2 px-4 placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm ${
+          `w-full rounded-full border-0 py-2 px-4 placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 text-sm ${
             showError ?? "bg-red-100 border border-danger-500"
           }`,
           className

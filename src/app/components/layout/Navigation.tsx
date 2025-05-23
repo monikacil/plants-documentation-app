@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 
-import { FaBars, FaCircleUser } from "react-icons/fa6";
+import {FaBars, FaCircleUser} from "react-icons/fa6";
 
 import Dropdown from "../common/Dropdown";
-import { usePathname } from "next/navigation";
-import { NAVIGATION_CONFIG } from "@/app/lib/navConfig";
-import { generateUniqKey } from "@/app/lib/utils/others";
+import {usePathname} from "next/navigation";
+import {NAVIGATION_CONFIG} from "@/app/lib/navConfig";
+import {generateUniqKey} from "@/app/lib/utils/others";
+import {useActionState} from "react";
+import {logout} from "@/app/actions/auth.ts";
 
 export default function Navigation() {
-  const pathname = usePathname();
-  const navLinks = NAVIGATION_CONFIG;
+  const [state, formAction] = useActionState(logout, undefined)
 
+  const pathname = usePathname();
   type Link = {
     name: string;
     href?: string;
@@ -42,7 +44,7 @@ export default function Navigation() {
       </button>
       <section className='hidden w-full md:block md:w-auto'>
         <ul className='flex flex-col items-center font-medium p-4 md:p-0 md:flex-row gap-5'>
-          {navLinks.map((el: LinkList) => {
+          {NAVIGATION_CONFIG.map((el: LinkList) => {
             if (el.type === "dropdown") {
               return (
                 <li
@@ -116,9 +118,13 @@ export default function Navigation() {
           })}
           <li
             key={generateUniqKey(`logout-btn`)}
-            className='hover:text-base-green-700 rounded-lg'
+            className="hover:text-base-green-700 rounded-lg cursor-pointer"
           >
-            Logout
+            <form
+              action={formAction}
+            >
+              <button type="submit">Sign Out</button>
+            </form>
           </li>
         </ul>
       </section>

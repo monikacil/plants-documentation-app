@@ -1,6 +1,6 @@
 import { getPlant } from "@/app/actions/plant.actions";
 import PlantDetails from "@/app/components/plants/PlantDetails";
-import { Collections, PlantDocument } from "@/app/types/plant.types";
+import { Collections, PlantDocument } from "@/app/mongoose/types/plant.types";
 
 type Props = {
   params: Promise<{ id: string; slug: string }>;
@@ -14,8 +14,8 @@ export default async function PlantDetailsPage({ params }: Props) {
   return (
     <>
       <PlantDetails
-        plant={plant}
-        collection={collection}
+        plant={ plant }
+        collection={ collection }
       />
     </>
   );

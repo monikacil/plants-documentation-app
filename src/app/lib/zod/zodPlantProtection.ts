@@ -21,18 +21,3 @@ export const zodPlantProtectionSchema = object({
       message: "Species required",
     }),
 });
-
-export type ZodPlantProtectionFormState =
-  | {
-    errors: {
-      date: string | undefined;
-      control: string | undefined;
-      pests: string | undefined;
-      actionTaken: string | undefined;
-      exterminator: string | undefined;
-      amount: string | undefined;
-      species: string | undefined;
-      message: string | undefined;
-    };
-  }
-  | undefined;

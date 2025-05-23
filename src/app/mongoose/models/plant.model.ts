@@ -1,10 +1,13 @@
 import mongoose, { model, Schema } from "mongoose";
-import { PlantDocument } from "../types/plant.types.ts";
-import {ObjectId} from "mongodb";
+
+import { PlantDocument } from "@/app/mongoose/types/plant.types.ts";
 
 const CollectedPlantSchema = new Schema<PlantDocument>(
   {
-    _userId: { type: ObjectId, required: true },
+    _userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
     species: {
       type: String,
       required: [true, "Species is required"],
@@ -18,15 +21,11 @@ const CollectedPlantSchema = new Schema<PlantDocument>(
       trim: true,
       lowercase: true,
     },
-    _sellerId: ObjectId,
-    _buyerId: ObjectId,
     createdAt: Number,
     updatedAt: Number,
   },
   { timestamps: true }
 );
 
-const CollectedPlant =
-  mongoose.models?.CollectedPlant ||
-  model<PlantDocument>("CollectedPlant", CollectedPlantSchema);
+const CollectedPlant = mongoose.models?.CollectedPlant || model<PlantDocument>("CollectedPlant", CollectedPlantSchema);
 export default CollectedPlant;

@@ -6,13 +6,14 @@ import Logo from "./Logo";
 import { cn } from "@/app/lib/utils/others";
 
 import AddToHomeScreen from "../pwa/AddToHomeScreen";
+import {auth} from "@/auth.ts";
 
 type Props = {
   className?: string;
 };
 
 export default async function Header({ className }: Props) {
-  const isUserAuthenticated = false;
+  const isUserAuthenticated = await auth();
 
   return (
     <header className={cn("w-full py-4", className)}>

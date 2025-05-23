@@ -10,19 +10,19 @@ export default function getBreadcrumbsLinks(url: string) {
       }
       if (idx === 1) {
         return {
-          name: `${capitalizeFirstLetter(el)} Plants`,
+          name: `${ capitalizeFirstLetter(el) } Plants`,
           href: "/plants/" + el,
         };
       }
       if (idx > 1 && ["add", "edit", "delete"].includes(el)) {
         return {
           name: capitalizeFirstLetter(el),
-          href: `/plants/${splittedUrl[1]}/${splittedUrl[2]}/${el}`,
+          href: `/plants/${ splittedUrl[ 1 ] }/${ splittedUrl[ 2 ] }/${ el }`,
         };
       }
       return {
-        name: `Plant Details (${el})`,
-        href: `/${splittedUrl[1]}/${splittedUrl[2]}/${el}`,
+        name: `Plant Details (${ el })`,
+        href: `/${ splittedUrl[ 1 ] }/${ splittedUrl[ 2 ] }/${ el }`,
       };
     });
 

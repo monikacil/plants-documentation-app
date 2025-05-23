@@ -9,7 +9,7 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { PlantProtectionFormType } from "@/app/types/protection.ts";
+import { PlantProtectionFormType } from "@/app/mongoose/types/protection.types.ts";
 
 type Props = {
   plantProtection?: PlantProtectionFormType;
@@ -46,87 +46,87 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
   return (
     <>
       <Form
-        action={formAction}
+        action={ formAction }
         className='flex flex-col gap-3'
       >
         <FormDatepicker
           name='date'
-          maxDate={new Date()}
-          value={protectionForm?.date}
-          onChange={(value) => {
+          maxDate={ new Date() }
+          value={ protectionForm?.date }
+          onChange={ (value) => {
             setprotectionForm({
               ...protectionForm,
               date: value,
             });
-          }}
+          } }
         />
         <Input
           name='control'
           placeholder='Control'
-          value={protectionForm?.control}
-          errors={!protectionForm.control ? state?.errors?.control : null}
-          onChange={(value) => {
+          value={ protectionForm?.control }
+          errors={ !protectionForm.control ? state?.errors?.control : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, control: value });
-          }}
+          } }
         />
         <Input
           name='pests'
           placeholder='Pests'
-          value={protectionForm?.pests}
-          errors={!protectionForm.pests ? state?.errors?.pests : null}
-          onChange={(value) => {
+          value={ protectionForm?.pests }
+          errors={ !protectionForm.pests ? state?.errors?.pests : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, pests: value });
-          }}
+          } }
         />
         <Input
           name='actionTaken'
           placeholder='Anti-pest actions'
-          value={protectionForm?.actionTaken}
-          errors={!protectionForm.actionTaken ? state?.errors?.actionTaken : null}
-          onChange={(value) => {
+          value={ protectionForm?.actionTaken }
+          errors={ !protectionForm.actionTaken ? state?.errors?.actionTaken : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, actionTaken: value });
-          }}
+          } }
         />
         <Input
           name='exterminator'
           placeholder='Pest Exterminator'
-          value={protectionForm?.exterminator}
-          errors={!protectionForm.exterminator ? state?.errors?.exterminator : null}
-          onChange={(value) => {
+          value={ protectionForm?.exterminator }
+          errors={ !protectionForm.exterminator ? state?.errors?.exterminator : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, exterminator: value });
-          }}
+          } }
         />
         <Input
           name='amount'
           type='number'
-          min={1}
-          value={protectionForm?.amount}
-          errors={!protectionForm.amount ? state?.errors?.amount : null}
-          onChange={(value) => {
+          min={ 1 }
+          value={ protectionForm?.amount }
+          errors={ !protectionForm.amount ? state?.errors?.amount : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, amount: parseInt(value) });
-          }}
+          } }
         />
         <Input
           name='species'
           placeholder='Species'
-          value={protectionForm?.species}
-          errors={!protectionForm.species ? state?.errors?.species : null}
-          onChange={(value) => {
+          value={ protectionForm?.species }
+          errors={ !protectionForm.species ? state?.errors?.species : null }
+          onChange={ (value) => {
             setprotectionForm({ ...protectionForm, species: value });
-          }}
+          } }
         />
 
-        {state?.error && (
+        { state?.error && (
           <Alert
             color='failure'
-            icon={HiInformationCircle}
+            icon={ HiInformationCircle }
           >
-            <span className='font-medium'>{state?.error}</span>
+            <span className='font-medium'>{ state?.error }</span>
           </Alert>
-        )}
+        ) }
         <Button
           type='submit'
-          disabled={isPending}
+          disabled={ isPending }
           className='my-5'
         >
           Save Plant Protection

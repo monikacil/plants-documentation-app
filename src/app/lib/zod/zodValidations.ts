@@ -1,5 +1,4 @@
-import { zodCollectedPlantSchema, zodPlantSchema } from "./zodPlant";
-import { Collections } from "@/app/types/plant.types";
+import { zodPlantSchema } from "./zodPlant";
 import { zodExpenseSchema } from "./zodExpense";
 import { zodPlantProtectionSchema } from "./zodPlantProtection";
 
@@ -20,7 +19,6 @@ export async function zodExpenseValidation(formData: FormData) {
 
 export async function zodPlantValidation(
   formData: FormData,
-  collection: Collections
 ) {
   const data = {
     species: formData.get("species"),
@@ -34,24 +32,19 @@ export async function zodPlantValidation(
     email: formData.get("email"),
     country: formData.get("country"),
   };
-  if (collection !== "collected") {
-    return zodPlantSchema.safeParse({
-      species: data.species,
-      variety: data.variety,
-      price: data.price,
-      date: data.date,
-      passport: data.passport,
-      name: data.name,
-      address: data.address,
-      phone: data.phone,
-      email: data.email,
-      country: data.country,
-    });
-  }
-  return zodCollectedPlantSchema.safeParse({
+  return zodPlantSchema.safeParse({
     species: data.species,
     variety: data.variety,
+    price: data.price,
+    date: data.date,
+    passport: data.passport,
+    name: data.name,
+    address: data.address,
+    phone: data.phone,
+    email: data.email,
+    country: data.country,
   });
+
 }
 
 export async function zodPlantProtectionValidation(formData: FormData) {

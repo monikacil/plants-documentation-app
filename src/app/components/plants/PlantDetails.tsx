@@ -1,6 +1,6 @@
 "use client";
 
-import { Collections, PlantDocument } from "@/app/types/plant.types";
+import { Collections, PlantDocument } from "@/app/mongoose/types/plant.types";
 import ActionButtons from "../table/ActionButtons";
 
 type Props = {
@@ -9,10 +9,10 @@ type Props = {
 };
 
 export default function PlantDetails({ plant, collection }: Props) {
-  const route = `/plants/${collection}/${plant?._id}`;
+  const route = `/plants/${ collection }/${ plant?._id }`;
   return (
     <div className="flex gap-2">
-      <ActionButtons route={route} />
+      <ActionButtons route={ route }/>
     </div>
   );
 }
