@@ -7,7 +7,7 @@ import Credentials from "next-auth/providers/credentials";
 import User from "@/app/mongoose/models/user.model.ts";
 
 import connectDb from "@/app/mongoose/db.ts";
-import { CredentialsError, NoUserError, UserNotConfirmed } from "@/app/lib/authErrors.ts";
+import { CredentialsError, UserNotConfirmed } from "@/app/lib/authErrors.ts";
 import { ComparePassword } from "@/app/lib/bcrypt.ts";
 
 export default {
@@ -33,7 +33,7 @@ export default {
         await connectDb();
         const user = await User.findOne({ email }).select("+password");
 
-        if (!user) throw new NoUserError();
+        if (!user) throw new CredentialsError();
 
         const isPasswordValid = await ComparePassword(password as string, user.password);
 

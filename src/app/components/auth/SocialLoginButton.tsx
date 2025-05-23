@@ -10,7 +10,7 @@ export function SocialLoginButtons() {
     await signIn(provider);
   };
   return (
-    <div className="flex gap-2 w-full items-center justify-center">
+    <div className="flex flex-col md:flex-row gap-2 w-full items-center justify-center">
       <Button
         type="button"
         onClick={ () => handleLogin("google") }

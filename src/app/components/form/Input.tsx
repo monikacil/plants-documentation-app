@@ -1,67 +1,85 @@
 "use client";
 
-import { InputHTMLAttributes, useEffect, useState } from "react";
-
-import ZodErrors from "./../common/ZodErrors";
-
+import { forwardRef, InputHTMLAttributes, useEffect, useRef, useState, } from "react";
 import { cn } from "@/app/lib/utils/others";
-import type { ZodError } from "zod";
+import { HiEye, HiEyeOff } from "react-icons/hi";
 
 type Props = {
-  value?: string | number;
-  label?: string;
-  className?: string;
-  errors?: ZodError[] | string[];
-  onChange: (e: string) => void;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
+  label?: string
+  value?: string | number
+  errors?: string[] | undefined | null
+  onChange: (value: string) => void
+  className?: string
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">
 
-export default function Input({ value, label, className, onChange, errors, ...rest }: Props) {
-  const [showError, setShowError] = useState(errors ? true : false);
-  const [inputValue, setInputValue] = useState(value);
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ label, value, errors, onChange, className, type = "text", ...rest }, ref) => {
+    const [showError, setShowError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const localRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (errors) {
-      setShowError(true);
-    }
-  }, [errors]);
+    useEffect(() => {
+      setShowError(!!errors?.length);
+    }, [errors]);
 
-  useEffect(() => {
-    setInputValue(() => value);
-    if (inputValue !== value) {
-      setShowError(false);
-    }
-  }, [value, inputValue]);
+    const togglePassword = () => {
+      setShowPassword((prev) => !prev);
+      localRef.current?.focus();
+    };
 
-  return (
-    <div className='flex flex-col gap-1'>
-      {label ?? <label>{label}</label>}
-      <input
-        data-testid='input'
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          onChange(e.currentTarget.value);
-        }}
-        {...rest}
-        className={cn(
-          `w-full rounded-full border-0 py-2 px-4 placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 text-sm ${
-            showError ?? "bg-red-100 border border-danger-500"
-          }`,
-          className
-        )}
-      />
-      <div data-testid='zod-error'>
-        {showError && errors
-          ? errors.map((error, index) => {
-              return (
-                <ZodErrors
-                  error={error as ZodError}
-                  className='text-center'
-                  key={index}
-                />
-              );
-            })
-          : ""}
+    const isPassword = type === "password";
+    const inputType = isPassword && showPassword ? "text" : type;
+
+    return (
+      <div className="flex flex-col gap-1 relative">
+        { label && <label className="text-sm font-medium text-gray-700">{ label }</label> }
+
+        <input
+          ref={ (node) => {
+            localRef.current = node;
+            if (ref && typeof ref === "function") ref(node);
+            else if (ref && typeof ref === "object") ref.current = node;
+          } }
+          type={ inputType }
+          value={ value }
+          onChange={ (e) => {
+            setShowError(false);
+            onChange(e.target.value);
+          } }
+          { ...rest }
+          className={ cn(
+            "w-full rounded-full border py-2 px-4 pr-10 text-sm focus:ring-2 focus:outline-none transition",
+            showError
+              ? "bg-red-50 border-red-500 text-red-700 placeholder-red-400 focus:ring-red-500"
+              : "border-gray-300 focus:ring-base-green-500 focus:border-base-green-500",
+            className
+          ) }
+        />
+
+        { isPassword && (
+          <span
+            onClick={ togglePassword }
+            className="absolute right-3 top-[10px] text-gray-500 hover:text-gray-700 cursor-pointer"
+          >
+            { showPassword ? <HiEyeOff size={ 18 }/> : <HiEye size={ 18 }/> }
+          </span>
+        ) }
+
+        { showError && errors && errors.length > 0 && (
+          <div data-testid="zod-error">
+            { errors && errors.length > 0 && (
+              <div className="text-sm text-red-600 mt-1">
+                { errors.map((err, idx) => (
+                  <p key={ idx }>{ err }</p>
+                )) }
+              </div>
+            ) }
+          </div>
+        ) }
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
+
+Input.displayName = "Input";
+export default Input;

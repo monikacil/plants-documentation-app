@@ -4,12 +4,12 @@ import Link from "next/link";
 import { auth } from "../auth";
 
 import Button from "@/app/components/common/Button";
-import AuthForm from "@/app/components/form/AuthForm.tsx";
+import AuthForm from "@/app/components/auth/AuthForm.tsx";
 
 export default async function LandingPage() {
   const session = await auth();
   const isUserAuthenticated = !!session?.user;
-  
+
   return (
     <main className="h-full text-xl">
       <section

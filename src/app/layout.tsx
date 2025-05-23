@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Fredoka } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
@@ -47,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Header className="flex-none"/>
       <section className="flex-auto">
         { children }
+        <Toaster toastOptions={ { duration: 4000 } }/>
       </section>
       <Footer className="flex-none"/>
     </div>

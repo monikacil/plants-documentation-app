@@ -19,8 +19,6 @@ export async function GET(req: Request) {
     return Response.redirect(`${ process.env.NEXT_PUBLIC_APP_URL }/auth/invalid-token`, 302);
   }
 
-  console.log(entry);
-
   const user = await User.findById(entry._userId);
   if (!user) {
     return Response.redirect(`${ process.env.NEXT_PUBLIC_APP_URL }/auth/invalid-token`, 302);
