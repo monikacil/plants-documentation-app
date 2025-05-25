@@ -81,7 +81,8 @@ export default function AuthForm() {
       </div>
       <input type="hidden" name="mode" value={ mode }/>
       <div className="flex flex-col gap-3 mt-5 space-y-3">
-        <Button type="submit" disabled={ isPending }>
+        <Button type="submit" disabled={ isPending } isLoading={ isPending }
+                aria-label={ mode === "login" ? "Log in with Credentials" : "Register with Credentials" }>
           { mode === "login" ? "Login" : "Register" }
         </Button>
         <SocialLoginButtons/>

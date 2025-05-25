@@ -1,22 +1,43 @@
-/** @type {import("jest").Config} */
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const nextJest = require("next/jest");
+import type { Config } from "jest";
+import nextJest from "next/jest";
 
 const createJestConfig = nextJest({
   dir: "./",
 });
 
-const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+const config: Config = {
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testEnvironment: "jest-environment-jsdom",
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
-    "^.+\\.(css|scss|sass)$": "identity-obj-proxy",
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^next-auth/react$": "<rootDir>/src/__mocks__/next-auth-react.ts",
+    "^next-auth$": "<rootDir>/src/__mocks__/next-auth.ts",
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
-  testEnvironment: "jsdom",
-  testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
+  transformIgnorePatterns: [
+    "/node_modules/(?!next-auth)/"
+  ],
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/.next/",
+    "<rootDir>/dist/"
+  ],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
-  },
+    "^.+\\.(t|j)sx?$": ["@swc/jest", {
+      jsc: {
+        parser: {
+          syntax: "typescript",
+          tsx: true,
+          decorators: true
+        },
+        transform: {
+          react: {
+            runtime: "automatic"
+          }
+        }
+      }
+    }]
+  }
 };
 
-module.exports = createJestConfig(customJestConfig);
+export default createJestConfig(config);
