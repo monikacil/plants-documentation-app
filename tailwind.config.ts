@@ -1,92 +1,74 @@
 import type { Config } from "tailwindcss";
-import { content, plugin } from "flowbite-react/tailwind";
+import { plantsUIPlugin } from "./plugins/plants-ui-plugin.ts";
 
 const config: Config = {
+  darkMode: "class",
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/tailwind-datepicker-react/dist/**/*.js",
-    content(),
-  ],
-  safelist: [
-    "text-2xl",
-    "text-3xl",
-    "text-4xl",
-    "text-5xl",
-    "text-6xl",
-    "sm:text-2xl",
-    "sm:text-3xl",
-    "sm:text-4xl",
-    "sm:text-5xl",
-    "sm:text-6xl",
-    "md:text-2xl",
-    "md:text-3xl",
-    "md:text-4xl",
-    "md:text-5xl",
-    "md:text-6xl",
-    "lg:text-2xl",
-    "lg:text-3xl",
-    "lg:text-4xl",
-    "lg:text-5xl",
-    "lg:text-6xl",
+    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-fredoka)"],
-      },
       colors: {
-        "base-gray": {
-          100: "#fbfbfb",
-          200: "#f6f6f6",
-          300: "#f2f2f2",
-          400: "#ededed",
-          500: "#e9e9e9",
-          600: "#bababa",
-          700: "#8c8c8c",
-          800: "#5d5d5d",
-          900: "#2f2f2f",
+        background: {
+          light: "#F5F8F2",
+          dark: "#0D1B13",
         },
-        "base-green": {
-          50: "#fbeded",
-          100: "#eaf2e0",
-          150: "#e2f2ce",
-          200: "#d5e5c2",
-          300: "#c0d8a3",
-          400: "#abcb85",
-          500: "#96be66",
-          600: "#799d4d",
-          700: "#5a723d",
-          800: "#3c4c29",
-          900: "#1e2614",
+        surface: {
+          light: "#FFFFFF",
+          dark: "#1B2D23",
         },
-        danger: {
-          500: "#ef4444",
-          600: "#bf3636",
+        sidebar: {
+          light: "#E5F0E4",
+          dark: "#15271F",
         },
-        warning: {
-          500: "#ffa53e",
-          600: "#cc8432",
+        card: {
+          light: "#F1F5F0",
+          dark: "#1F3429",
+        },
+        border: {
+          light: "#DDE7DE",
+          dark: "#2B4537",
         },
         primary: {
-          500: "#96be66",
-          600: "#799d4d",
+          DEFAULT: "#4B8F61", // text-primary
+          light: "#4B8F61",
+          dark: "#6FCF97",
         },
-        info: {
-          500: "#5d5d5d",
-          600: "#2f2f2f",
+        accent: {
+          light: "#A7D7B2",
+          dark: "#81C784",
+        },
+        text: {
+          light: "#1F2D1F",
+          dark: "#E8F5E9",
+        },
+        muted: {
+          light: "#6B7D6B",
+          dark: "#A8BDA8",
+        },
+        error: {
+          light: "#D9534F",
+          dark: "#FF6B6B",
+        },
+        warning: {
+          light: "#ECA400",
+          dark: "#FFD166",
+        },
+        edit: {
+          light: "#4C9C9A",
+          dark: "#3E8280",
+          DEFAULT: "#4C9C9A",
         },
       },
-      spacing: {
-        "128": "32rem",
-        "144": "36rem",
-      },
-      borderRadius: {
-        "4xl": "2rem",
+      fontFamily: {
+        sans: ["\"Fredoka\"", "sans-serif"],
       },
     },
   },
-  plugins: [plugin()],
+  plugins: [plantsUIPlugin],
 };
+
 export default config;
