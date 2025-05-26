@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
 
@@ -38,6 +38,13 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/images/web-app-manifest-192x192.png" }],
 };
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F5F8F2" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D1B13" },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -45,10 +52,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
       className={ `${ fredoka.variable }` }
     >
-    <body className="h-screen max-w-screen-2xl mx-auto px-3 md:px-14 lg:px-28">
+    <body className="bg-background-light h-screen max-w-screen-2xl mx-auto px-3 md:px-14 lg:px-28">
     <div className="flex flex-col h-full">
       <Header className="flex-none"/>
-      <main className="flex-auto">
+      <main className="flex-auto ">
         { children }
       </main>
       <Footer className="flex-none"/>

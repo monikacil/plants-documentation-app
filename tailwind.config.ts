@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import { plantsUIPlugin } from "./plugins/plants-ui-plugin.ts";
 
 const config: Config = {
-  darkMode: "class",
+  darkMode: "media",
   content: [
     "./app/**/*.{ts,tsx}",
     "./pages/**/*.{ts,tsx}",

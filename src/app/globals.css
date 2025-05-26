@@ -2,18 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #f6f6f6;
-  --foreground: #030303;
-}
-
 html {
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.8px;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
+  color: #1F2D1F;
+  background: #0D1B13;
 }
