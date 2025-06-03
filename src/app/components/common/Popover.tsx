@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
+import { UseOutsideClick } from "@/app/lib/hooks/UseOutsideClick";
 
 type Props = {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ type Props = {
 
 export default function Popover({ children, content }: Props) {
   const [show, setShow] = useState(false);
-  const ref = useOutsideClick(() => {
+  const ref = UseOutsideClick(() => {
     setShow(false);
   });
 
@@ -24,18 +24,18 @@ export default function Popover({ children, content }: Props) {
 
   return (
     <div
-      ref={ref}
-      onMouseEnter={handleMouseOver}
-      onMouseLeave={handleMouseLeft}
+      ref={ ref }
+      onMouseEnter={ handleMouseOver }
+      onMouseLeave={ handleMouseLeft }
       className="w-fit h-fit relative flex justify-center"
     >
-      <div onClick={() => setShow(!show)}>{children}</div>
+      <div onClick={ () => setShow(!show) }>{ children }</div>
       <div
-        hidden={!show}
+        hidden={ !show }
         className="min-w-fit w-12 h-fit absolute bottom-full right-0 z-50 transition-all"
       >
         <div className="rounded-full text-base-gray-900 bg-white py-2 px-3 mb-1 border border-base-gray-500 shadow-xl">
-          {content}
+          { content }
         </div>
       </div>
     </div>

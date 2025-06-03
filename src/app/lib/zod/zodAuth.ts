@@ -17,3 +17,7 @@ export type AuthFormState =
   errorMessage?: string
   status?: string
 }
+
+export const initResetPasswordSchema = z.object({
+  email: z.string().email("Please provide a valid email address"),
+});

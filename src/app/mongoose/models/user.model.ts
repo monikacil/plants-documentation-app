@@ -8,7 +8,6 @@ const UserSchema = withSanitizedOutput(
     {
       name: {
         type: String,
-        required: [true, "Name is required"],
         trim: true,
         lowercase: true,
       },
@@ -19,10 +18,10 @@ const UserSchema = withSanitizedOutput(
         lowercase: true,
         trim: true,
       },
-      emailVerified: Date,
+      emailVerified: { type: Date, default: null },
       password: {
         type: String,
-        required: [true, "Password is required"],
+        required: false,
         minLength: [6, "Minimum length is 6 characters"],
         trim: true,
         select: false,

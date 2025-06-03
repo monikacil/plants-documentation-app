@@ -1,25 +1,25 @@
+import { getToken } from "next-auth/jwt";
+import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import NextAuth from "next-auth";
-import authConfig from "./auth.config";
 
-const PUBLIC_ROUTES = ["/"];
+const PUBLIC_ROUTES = ["/", "/api/auth", "/reset-password", "/reset-password-token", "/verify-email"];
 
-const { auth } = NextAuth(authConfig);
-export default auth(async function middleware(req) {
-  const { nextUrl } = req;
+export async function middleware(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const isAuthenticated = !!token;
+  const isPublicRoute = PUBLIC_ROUTES.includes(req.nextUrl.pathname);
 
-  const isAuthenticated = !!req.auth;
-  const isPublicRoute = PUBLIC_ROUTES.includes(nextUrl.pathname);
+  if (isPublicRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
-  if (isPublicRoute && isAuthenticated)
-    return Response.redirect(new URL("/dashboard", nextUrl));
-
-  if (!isAuthenticated && !isPublicRoute)
-    return Response.redirect(new URL("/", nextUrl));
+  if (!isPublicRoute && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 
   return NextResponse.next();
-});
+}
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)"],
+  matcher: ["/((?!_next|images|manifest.json|favicon.ico|service-worker.js|api).*)"],
 };

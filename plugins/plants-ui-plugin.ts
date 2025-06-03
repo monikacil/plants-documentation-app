@@ -2,23 +2,35 @@ import plugin from "tailwindcss/plugin";
 
 export const plantsUIPlugin = plugin(function({ addComponents, addUtilities }) {
   addComponents({
+    ".btn": {
+      "@apply rounded-full font-semibold shadow text-white transition inline-flex items-center justify-center gap-2 whitespace-nowrap text-base font-medium transition-colors": {},
+    },
     ".btn-primary": {
-      "@apply px-4 py-2 font-semibold rounded-lg shadow text-white bg-primary-light dark:bg-primary-dark hover:opacity-90 transition": {},
+      "@apply bg-primary-light dark:bg-primary-dark": {},
     },
     ".btn-outline": {
-      "@apply px-4 py-2 font-semibold rounded-lg border border-primary-light dark:border-primary-dark text-primary-light dark:text-primary-dark bg-transparent hover:bg-primary-light hover:text-white dark:hover:bg-primary-dark dark:hover:text-black transition": {},
+      "@apply border border-primary-light dark:border-primary-dark text-primary-light dark:text-primary-dark bg-transparent hover:bg-primary-light/70 hover:text-white dark:hover:bg-primary-dark dark:hover:text-black": {},
     },
     ".btn-danger": {
-      "@apply px-4 py-2 font-semibold rounded-lg bg-error-light dark:bg-error-dark text-white hover:opacity-90 transition": {},
+      "@apply bg-error-light dark:bg-error-dark hover:opacity-90": {},
     },
     ".btn-edit": {
-      "@apply px-4 py-2 font-semibold rounded-lg text-white bg-edit hover:bg-edit-dark transition": {},
+      "@apply bg-edit hover:bg-edit-dark": {},
+    },
+    ".btn-facebook": {
+      "@apply bg-[#1877F2] text-white hover:bg-[#145DBF]": {},
+    },
+    ".btn-google": {
+      "@apply bg-white border border-gray-300 text-black hover:bg-gray-100": {},
     },
     ".card": {
       "@apply p-6 rounded-xl bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark shadow": {},
     },
     ".input": {
-      "@apply w-full px-4 py-2 rounded-md border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-text-light dark:text-text-dark placeholder-muted-light dark:placeholder-muted-dark focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition": {},
+      "@apply w-full px-4 py-2 rounded-full text-sm border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-text-light dark:text-text-dark placeholder-muted-light dark:placeholder-muted-dark focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition": {},
+    },
+    ".input-invalid": {
+      "@apply bg-red-50 border-red-500 text-red-700 placeholder-red-400 focus:ring-red-500": {},
     },
     ".alert-success": {
       "@apply p-4 rounded-md bg-primary-light dark:bg-primary-dark text-white text-sm animate-fade-in": {},
@@ -28,6 +40,9 @@ export const plantsUIPlugin = plugin(function({ addComponents, addUtilities }) {
     },
     ".alert-error": {
       "@apply p-4 rounded-md bg-error-light dark:bg-error-dark text-white text-sm animate-bounce-once": {},
+    },
+    ".error-message": {
+      "@apply text-sm text-red-600 mt-1": {},
     },
   });
 

@@ -1,12 +1,16 @@
 import type { Metadata, Viewport } from "next";
 
+import { auth } from "@/auth";
+
 import "./globals.css";
 
 import { Fredoka } from "next/font/google";
-
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
 import { Toaster } from "react-hot-toast";
+
+import AppSessionProvider from "@/app/AppSessionProvider.tsx";
+import ServiceWorkerRegister from "@/app/components/pwa/ServiceWorkerRegister.tsx";
+import Footer from "@/app/components/layout/Footer";
+import Sidebar from "@/app/components/layout/Sidebar.tsx";
 
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
@@ -35,32 +39,41 @@ export const metadata: Metadata = {
       url: "https://www.linkedin.com/in/monika-cilinska/",
     },
   ],
-  icons: [{ rel: "icon", url: "/images/web-app-manifest-192x192.png" }],
+  icons: [{ rel: "icon", url: "/favicon.png" }],
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#F5F8F2" },
     { media: "(prefers-color-scheme: dark)", color: "#0D1B13" },
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
       className={ `${ fredoka.variable }` }
     >
-    <body className="bg-background-light h-screen max-w-screen-2xl mx-auto px-3 md:px-14 lg:px-28">
-    <div className="flex flex-col h-full">
-      <Header className="flex-none"/>
-      <main className="flex-auto ">
-        { children }
-      </main>
-      <Footer className="flex-none"/>
-    </div>
+    <body className="bg-background-light text-text-light dark:text-text-dark min-h-screen overflow-x-hidden">
+    <AppSessionProvider session={ session }>
+      <div className="flex min-h-screen w-full max-w-full overflow-hidden">
+        <Sidebar/>
+        <div className="flex flex-col flex-1">
+          <main className="flex-1 w-full overflow-y-auto">
+            { children }
+          </main>
+          <Footer className="flex-none"/>
+        </div>
+      </div>
+    </AppSessionProvider>
     <Toaster toastOptions={ { duration: 4000 } }/>
+    <ServiceWorkerRegister/>
     </body>
     </html>
   );

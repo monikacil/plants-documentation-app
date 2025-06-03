@@ -3,49 +3,35 @@
 import { unstable_rethrow } from "next/navigation";
 import crypto from "crypto";
 
-import { signIn, signOut } from "@/auth";
+import { signOut } from "@/auth";
 
 import connectDb from "@/app/mongoose/db.ts";
 import { HashPassword } from "@/app/lib/bcrypt.ts";
-import { sendVerificationEmail } from "@/app/lib/mailer.ts";
+import { sendResetPasswordEmail, sendVerificationEmail } from "@/app/lib/mailer.ts";
 
 import User from "@/app/mongoose/models/user.model.ts";
 
 import Account from "@/app/mongoose/models/account.model.ts";
 import VerificationToken from "@/app/mongoose/models/verificationToken.model.ts";
-import { loginSchema, registerSchema } from "@/app/lib/zod/zodAuth.ts";
+import { initResetPasswordSchema, registerSchema } from "@/app/lib/zod/zodAuth.ts";
 import { getErrorMessage } from "@/app/lib/utils/getErrorMessage.ts";
 import { createFormResponse } from "@/app/lib/createFormResponse.ts";
+import PasswordResetToken from "@/app/mongoose/models/passwordResetToken.model.ts";
 
 
-export async function authOrSignIn(prevState: unknown, formData: FormData) {
+export async function createUser(prevState: unknown, formData: FormData) {
   const email = formData.get("email")?.toString() || "";
   const password = formData.get("password")?.toString() || "";
   const name = formData.get("name")?.toString() || "";
-  const mode = formData.get("mode") as "login" | "register";
 
-  // if (!email || !password) {
-  //   return createFormResponse({
-  //     errorMessage: "Email or Password is missing. Please try again.",
-  //     status: "invalid",
-  //   });
-  // }
-
-  if (mode === "register") {
-    return await createUser(email, name, password);
+  const result = registerSchema.safeParse({ email, name, password });
+  if (!result.success) {
+    return createFormResponse({
+      error: result.error.flatten().fieldErrors,
+      status: "invalid",
+    });
   }
 
-  if (mode === "login") {
-    return await login(email, password);
-  }
-
-  return createFormResponse({
-    errorMessage: "Something went wrong. Please try again.",
-    status: "invalid",
-  });
-}
-
-export async function createUser(email: string, name: string, password: string) {
   await connectDb();
 
   const user = await User.findOne({ email });
@@ -53,14 +39,6 @@ export async function createUser(email: string, name: string, password: string) 
     return createFormResponse({
       errorMessage: "User already exists. Please try logging in or resetting your password.",
       status: "unauthorized",
-    });
-  }
-
-  const result = registerSchema.safeParse({ email, name, password });
-  if (!result.success) {
-    return createFormResponse({
-      error: result.error.flatten().fieldErrors,
-      status: "invalid",
     });
   }
 
@@ -102,32 +80,6 @@ export async function createUser(email: string, name: string, password: string) 
   }
 }
 
-export async function login(email: string, password: string) {
-  const result = loginSchema.safeParse({ email, password });
-  if (!result.success) {
-    return createFormResponse({
-      error: result.error.flatten().fieldErrors,
-      status: "invalid",
-    });
-  }
-
-  try {
-    await signIn("credentials", {
-      email,
-      password,
-      redirectTo: "/dashboard",
-    });
-
-    return createFormResponse({ success: true, status: "logged_in" });
-  } catch (e) {
-    unstable_rethrow(e);
-    return createFormResponse({
-      errorMessage: getErrorMessage(e),
-      status: "unauthorized",
-    });
-  }
-}
-
 export async function logout() {
   try {
     await signOut({ redirectTo: "/" });
@@ -137,4 +89,72 @@ export async function logout() {
       errorMessage: getErrorMessage(e),
     });
   }
+}
+
+export async function initiatePasswordReset(prevState: unknown, formData: FormData) {
+  const email = formData.get("email")?.toString();
+
+  if (!email) return createFormResponse({
+    errorMessage: "Email is required",
+    status: "invalid",
+  });
+
+  await connectDb();
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return createFormResponse({
+      errorMessage: "User not found",
+      status: "invalid",
+    });
+  }
+  const result = initResetPasswordSchema.safeParse({ email });
+  if (!result.success) {
+    return createFormResponse({
+      error: result.error.flatten().fieldErrors,
+      status: "invalid",
+    });
+  }
+
+  await PasswordResetToken.deleteMany({ _userId: user._id });
+
+  const token = crypto.randomBytes(32).toString("hex");
+  const expires = new Date(Date.now() + 1000 * 60 * 30);
+
+  await PasswordResetToken.create({
+    _userId: user._id,
+    token,
+    expires,
+  });
+
+  try {
+    await sendResetPasswordEmail(email, token);
+    return createFormResponse({
+      status: "success",
+    });
+  } catch (e) {
+    unstable_rethrow(e);
+    return createFormResponse({
+      errorMessage: getErrorMessage(e),
+      status: "server_error",
+    });
+  }
+}
+
+
+export async function resetPassword(token: string, newPassword: string) {
+  await connectDb();
+
+  const resetToken = await PasswordResetToken.findOne({ token });
+  if (!resetToken || resetToken.expires < new Date()) {
+    throw new Error("Token expired or invalid");
+  }
+
+  const user = await User.findById(resetToken._userId);
+  if (!user) throw new Error("User not found");
+
+  user.password = await HashPassword(newPassword);
+  await user.save();
+
+  await PasswordResetToken.deleteOne({ token });
 }

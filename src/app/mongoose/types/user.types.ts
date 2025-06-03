@@ -1,6 +1,6 @@
 export type UserDocument = {
-  name: string;
+  name?: string;
   email: string;
-  emailVerified: boolean;
-  password: string;
+  emailVerified?: Date | null;
+  password?: string;
 };

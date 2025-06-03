@@ -1,22 +1,23 @@
-import { getPlant } from "@/app/actions/plant.actions";
-import PlantDetails from "@/app/components/plants/PlantDetails";
-import { Collections, PlantDocument } from "@/app/mongoose/types/plant.types";
+// import { getPlant } from "@/app/actions/plant.actions";
+// import PlantDetails from "@/app/components/plants/PlantDetails";
+// import { Collections, PlantDocument } from "@/app/mongoose/types/plant.types";
 
 type Props = {
   params: Promise<{ id: string; slug: string }>;
 };
 
 export default async function PlantDetailsPage({ params }: Props) {
-  const collection = (await params).slug as Collections;
-  const plantId = (await params).id;
-  const plant: PlantDocument = await getPlant(plantId, collection);
+  console.log(params);
+  // const collection = (await params).slug as Collections;
+  // const plantId = (await params).id;
+  // const plant: PlantDocument = await getPlant(plantId, collection);
 
   return (
     <>
-      <PlantDetails
-        plant={ plant }
-        collection={ collection }
-      />
+      {/*<PlantDetails*/ }
+      {/*  plant={ plant }*/ }
+      {/*  collection={ collection }*/ }
+      {/*/>*/ }
     </>
   );
 }

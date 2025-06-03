@@ -1,10 +1,10 @@
-import { getPlants, getPlantsPages } from "@/app/actions/plant.actions";
-import { Collections, PlantTableType } from "@/app/mongoose/types/plant.types";
-
-import TableWrapper from "@/app/components/table/TableWrapper";
-import getPageSearchParams from "../lib/pagesHelper";
-import TableGenerator from "./table/TableGenerator";
-import tableConfig from "@/app/tablesConfig/plantsTable.json";
+// import { getPlants, getPlantsPages } from "@/app/actions/plant.actions";
+// import { Collections, PlantTableType } from "@/app/mongoose/types/plant.types";
+//
+// import TableWrapper from "@/app/components/table/TableWrapper";
+// import getPageSearchParams from "../lib/pagesHelper";
+// import TableGenerator from "./table/TableGenerator";
+// import tableConfig from "@/app/tablesConfig/plantsTable.json";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -17,35 +17,61 @@ type Props = {
 };
 
 export default async function PlantsCollectionPage({ params, searchParams }: Props) {
-  const collection = (await params).slug as Collections;
-  const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
-  const totalPages = await getPlantsPages(query, collection, limit);
-  const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort);
-  const collectionTableConfig =
-    tableConfig.find((config) => config[ collection ])?.[ collection ] || null; // Fallback to null if not found
+//   const collection = (await params).slug as Collections;
+//   const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
+//   const totalPages = await getPlantsPages(query, collection, limit);
+//   const plantsList: PlantTableType[] = await getPlants(collection, query, currentPage, limit, sort);
+//   const collectionTableConfig =
+//     tableConfig.find((config) => config[ collection ])?.[ collection ] || null; // Fallback to null if not found
+//
+//   console.log(collectionTableConfig);
+//
+//   if (!collectionTableConfig) {
+//     throw new Error(`No configuration found for collection: ${ collection }`);
+//   }
+//
+//   const plants = await Promise.all(
+//     plantsList.map(async (plant: PlantTableType) => {
+//       return { ...plant, date: new Date(plant.date) };
+//     })
+//   );
+//
+//   return (
+//     <TableWrapper
+//       title='Plants'
+//       pages={ totalPages }
+//       link={ { href: `/plants/${ collection }/add`, text: "Add Plant" } }
+//     >
+//       <TableGenerator
+//         tableConfig={ collectionTableConfig }
+//         data={ plants }
+//       ></TableGenerator>{ " " }
+//     </TableWrapper>
+//   );
+// }
 
-  console.log(collectionTableConfig);
-
-  if (!collectionTableConfig) {
-    throw new Error(`No configuration found for collection: ${ collection }`);
-  }
-
-  const plants = await Promise.all(
-    plantsList.map(async (plant: PlantTableType) => {
-      return { ...plant, date: new Date(plant.date) };
-    })
-  );
+  console.log(params, searchParams);
+  // const { query, currentPage, limit, sort } = await getPageSearchParams(searchParams);
+  // const totalPages = await getExpensesPages(query, limit);
+  // const expensesList: ExpenseDocument[] = await getExpenses(query, currentPage, limit, sort);
+  //
+  // const expenses = await Promise.all(
+  //   expensesList.map(async (expense: ExpenseDocument) => {
+  //     return { ...expense, date: new Date(expense.date) };
+  //   })
+  // );
 
   return (
-    <TableWrapper
-      title='Plants'
-      pages={ totalPages }
-      link={ { href: `/plants/${ collection }/add`, text: "Add Plant" } }
-    >
-      <TableGenerator
-        tableConfig={ collectionTableConfig }
-        data={ plants }
-      ></TableGenerator>{ " " }
-    </TableWrapper>
+    <></>
+    // <TableWrapper
+    //   title='List of Expenses'
+    //   pages={ totalPages }
+    //   link={ { href: `/expenses/add`, text: "Add Expense" } }
+    // >
+    //   <TableGenerator
+    //     tableConfig={ tableConfig }
+    //     data={ expenses }
+    //   ></TableGenerator>
+    // </TableWrapper>
   );
 }

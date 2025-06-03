@@ -6,46 +6,26 @@ type Props = {
   size?: "sm" | "md" | "lg" | "xl";
 };
 
-export default function Logo({ className, size = "lg" }: Props) {
-  const cssSize = () => {
-    let textSize;
-    let logoSize;
-    switch (size) {
-      case "sm":
-        textSize = "xl";
-        logoSize = "2xl";
-        break;
-      case "md":
-        textSize = "2xl";
-        logoSize = "3xl";
-        break;
-      case "lg":
-        textSize = "3xl";
-        logoSize = "4xl";
-      case "xl":
-        textSize = "4xl";
-        logoSize = "5xl";
-        break;
-      default:
-        textSize = "4xl";
-        logoSize = "5xl";
-        break;
-    }
-    return { textSize, logoSize };
+export default function Logo({ className, size = "md" }: Props) {
+  const sizes = {
+    sm: "text-2xl",
+    md: "text-3xl",
+    lg: "text-4xl",
+    xl: "text-5xl",
   };
 
   return (
     <div
       data-testid="main-logo"
-      className={cn(
-        `flex items-center gap-2 font-semibold text-${cssSize().textSize}`,
+      className={ cn(
+        `flex items-center gap-2 font-semibold`,
         className
-      )}
+      ) }
     >
       <GiMonsteraLeaf
-        className={`text-${cssSize().logoSize} text-base-green-600`}
+        className={ `${ sizes[ size ] } text-primary-light` }
       />
-      <div className={`text-${cssSize().textSize}`}>PlantsDoc</div>
+      <div className={ sizes[ size ] }>PlantsDoc</div>
     </div>
   );
 }

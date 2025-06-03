@@ -1,38 +1,25 @@
 import Image from "next/image";
-import Link from "next/link";
 
-import { auth } from "../auth";
-
-import Button from "@/app/components/common/Button";
 import AuthForm from "@/app/components/auth/AuthForm.tsx";
+import AddToHomeScreen from "@/app/components/pwa/AddToHomeScreen.tsx";
+import Logo from "@/app/components/layout/Logo.tsx";
 
-export default async function LandingPage() {
-  const session = await auth();
-  const isUserAuthenticated = !!session?.user;
-
+export default function LandingPage() {
   return (
-    <main className="h-full text-xl">
+    <main className="w-full flex-1 h-full">
+      <AddToHomeScreen/>
       <section
-        className="h-full flex flex-col md:flex-row gap-10 items-center justify-center p-5 md:p-20 bg-base-gray-500 rounded-3xl">
-        <div
-          className="flex flex-col justify-center md:justify-start md:w-1/2 lg:pl-14 xl:pl-36 text-2xl lg:text-3xl xl:text-5xl text-center md:text-left">
-          <article className="text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-            Access to your plant documentation always at hand!
+        className="flex flex-col md:flex-row gap-10 items-center justify-center px-4 py-6 md:p-10 lg:p-20 bg-base-gray-500 rounded-3xl h-full">
+        <div className="flex flex-col justify-center md:justify-start md:w-1/2 text-center md:text-left">
+          <article className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center">
+            <div className="flex justify-center">
+              <Logo size="lg" className="mb-3"/>
+            </div>
+            <p>Access to your plant documentation always at hand!</p>
           </article>
-          { !isUserAuthenticated ? (
-            <section className="text-2xl mt-10">
-              <AuthForm/>
-            </section>
-          ) : (
-            <Button className="w-2/3 text-center text-xl mt-10">
-              <Link
-                href="/dashboard"
-                className="w-full h-full block"
-              >
-                Go to Dashboard
-              </Link>
-            </Button>
-          ) }
+          <section className="mt-10">
+            <AuthForm/>
+          </section>
         </div>
         <div className="lg:m-auto w-1/2 flex justify-center">
           <Image
@@ -44,6 +31,7 @@ export default async function LandingPage() {
           />
         </div>
       </section>
+
     </main>
   );
 }

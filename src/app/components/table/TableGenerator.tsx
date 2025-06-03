@@ -1,9 +1,6 @@
 "use client";
 
-import { redirect } from "next/navigation";
-import { Table } from "flowbite-react";
 import Sort from "@/app/components/common/Sort";
-import { generateUniqKey } from "@/app/lib/utils/others";
 import ActionButtons from "./ActionButtons";
 
 // type Props = {
@@ -92,7 +89,7 @@ type Props = {
     url?: string;
     hasDetails: boolean;
   };
-  // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   data: any[];
 };
 
@@ -101,7 +98,7 @@ export default function TableGenerator({ tableConfig, data }: Props) {
   const url: string = tableConfig.url || "";
 
   const goToDetails = (id: string) => {
-    window.location.href = `${url}/${id}`;
+    window.location.href = `${ url }/${ id }`;
   };
 
   const handleClick = (id: string) => {
@@ -113,18 +110,18 @@ export default function TableGenerator({ tableConfig, data }: Props) {
 
   const renderHeaders = () => {
     return (
-      <tr className='text-lg'>
-        {headers.map((header) => (
+      <tr className="text-lg">
+        { headers.map((header) => (
           <th
-            key={header.dbName}
-            className='px-4 py-2'
+            key={ header.dbName }
+            className="px-4 py-2"
           >
-            <div className='flex items-centers align-middle font-semibold'>
-              {header.title}
-              {header.sortable && <Sort name={header.dbName || ""} />}
+            <div className="flex items-centers align-middle font-semibold">
+              { header.title }
+              { header.sortable && <Sort name={ header.dbName || "" }/> }
             </div>
           </th>
-        ))}
+        )) }
       </tr>
     );
   };
@@ -132,21 +129,21 @@ export default function TableGenerator({ tableConfig, data }: Props) {
   const renderBody = () => {
     return data.map((row, idx) => (
       <tr
-        key={row._id || idx}
-        className={`border-b hover:bg-gray-100 ${
+        key={ row._id || idx }
+        className={ `border-b hover:bg-gray-100 ${
           tableConfig.hasDetails && "cursor-pointer"
-        } font-normal`}
+        } font-normal` }
       >
-        {headers.map((header) => {
+        { headers.map((header) => {
           if (header.dbName === "index") {
             return (
               <td
-                key={header.dbName}
-                className='px-4 py-2 text-base'
-                width='80px'
-                onClick={() => handleClick(row._id)}
+                key={ header.dbName }
+                className="px-4 py-2 text-base"
+                width="80px"
+                onClick={ () => handleClick(row._id) }
               >
-                {idx + 1}
+                { idx + 1 }
               </td>
             );
           }
@@ -154,36 +151,36 @@ export default function TableGenerator({ tableConfig, data }: Props) {
           if (header.dbName === "actions") {
             return (
               <td
-                key={header.dbName}
-                className='px-4 py-2 text-base'
-                width='120px'
+                key={ header.dbName }
+                className="px-4 py-2 text-base"
+                width="120px"
               >
-                <ActionButtons route={`${url}/${row._id}`} />
+                <ActionButtons route={ `${ url }/${ row._id }` }/>
               </td>
             );
           }
 
-          const value = row[header.dbName];
+          const value = row[ header.dbName ];
           return (
             <td
-              key={header.dbName}
-              className='px-4 py-2 text-base'
-              width={header.width ? header.width : ""}
-              onClick={() => handleClick(row._id)}
+              key={ header.dbName }
+              className="px-4 py-2 text-base"
+              width={ header.width ? header.width : "" }
+              onClick={ () => handleClick(row._id) }
             >
-              {value instanceof Date ? value.toLocaleDateString() : value}
+              { value instanceof Date ? value.toLocaleDateString() : value }
             </td>
           );
-        })}
+        }) }
       </tr>
     ));
   };
 
   return (
-    <div className='rounded-lg shadow-md overflow-hidden'>
-      <table className='min-w-full'>
-        <thead className='bg-base-green-600 text-white'>{renderHeaders()}</thead>
-        <tbody>{renderBody()}</tbody>
+    <div className="rounded-lg shadow-md overflow-hidden">
+      <table className="min-w-full">
+        <thead className="bg-base-green-600 text-white">{ renderHeaders() }</thead>
+        <tbody>{ renderBody() }</tbody>
       </table>
     </div>
   );

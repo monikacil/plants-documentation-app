@@ -9,16 +9,25 @@ import Button from "../common/Button";
 import Input from "../form/Input";
 import FormDatepicker from "../form/FormDatepicker";
 
-import { PlantProtectionFormType } from "@/app/mongoose/types/protection.types.ts";
+// import { PlantProtectionFormType } from "@/app/mongoose/types/protection.types.ts";
 
+type PlantProtectionFormType = {
+  _id: string;
+  control: string;
+  pests: string;
+  actionTaken: string;
+  exterminator: string;
+  amount: number;
+  species: string;
+  date: Date;
+}
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 type Props = {
   plantProtection?: PlantProtectionFormType;
   action: (
     id: string | undefined,
-    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
     prevState: any,
     formData: FormData
-    // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   ) => Promise<any>;
 };
 
@@ -47,10 +56,10 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
     <>
       <Form
         action={ formAction }
-        className='flex flex-col gap-3'
+        className="flex flex-col gap-3"
       >
         <FormDatepicker
-          name='date'
+          name="date"
           maxDate={ new Date() }
           value={ protectionForm?.date }
           onChange={ (value) => {
@@ -61,8 +70,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='control'
-          placeholder='Control'
+          name="control"
+          placeholder="Control"
           value={ protectionForm?.control }
           errors={ !protectionForm.control ? state?.errors?.control : null }
           onChange={ (value) => {
@@ -70,8 +79,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='pests'
-          placeholder='Pests'
+          name="pests"
+          placeholder="Pests"
           value={ protectionForm?.pests }
           errors={ !protectionForm.pests ? state?.errors?.pests : null }
           onChange={ (value) => {
@@ -79,8 +88,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='actionTaken'
-          placeholder='Anti-pest actions'
+          name="actionTaken"
+          placeholder="Anti-pest actions"
           value={ protectionForm?.actionTaken }
           errors={ !protectionForm.actionTaken ? state?.errors?.actionTaken : null }
           onChange={ (value) => {
@@ -88,8 +97,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='exterminator'
-          placeholder='Pest Exterminator'
+          name="exterminator"
+          placeholder="Pest Exterminator"
           value={ protectionForm?.exterminator }
           errors={ !protectionForm.exterminator ? state?.errors?.exterminator : null }
           onChange={ (value) => {
@@ -97,8 +106,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='amount'
-          type='number'
+          name="amount"
+          type="number"
           min={ 1 }
           value={ protectionForm?.amount }
           errors={ !protectionForm.amount ? state?.errors?.amount : null }
@@ -107,8 +116,8 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
         <Input
-          name='species'
-          placeholder='Species'
+          name="species"
+          placeholder="Species"
           value={ protectionForm?.species }
           errors={ !protectionForm.species ? state?.errors?.species : null }
           onChange={ (value) => {
@@ -118,16 +127,16 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
 
         { state?.error && (
           <Alert
-            color='failure'
+            color="failure"
             icon={ HiInformationCircle }
           >
-            <span className='font-medium'>{ state?.error }</span>
+            <span className="font-medium">{ state?.error }</span>
           </Alert>
         ) }
         <Button
-          type='submit'
+          type="submit"
           disabled={ isPending }
-          className='my-5'
+          className="my-5"
         >
           Save Plant Protection
         </Button>

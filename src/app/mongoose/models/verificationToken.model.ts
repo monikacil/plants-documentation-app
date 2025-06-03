@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 type VerificationTokenDocument = {
   _userId: Schema.Types.ObjectId,
@@ -7,9 +7,18 @@ type VerificationTokenDocument = {
 }
 
 const VerificationTokenSchema = new Schema<VerificationTokenDocument>({
-  _userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, token: String,
-  expires: Date,
+  _userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  token: String,
+  expires: {
+    type: Date,
+    required: true,
+    index: { expires: 0 },
+  },
 });
 
-const VerificationToken = mongoose.models?.VerificationToken || model<VerificationTokenDocument>("VerificationToken", VerificationTokenSchema);
+const VerificationToken = models?.VerificationToken || model<VerificationTokenDocument>("VerificationToken", VerificationTokenSchema);
 export default VerificationToken;

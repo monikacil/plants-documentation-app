@@ -2,17 +2,18 @@
 
 import Link from "next/link";
 
-import {FaBars, FaCircleUser} from "react-icons/fa6";
+import { FaBars, FaCircleUser } from "react-icons/fa6";
 
 import Dropdown from "../common/Dropdown";
-import {usePathname} from "next/navigation";
-import {NAVIGATION_CONFIG} from "@/app/lib/navConfig";
-import {generateUniqKey} from "@/app/lib/utils/others";
-import {useActionState} from "react";
-import {logout} from "@/app/actions/auth.ts";
+import { usePathname } from "next/navigation";
+import { NAVIGATION_CONFIG } from "@/app/lib/navConfig";
+import { generateUniqKey } from "@/app/lib/utils/others";
+import { useActionState } from "react";
+import { logout } from "@/app/actions/auth.ts";
+/* eslint-disable   @typescript-eslint/no-unused-vars */
 
 export default function Navigation() {
-  const [state, formAction] = useActionState(logout, undefined)
+  const [state, formAction] = useActionState(logout, undefined);
 
   const pathname = usePathname();
   type Link = {
@@ -32,67 +33,67 @@ export default function Navigation() {
 
   return (
     <div
-      className='flex gap-2 align-middle'
-      data-testid='nav-wrapper'
+      className="flex gap-2 align-middle"
+      data-testid="nav-wrapper"
     >
       <button
-        type='button'
-        className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-base-500 rounded-lg md:hidden hover:bg-base-100 focus:outline-none focus:ring-2 focus:ring-base-200'
+        type="button"
+        className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-base-500 rounded-lg md:hidden hover:bg-base-100 focus:outline-none focus:ring-2 focus:ring-base-200"
       >
-        <span className='sr-only'>Open main menu</span>
-        <FaBars size={50} />
+        <span className="sr-only">Open main menu</span>
+        <FaBars size={ 50 }/>
       </button>
-      <section className='hidden w-full md:block md:w-auto'>
-        <ul className='flex flex-col items-center font-medium p-4 md:p-0 md:flex-row gap-5'>
-          {NAVIGATION_CONFIG.map((el: LinkList) => {
+      <section className="hidden w-full md:block md:w-auto">
+        <ul className="flex flex-col items-center font-medium p-4 md:p-0 md:flex-row gap-5">
+          { NAVIGATION_CONFIG.map((el: LinkList) => {
             if (el.type === "dropdown") {
               return (
                 <li
-                  key={generateUniqKey(`dropdown-${el.name}`)}
-                  className='relative'
+                  key={ generateUniqKey(`dropdown-${ el.name }`) }
+                  className="relative"
                 >
                   <Dropdown
-                    title={el.name}
-                    className='hover:text-base-green-700'
+                    title={ el.name }
+                    className="hover:text-base-green-700"
                     icon={
                       el.icon ? (
                         <FaCircleUser
-                          size={40}
-                          className='hover:text-base-green-700'
+                          size={ 40 }
+                          className="hover:text-base-green-700"
                         />
                       ) : undefined
                     }
                   >
-                    <ul className='text-sm text-base-900'>
-                      {el.options?.map((link: Link) => {
+                    <ul className="text-sm text-base-900">
+                      { el.options?.map((link: Link) => {
                         if (link.type === "button" && link.action) {
                           return (
                             <li
-                              key={generateUniqKey(`nav-btn-${link.name}`)}
-                              className={`hover:bg-base-100 rounded-lg ${
+                              key={ generateUniqKey(`nav-btn-${ link.name }`) }
+                              className={ `hover:bg-base-100 rounded-lg ${
                                 link.href === pathname ? "bg-base-green-200" : ""
-                              }`}
+                              }` }
                             ></li>
                           );
                         } else if (link.href) {
                           return (
                             <li
-                              key={generateUniqKey(`nav-link-${link.name}`)}
-                              className={`hover:bg-base-100 rounded-lg ${
+                              key={ generateUniqKey(`nav-link-${ link.name }`) }
+                              className={ `hover:bg-base-100 rounded-lg ${
                                 link.href === pathname ? "bg-base-green-200" : ""
-                              }`}
+                              }` }
                             >
                               <Link
-                                href={link.href}
-                                scroll={false}
-                                className='block px-4 py-2'
+                                href={ link.href }
+                                scroll={ false }
+                                className="block px-4 py-2"
                               >
-                                {link.name}
+                                { link.name }
                               </Link>
                             </li>
                           );
                         }
-                      })}
+                      }) }
                     </ul>
                   </Dropdown>
                 </li>
@@ -100,28 +101,28 @@ export default function Navigation() {
             } else {
               return (
                 <li
-                  key={generateUniqKey(`link-${el.name}`)}
-                  className={`hover:text-base-green-700 rounded-lg ${
+                  key={ generateUniqKey(`link-${ el.name }`) }
+                  className={ `hover:text-base-green-700 rounded-lg ${
                     el.href === pathname ? "bg-base-green-200 hover:text-base-green-800" : ""
-                  }`}
+                  }` }
                 >
                   <Link
-                    href={el.href ? el.href : ""}
-                    scroll={false}
-                    className='block px-4 py-2'
+                    href={ el.href ? el.href : "" }
+                    scroll={ false }
+                    className="block px-4 py-2"
                   >
-                    {el.name}
+                    { el.name }
                   </Link>
                 </li>
               );
             }
-          })}
+          }) }
           <li
-            key={generateUniqKey(`logout-btn`)}
+            key={ generateUniqKey(`logout-btn`) }
             className="hover:text-base-green-700 rounded-lg cursor-pointer"
           >
             <form
-              action={formAction}
+              action={ formAction }
             >
               <button type="submit">Sign Out</button>
             </form>

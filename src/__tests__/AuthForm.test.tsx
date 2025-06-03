@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AuthForm from "@/app/components/auth/AuthForm";
 import { signIn } from "next-auth/react";
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 // Mock next/form
 jest.mock("next/form", () => {
   return function Form({ children, action, ...props }: any) {
@@ -26,8 +26,8 @@ jest.mock("react", () => {
   return {
     ...originalModule,
     useActionState: () => {
-      const [state, setState] = originalModule.useState(null);
-      const action = async (formData: FormData) => {
+      const [state] = originalModule.useState(null);
+      const action = async () => {
         return { success: true };
       };
       return [state, action, false];

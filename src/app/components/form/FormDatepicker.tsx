@@ -7,7 +7,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 import { cn } from "@/app/lib/utils/others";
 import getDatepickerOptions from "@/app/lib/utils/getDatePickerOption";
-import { useOutsideClick } from "@/app/lib/hooks/useOutsideClick";
+import { UseOutsideClick } from "@/app/lib/hooks/UseOutsideClick";
 
 type Props = {
   name: string;
@@ -25,16 +25,16 @@ type HandleChangeEvent = {
 };
 
 export default function FormDatepicker({
-  name,
-  value,
-  maxDate,
-  minDate,
-  className,
-  onChange,
-}: Props) {
+                                         name,
+                                         value,
+                                         maxDate,
+                                         minDate,
+                                         className,
+                                         onChange,
+                                       }: Props) {
   const options = getDatepickerOptions(maxDate, minDate, name, {
-    prev: () => <FaAngleLeft />,
-    next: () => <FaAngleRight />,
+    prev: () => <FaAngleLeft/>,
+    next: () => <FaAngleRight/>,
   });
 
   const [show, setShow] = useState(false);
@@ -44,34 +44,34 @@ export default function FormDatepicker({
     onChange(date);
   };
 
-  const ref = useOutsideClick(() => {
+  const ref = UseOutsideClick(() => {
     setShow(false);
   });
 
   return (
     <div
-      data-testid='datepicker-wrapper'
-      ref={ref}
+      data-testid="datepicker-wrapper"
+      ref={ ref }
     >
       <Datepicker
-        options={options}
-        onChange={(date) => handleChange(date)}
-        show={show}
-        setShow={(state) => setShow(state)}
+        options={ options }
+        onChange={ (date) => handleChange(date) }
+        show={ show }
+        setShow={ (state) => setShow(state) }
       >
-        <div className={cn("flex w-full rounded-full bg-white", className)}>
+        <div className={ cn("flex w-full rounded-full bg-white", className) }>
           <input
-            data-testid='datepicker-input'
-            type='text'
-            name={name}
-            placeholder='Select date'
-            value={selectedDate.toDateString()}
-            onFocus={() => setShow(true)}
+            data-testid="datepicker-input"
+            type="text"
+            name={ name }
+            placeholder="Select date"
+            value={ selectedDate.toDateString() }
+            onFocus={ () => setShow(true) }
             readOnly
-            className={cn(
+            className={ cn(
               "w-full rounded-full border-0 py-2 px-4  placeholder:text-gray-400 focus-visible:border-none focus-visible:ring-inset focus-visible:outline-base-green-500 focus:ring-2 focus:ring-inset focus:ring-base-green-500 sm:text-sm",
               className
-            )}
+            ) }
           />
         </div>
       </Datepicker>

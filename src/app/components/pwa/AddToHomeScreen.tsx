@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import useUserAgent from "@/app/lib/UseUserAgent";
 import AddToMobileDevice from "./AddToMobileDevice";
-
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export default function AddToHomeScreen() {
   const [displayPrompt, setDisplayPrompt] = useState(false);
-  // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const { isMobile, isStandalone, isIOS } = useUserAgent();
 
@@ -19,8 +18,7 @@ export default function AddToHomeScreen() {
     if (!deferredPrompt) {
       return;
     }
-    const result = await deferredPrompt.prompt();
-    console.log(`Install prompt was: ${result.outcome}`);
+    await deferredPrompt.prompt();
   };
 
   const handleListener = (e: Event) => {
@@ -29,7 +27,6 @@ export default function AddToHomeScreen() {
   };
 
   useEffect(() => {
-    // Only show prompt if user is on mobile and app is not installed
     if (isMobile && !isStandalone) {
       setDisplayPrompt(true);
     }
@@ -42,12 +39,12 @@ export default function AddToHomeScreen() {
 
   return (
     <>
-      {displayPrompt && deferredPrompt && (
+      { displayPrompt && deferredPrompt && (
         <AddToMobileDevice
-          closePrompt={closePrompt}
-          installPrompt={handleInstallPrompt}
+          closePrompt={ closePrompt }
+          installPrompt={ handleInstallPrompt }
         />
-      )}
+      ) }
     </>
   );
 }
