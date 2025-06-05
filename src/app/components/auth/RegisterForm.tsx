@@ -38,8 +38,8 @@ export default function RegisterForm({ children }: { children: React.ReactNode }
   };
 
   return (
-    <Form action={ submitForm } className="max-w-md mx-auto text-center space-y-3">
-      <div className="space-y-2">
+    <Form action={ submitForm } className="space-y-3 md:space-y-2">
+      <div className="space-y-3 md:space-y-2">
         <Input
           name="name"
           placeholder="Name"
@@ -65,7 +65,7 @@ export default function RegisterForm({ children }: { children: React.ReactNode }
         />
       </div>
       { children }
-      <div className="flex flex-col gap-3 mt-5 space-y-3">
+      <div className="flex flex-col gap-3 mt-5 space-y-2">
         <Button
           type="submit"
           disabled={ isPending }

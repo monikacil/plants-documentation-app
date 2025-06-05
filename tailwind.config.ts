@@ -108,6 +108,9 @@ const config: Config = {
           DEFAULT: "#4C9C9A",
         },
       },
+      maxWidth: {
+        "8xl": "95rem",
+      },
       fontFamily: {
         sans: ["\"Fredoka\"", "sans-serif"],
       },

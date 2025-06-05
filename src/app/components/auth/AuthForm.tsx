@@ -5,9 +5,11 @@ import { Modal } from "@/app/components/modal/Modal.tsx";
 import InitResetPasswordForm from "@/app/components/auth/InitResetPasswordForm.tsx";
 import RegisterForm from "@/app/components/auth/RegisterForm.tsx";
 import LoginForm from "@/app/components/auth/LoginForm.tsx";
+import { AuthSwitchPrompt } from "@/app/components/auth/AuthSwitchPrompt.tsx";
+import { Button } from "@/app/components/ui/Button.tsx";
+import { cn } from "@/app/lib/utils/others.ts";
 
-
-export default function AuthForm() {
+export default function AuthForm({ className }: { className?: string; }) {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -16,37 +18,22 @@ export default function AuthForm() {
   };
 
   return (
-    <>
+    <section className={ cn("w-full", className) }>
       { mode === "register" ? (
         <RegisterForm>
-          <div className="text-sm">
-            Already have an account?
-            <span
-              onClick={ toggleMode }
-              className="ml-2 font-semibold cursor-pointer text-base-green-600 underline underline-offset-4"
-            >
-              Log In
-            </span>
-          </div>
+          <AuthSwitchPrompt label="Already have an account?" actionText="Log In" onAction={ toggleMode }/>
         </RegisterForm>
       ) : (
         <LoginForm>
-          <button
+          <Button
             type="button"
-            className="text-edit-light underline h-[34px]"
+            variant="link"
+            className="h-[46px] md:h-[38px]"
             onClick={ () => setModalOpen(true) }
           >
             Forgot password?
-          </button>
-          <div className="text-sm">
-            Don&#39;t have an account?
-            <span
-              onClick={ toggleMode }
-              className="ml-2 font-semibold cursor-pointer text-base-green-600 underline underline-offset-4"
-            >
-              Sign Up
-            </span>
-          </div>
+          </Button>
+          <AuthSwitchPrompt label="Don't have an account?" actionText="Sign Up" onAction={ toggleMode }/>
         </LoginForm>
       ) }
       <Modal
@@ -59,6 +46,7 @@ export default function AuthForm() {
           <InitResetPasswordForm onSuccess={ () => setModalOpen(false) }/>
         </div>
       </Modal>
-    </>
+    </section>
+
   );
 }

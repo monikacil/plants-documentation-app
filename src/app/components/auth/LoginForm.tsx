@@ -55,8 +55,8 @@ export default function LoginForm({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <form onSubmit={ handleSubmit } className="max-w-md mx-auto text-center space-y-3">
-        <div className="space-y-2">
+      <form onSubmit={ handleSubmit } className="space-y-3 md:space-y-2">
+        <div className="space-y-3 md:space-y-2">
           <Input
             name="email"
             placeholder="Email"
@@ -75,7 +75,7 @@ export default function LoginForm({ children }: { children: React.ReactNode }) {
           />
         </div>
         { children }
-        <div className="flex flex-col gap-3 mt-5 space-y-3">
+        <div className="flex flex-col gap-3 mt-5 space-y-2">
           <Button
             type="submit"
             disabled={ isLoading }

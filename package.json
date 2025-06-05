@@ -30,7 +30,6 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
-    "flowbite-react": "^0.10.2",
     "jose": "^5.9.6",
     "lucide-react": "^0.511.0",
     "mongodb": "^6.16.0",

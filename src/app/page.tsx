@@ -9,29 +9,28 @@ export default function LandingPage() {
     <main className="w-full flex-1 h-full">
       <AddToHomeScreen/>
       <section
-        className="flex flex-col md:flex-row gap-10 items-center justify-center px-4 py-6 md:p-10 lg:p-20 bg-base-gray-500 rounded-3xl h-full">
-        <div className="flex flex-col justify-center md:justify-start md:w-1/2 text-center md:text-left">
-          <article className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-center">
-            <div className="flex justify-center">
-              <Logo size="lg" className="mb-3"/>
+        className="flex flex-col md:flex-row items-center justify-center md:gap-10 w-full max-w-8xl mx-auto px-4 py-6 h-full">
+        <div className="flex flex-col md:gap-3 justify-center items-center md:w-1/2 text-center md:text-left">
+          <section className="max-w-lg text-3xl lg:text-4xl text-center">
+            <div className="flex justify-center my-5 md:mt-0">
+              <Logo size="xl"/>
             </div>
             <p>Access to your plant documentation always at hand!</p>
-          </article>
-          <section className="mt-10">
-            <AuthForm/>
           </section>
+          <div className="w-full max-w-lg mx-auto px-4 py-8 flex flex-col gap-6">
+            <AuthForm/>
+          </div>
         </div>
-        <div className="lg:m-auto w-1/2 flex justify-center">
+        <div className="lg:m-auto md:w-1/2 flex justify-center">
           <Image
             src="/images/landing-page-img.png"
-            width={ 600 }
+            width={ 700 }
             height={ 600 }
-            priority={ true }
+            priority
             alt="Landing page picture"
           />
         </div>
       </section>
-
     </main>
   );
 }

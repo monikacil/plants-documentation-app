@@ -3,9 +3,10 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/app/lib/utils/others";
+import { Spinner } from "@/app/components/common/Spinner";
 
 const buttonVariants = cva(
-  "btn focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "btn focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -13,12 +14,13 @@ const buttonVariants = cva(
         outline: "btn-outline",
         danger: "btn-danger",
         edit: "btn-edit",
+        link: "btn-link",
         facebook: "btn-facebook",
         google: "btn-google",
       },
       size: {
-        default: "px-4 py-2 text-base",
-        sm: "px-3 py-1 text-sm",
+        default: "px-4 py-3 md:py-2 text-base",
+        sm: "px-3 py-2 text-base",
         lg: "px-5 py-3 text-lg",
         icon: "h-9 w-9",
       },
@@ -70,15 +72,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ) }
         { ...props }
       >
-        { isLoading ? (
-          <span className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"/>
-        ) : (
-          <>
-            { icon && <span className="inline-flex items-center">{ icon }</span> }
-            <span className="whitespace-nowrap">{ children }</span>
-            { iconRight && <span className="inline-flex items-center">{ iconRight }</span> }
-          </>
+        { isLoading && (
+          <Spinner/>
         ) }
+        <span className={ cn(
+          "flex items-center justify-center",
+          isLoading ? "opacity-0" : "opacity-100",
+          children && "gap-2"
+        ) }>
+          { icon &&
+            <span className={ cn(!children && "inline-flex justify-center items-center w-9 h-9") }>{ icon }</span> }
+          <span className="whitespace-nowrap">{ children }</span>
+          { iconRight && <span className="inline-flex justify-center items-center">{ iconRight }</span> }
+        </span>
       </Comp>
     );
   }

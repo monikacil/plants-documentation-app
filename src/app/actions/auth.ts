@@ -5,25 +5,26 @@ import crypto from "crypto";
 
 import { signOut } from "@/auth";
 
+// mongoose
 import connectDb from "@/app/mongoose/db.ts";
-import { HashPassword } from "@/app/lib/bcrypt.ts";
-import { sendResetPasswordEmail, sendVerificationEmail } from "@/app/lib/mailer.ts";
-
 import User from "@/app/mongoose/models/user.model.ts";
-
 import Account from "@/app/mongoose/models/account.model.ts";
 import VerificationToken from "@/app/mongoose/models/verificationToken.model.ts";
-import { initResetPasswordSchema, registerSchema } from "@/app/lib/zod/zodAuth.ts";
-import { getErrorMessage } from "@/app/lib/utils/getErrorMessage.ts";
-import { createFormResponse } from "@/app/lib/createFormResponse.ts";
 import PasswordResetToken from "@/app/mongoose/models/passwordResetToken.model.ts";
 
+// libs
+import { HashPassword } from "@/app/lib/bcrypt.ts";
+import { sendResetPasswordEmail, sendVerificationEmail } from "@/app/lib/mailer.ts";
+import { createFormResponse } from "@/app/lib/createFormResponse.ts";
+import { getErrorMessage } from "@/app/lib/utils/getErrorMessage.ts";
+import { initResetPasswordSchema, registerSchema } from "@/app/lib/zod/zodAuth.ts";
 
 export async function createUser(prevState: unknown, formData: FormData) {
   const email = formData.get("email")?.toString() || "";
   const password = formData.get("password")?.toString() || "";
   const name = formData.get("name")?.toString() || "";
 
+  // zod validation
   const result = registerSchema.safeParse({ email, name, password });
   if (!result.success) {
     return createFormResponse({
@@ -32,8 +33,8 @@ export async function createUser(prevState: unknown, formData: FormData) {
     });
   }
 
+  // db connection & user
   await connectDb();
-
   const user = await User.findOne({ email });
   if (user) {
     return createFormResponse({
@@ -42,8 +43,8 @@ export async function createUser(prevState: unknown, formData: FormData) {
     });
   }
 
+  // password check
   const hashedPassword = await HashPassword(password);
-
   try {
     const newUser = await User.create({
       email,
@@ -52,6 +53,7 @@ export async function createUser(prevState: unknown, formData: FormData) {
       emailVerified: null,
     });
 
+    // account create
     await Account.create({
       _userId: newUser._id,
       type: "credentials",
@@ -59,17 +61,17 @@ export async function createUser(prevState: unknown, formData: FormData) {
       providerAccountId: email,
     });
 
+    // verification token
     const token = crypto.randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 1000 * 60 * 60 * 12); // 12h
-
     await VerificationToken.create({
       _userId: newUser._id,
       token,
       expires,
     });
-
     await sendVerificationEmail(email, token);
 
+    // status
     return createFormResponse({ success: true, status: "registered" });
   } catch (e) {
     unstable_rethrow(e);
@@ -92,22 +94,9 @@ export async function logout() {
 }
 
 export async function initiatePasswordReset(prevState: unknown, formData: FormData) {
-  const email = formData.get("email")?.toString();
+  const email = formData.get("email")?.toString() || "";
 
-  if (!email) return createFormResponse({
-    errorMessage: "Email is required",
-    status: "invalid",
-  });
-
-  await connectDb();
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return createFormResponse({
-      errorMessage: "User not found",
-      status: "invalid",
-    });
-  }
+  // zod validation
   const result = initResetPasswordSchema.safeParse({ email });
   if (!result.success) {
     return createFormResponse({
@@ -116,18 +105,28 @@ export async function initiatePasswordReset(prevState: unknown, formData: FormDa
     });
   }
 
-  await PasswordResetToken.deleteMany({ _userId: user._id });
+  // db connection & user
+  await connectDb();
+  const user = await User.findOne({ email });
+  if (!user) {
+    return createFormResponse({
+      errorMessage: "User not found",
+      status: "invalid",
+    });
+  }
 
+  // reset password token
+  await PasswordResetToken.deleteMany({ _userId: user._id });
   const token = crypto.randomBytes(32).toString("hex");
   const expires = new Date(Date.now() + 1000 * 60 * 30);
 
-  await PasswordResetToken.create({
-    _userId: user._id,
-    token,
-    expires,
-  });
-
   try {
+    await PasswordResetToken.create({
+      _userId: user._id,
+      token,
+      expires,
+    });
+
     await sendResetPasswordEmail(email, token);
     return createFormResponse({
       status: "success",
@@ -141,10 +140,8 @@ export async function initiatePasswordReset(prevState: unknown, formData: FormDa
   }
 }
 
-
 export async function resetPassword(token: string, newPassword: string) {
   await connectDb();
-
   const resetToken = await PasswordResetToken.findOne({ token });
   if (!resetToken || resetToken.expires < new Date()) {
     throw new Error("Token expired or invalid");
