@@ -38,8 +38,8 @@ export default function Sidebar() {
       <aside
         aria-hidden={ !mobileOpen }
         className={ clsx(
-          "fixed top-0 left-0 z-40 h-screen bg-sidebar-light dark:bg-sidebar-dark text-text-light dark:text-text-dark shadow-lg transition-all duration-300 ease-in-out",
-          collapsed ? "w-16" : "w-64",
+          "flex flex-col fixed top-0 left-0 z-40 h-screen bg-sidebar-light dark:bg-sidebar-dark text-text-light dark:text-text-dark shadow-lg transition-all duration-300 ease-in-out",
+          collapsed ? "w-16" : "w-80",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           "md:relative md:translate-x-0"
         ) }
@@ -59,7 +59,7 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-2">
+        <nav className="flex flex-1 flex-col justify-between overflow-y-auto px-2 pb-10">
           <ul className="space-y-1">
             { navigation.map(({ label, href, icon }) => {
               const isActive = pathname.startsWith(href);
@@ -91,7 +91,7 @@ export default function Sidebar() {
           </ul>
           <form action={ formAction }>
             <button type="submit" className={ clsx(
-              "w-full flex gap-3 py-2 px-3 rounded-lg transition group cursor-pointer hover:bg-border-light dark:hover:bg-border-dark",
+              "w-full h-10 flex items-center gap-3 py-2 px-3 rounded-lg transition group cursor-pointer hover:bg-border-light dark:hover:bg-border-dark",
             ) }>
               <span
                 className="flex-shrink-0 transition-transform duration-300 group-hover:scale-110">

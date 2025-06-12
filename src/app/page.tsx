@@ -11,7 +11,7 @@ export default function LandingPage() {
       <section
         className="flex flex-col md:flex-row items-center justify-center md:gap-10 w-full max-w-8xl mx-auto px-4 py-6 h-full">
         <div className="flex flex-col md:gap-3 justify-center items-center md:w-1/2 text-center md:text-left">
-          <section className="max-w-lg text-3xl lg:text-4xl text-center">
+          <section className="max-w-lg text-2xl lg:text-4xl text-center">
             <div className="flex justify-center my-5 md:mt-0">
               <Logo size="xl"/>
             </div>

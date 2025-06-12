@@ -10,8 +10,8 @@ export default function Logo({ className, size = "md" }: Props) {
   const sizes = {
     sm: "text-2xl",
     md: "text-3xl",
-    lg: "text-5xl",
-    xl: "text-6xl",
+    lg: "text-3xl md:text-4xl",
+    xl: "text-4xl md:text-6xl",
   };
 
   return (
