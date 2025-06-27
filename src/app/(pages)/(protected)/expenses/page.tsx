@@ -1,6 +1,3 @@
-import ExpensesPage from "@/app/components/ExpensesPage";
-import { SearchParams } from "@/app/mongoose/types/others.types";
-
-export default async function Page({ searchParams }: SearchParams) {
-  return <ExpensesPage searchParams={ searchParams }/>;
+export default async function Page() {
+  return <div>plants expenses</div>;
 }

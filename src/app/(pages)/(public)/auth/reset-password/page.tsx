@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ResetedPage() {
+export default function ResetPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
       <div className="max-w-md bg-white shadow-md rounded p-6 text-center">

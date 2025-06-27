@@ -13,7 +13,7 @@ import { AuthFormState, loginSchema } from "@/app/lib/zod/zodAuth.ts";
 import { createFormResponse } from "@/app/lib/createFormResponse.ts";
 
 
-export default function LoginForm({ children }: { children: React.ReactNode }) {
+export function LoginForm({ children }: { children: React.ReactNode }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -23,7 +23,7 @@ export default function LoginForm({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<AuthFormState | undefined>(undefined);
 
   const handleChange = <T extends keyof typeof form>(field: T, value: string) => {
-    setForm((prev) => ({ ...prev, [ field ]: value }));
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,7 +48,7 @@ export default function LoginForm({ children }: { children: React.ReactNode }) {
     });
     setIsLoading(false);
     if (result?.error) {
-      toastCustom(result.error, "error");
+      toastCustom("Invalid credentials. Please try again.", "error");
     }
     if (!result?.error) redirect("/dashboard");
   };
@@ -84,7 +84,7 @@ export default function LoginForm({ children }: { children: React.ReactNode }) {
           >
             Login
           </Button>
-          <SocialLoginButtons/>
+          <SocialLoginButtons />
         </div>
       </form>
     </>

@@ -12,12 +12,12 @@ interface AuthProviderProps {
   waitMs?: number;
 }
 
-export default function AuthProvider({
-                                       children,
-                                       redirectTo = "/",
-                                       loadingFallback = <Loading/>,
-                                       waitMs = 600,
-                                     }: AuthProviderProps) {
+export function AuthProvider({
+                               children,
+                               redirectTo = "/",
+                               loadingFallback = <Loading />,
+                               waitMs = 600,
+                             }: AuthProviderProps) {
   const { status, data } = useSession();
   const router = useRouter();
   const hasRedirected = useRef(false);

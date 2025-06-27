@@ -1,13 +1,10 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { HiInformationCircle } from "react-icons/hi";
-import { Alert } from "flowbite-react";
 import Form from "next/form";
 
-import Button from "../common/Button";
-import Input from "../form/Input";
-import FormDatepicker from "../form/FormDatepicker";
+import { Button } from "../ui/Button";
+import { Input } from "../ui/Input";
 
 // import { PlantProtectionFormType } from "@/app/mongoose/types/protection.types.ts";
 
@@ -42,7 +39,7 @@ const initForm: PlantProtectionFormType = {
   date: new Date(),
 };
 
-export default function PlantprotectionForm({ plantProtection, action }: Props) {
+export function PlantprotectionForm({ plantProtection, action }: Props) {
   const [state, formAction, isPending] = useActionState(
     action.bind(null, plantProtection?._id ? plantProtection._id.toString() : undefined),
     null
@@ -58,17 +55,6 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
         action={ formAction }
         className="flex flex-col gap-3"
       >
-        <FormDatepicker
-          name="date"
-          maxDate={ new Date() }
-          value={ protectionForm?.date }
-          onChange={ (value) => {
-            setprotectionForm({
-              ...protectionForm,
-              date: value,
-            });
-          } }
-        />
         <Input
           name="control"
           placeholder="Control"
@@ -125,14 +111,14 @@ export default function PlantprotectionForm({ plantProtection, action }: Props) 
           } }
         />
 
-        { state?.error && (
-          <Alert
-            color="failure"
-            icon={ HiInformationCircle }
-          >
-            <span className="font-medium">{ state?.error }</span>
-          </Alert>
-        ) }
+        {/*{state?.error && (*/ }
+        {/*    <Alert*/ }
+        {/*        color="failure"*/ }
+        {/*        icon={HiInformationCircle}*/ }
+        {/*    >*/ }
+        {/*        <span className="font-medium">{state?.error}</span>*/ }
+        {/*    </Alert>*/ }
+        {/*)}*/ }
         <Button
           type="submit"
           disabled={ isPending }

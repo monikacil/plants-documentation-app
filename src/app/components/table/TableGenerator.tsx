@@ -1,7 +1,6 @@
 "use client";
 
-import Sort from "@/app/components/common/Sort";
-import ActionButtons from "./ActionButtons";
+import { ActionButtons } from "./ActionButtons";
 
 // type Props = {
 //   // eslint-disable-next-line @/app/typescript-eslint/no-explicit-any
@@ -93,7 +92,7 @@ type Props = {
   data: any[];
 };
 
-export default function TableGenerator({ tableConfig, data }: Props) {
+export function TableGenerator({ tableConfig, data }: Props) {
   const headers = tableConfig.headers;
   const url: string = tableConfig.url || "";
 
@@ -118,7 +117,6 @@ export default function TableGenerator({ tableConfig, data }: Props) {
           >
             <div className="flex items-centers align-middle font-semibold">
               { header.title }
-              { header.sortable && <Sort name={ header.dbName || "" }/> }
             </div>
           </th>
         )) }
@@ -155,12 +153,12 @@ export default function TableGenerator({ tableConfig, data }: Props) {
                 className="px-4 py-2 text-base"
                 width="120px"
               >
-                <ActionButtons route={ `${ url }/${ row._id }` }/>
+                <ActionButtons route={ `${ url }/${ row._id }` } />
               </td>
             );
           }
 
-          const value = row[ header.dbName ];
+          const value = row[header.dbName];
           return (
             <td
               key={ header.dbName }

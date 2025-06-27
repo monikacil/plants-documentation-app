@@ -1,14 +1,25 @@
 "use client";
 
-import { useEffect } from "react";
+import {useEffect} from "react";
 
-export default function ServiceWorkerRegister() {
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/service-worker.js");
-    }
-  }, []);
+export function ServiceWorkerRegister() {
+    useEffect(() => {
+        if ("serviceWorker" in navigator) {
+            if (process.env.NODE_ENV === "production") {
+                navigator.serviceWorker
+                    .register("/service-worker.js")
+                    .catch((err) =>
+                        console.error("Service worker registration failed:", err)
+                    );
+            } else {
+                navigator.serviceWorker.getRegistrations().then((registrations) => {
+                    registrations.forEach((registration) => {
+                        registration.unregister();
+                    });
+                });
+            }
+        }
+    }, []);
 
-  return null;
+    return null;
 }

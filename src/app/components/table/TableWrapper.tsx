@@ -1,8 +1,5 @@
-import Link from "next/link";
-
-import Button from "../common/Button";
-import Search from "../common/Search";
-import Pagination from "../common/Pagination";
+// import {Search} from "../ui/Search";
+// import {Pagination} from "../ui/Pagination";
 
 type Props = {
   children: React.ReactNode;
@@ -14,23 +11,24 @@ type Props = {
   };
 };
 
-export default function TableWrapper({ children, pages, title, link }: Props) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function TableWrapper({ children, pages, title, link }: Props) {
   return (
     <section className='py-4 md:py-5 px-4 md:px-5 rounded-2xl bg-white shadow-md'>
-      <header className='text-4xl font-semibold text-base-green-700 pb-3'>{title}</header>
+      <header className='text-4xl font-semibold text-base-green-700 pb-3'>{ title }</header>
       <nav className='flex justify-between mb-3'>
-        <Search placeholder='Search...' />
-        {link && (
-          <Link
-            href={link.href}
-            scroll={false}
-          >
-            <Button>{link.text}</Button>
-          </Link>
-        )}
+        {/*<Search placeholder='Search...'/>*/ }
+        {/*{link && (*/ }
+        {/*    <Link*/ }
+        {/*        href={link.href}*/ }
+        {/*        scroll={false}*/ }
+        {/*    >*/ }
+        {/*        <Button>{link.text}</Button>*/ }
+        {/*    </Link>*/ }
+        {/*)}*/ }
       </nav>
-      {children}
-      {pages > 1 ? <Pagination totalPages={pages} /> : null}
+      { children }
+      {/*{pages > 1 ? <Pagination totalPages={pages}/> : null}*/ }
     </section>
   );
 }

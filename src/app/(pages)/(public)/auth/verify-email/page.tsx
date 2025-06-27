@@ -1,21 +1,19 @@
-import connectDb from "@/app/mongoose/db.ts";
-import VerificationToken from "@/app/mongoose/models/verificationToken.model.ts";
-import User from "@/app/mongoose/models/user.model.ts";
+import { connectDb } from "@/app/mongoose/db.ts";
+import { VerificationToken } from "@/app/mongoose/models/verificationToken.model.ts";
+import { User } from "@/app/mongoose/models/user.model.ts";
 import Link from "next/link";
 
-type Props = {
-  searchParams: { token?: string }
-};
-
-export default async function VerifyEmailPage({ searchParams }: Props) {
-  const token = searchParams.token;
+export default async function VerifyEmailPage({ params, }: {
+  params: Promise<{ token: string }>
+}) {
+  const token = (await params).token
 
   if (!token) {
     return (
       <Container>
         <ErrorTitle>No token provided!</ErrorTitle>
         <p>Please check if you clicked a valid link from your email.</p>
-        <LoginButton/>
+        <LoginButton />
       </Container>
     );
   }
@@ -28,7 +26,7 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
       <Container>
         <ErrorTitle>Token is invalid or has expired!</ErrorTitle>
         <p>Please request a new email verification or check your link.</p>
-        <LoginButton/>
+        <LoginButton />
       </Container>
     );
   }
@@ -39,7 +37,7 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
       <Container>
         <ErrorTitle>User not found.</ErrorTitle>
         <p>Please contact support or try again.</p>
-        <LoginButton/>
+        <LoginButton />
       </Container>
     );
   }
@@ -52,12 +50,12 @@ export default async function VerifyEmailPage({ searchParams }: Props) {
 
   return (
     <Container>
-      <SuccessCheckmark/>
+      <SuccessCheckmark />
       <h2 className="text-2xl font-bold mb-3 text-green-600 animate-fade-in">
         Email successfully verified!
       </h2>
       <p className="mb-4">You can now log in to your account.</p>
-      <LoginButton/>
+      <LoginButton />
     </Container>
   );
 }
