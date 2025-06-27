@@ -26,10 +26,6 @@ collection and plant expenses, all in a sleek, mobile-friendly interface.
 * **MongoDb**
 * **Vercel** (deployment and hosting)
 
-## 🖼️ Screenshots
-
-*(Optional – insert images from `/public/screenshots` to show key views of the app)*
-
 ## 🚀 Getting Started
 
 To run the project locally:
