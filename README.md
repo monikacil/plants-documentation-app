@@ -62,12 +62,19 @@ To run the project locally:
 ## 📁 Project Structure
 
 ```bash
-├── app/              # App Router pages and layouts
-├── components/       # Reusable UI components
-├── actions/          # Server actions for form handling
-├── lib/              # Utility functions and validators
-├── prisma/           # Prisma schema and DB seed
-└── public/           # Static assets (images, icons)
+── src/
+  ├── __mocks__/            # Mocks for tests
+  ├── __tests__/            # Tests files
+  ├── plugins/   
+  └── app/                  
+      ├── (pages)/          # App Router pages and layouts
+      ├── actions/          # Server actions for form handling
+      ├── api/              # Next auth route.ts
+      ├── components/       # Reusable UI components
+      ├── configs/          # Application configurations
+      ├── lib/              # Utility functions and validators
+      └── mongoose/         # Mongoose schema and DB seed
+── public/                  # Static assets (images, icons)
 ```
 
 ## ☁️ Deployment
