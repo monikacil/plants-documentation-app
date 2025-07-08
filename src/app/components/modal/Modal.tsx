@@ -15,12 +15,12 @@ export function Modal({ open, title, description, children, onOpenChangeAction }
   return (
     <Dialog.Root open={ open } onOpenChange={ onOpenChangeAction }>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40"/>
+        <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
         <Dialog.Content
-          className="fixed left-1/2 top-1/2 z-50 max-w-md w-full -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-xl shadow-xl"
+          className="fixed left-1/2 top-1/2 z-50 max-w-md w-full -translate-x-1/2 -translate-y-1/2 bg-background-light p-6 rounded-xl shadow-xl"
         >
           { title && (
-            <Dialog.Title className="text-xl font-semibold mb-2 text-text-light dark:text-text-dark">
+            <Dialog.Title className="text-xl font-semibold mb-2 text-text-light ">
               { title }
             </Dialog.Title>
           ) }
@@ -32,10 +32,10 @@ export function Modal({ open, title, description, children, onOpenChangeAction }
           { children }
           <Dialog.Close asChild>
             <button
-              className="absolute top-3 right-2 text-xl p-3 text-muted-light dark:text-muted-dark hover:text-text-light dark:hover:text-text-dark transition-colors"
+              className="absolute top-3 right-2 text-xl p-3 text-muted-light hover:text-text-light transition-colors"
               aria-label="Close"
             >
-              <FaX/>
+              <FaX />
             </button>
           </Dialog.Close>
         </Dialog.Content>
