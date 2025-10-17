@@ -1,18 +1,18 @@
-import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { auth } from "@/auth";
 
 const PUBLIC_ROUTES = [
   "/",
-  "/login",
-  "/register",
-  "/reset-password",
-  "/reset-password-token",
-  "/verify-email",
+  "/auth/reset-password",
+  "/auth/reset-password-token",
+  "/auth/verify-email",
 ];
 
 function isPublicRoute(path: string): boolean {
-  return PUBLIC_ROUTES.some((route) => path === route || path.startsWith(route + "/"));
+  return PUBLIC_ROUTES.some(
+    (route) => path === route || path.startsWith(route + "/")
+  );
 }
 
 function isStaticOrSpecial(path: string): boolean {
@@ -25,23 +25,16 @@ function isStaticOrSpecial(path: string): boolean {
   );
 }
 
-export async function middleware(req: NextRequest) {
+export default auth((req: NextRequest & { auth: Awaited<ReturnType<typeof auth>> }) => {
   const url = req.nextUrl.clone();
   const { pathname } = url;
 
   if (isStaticOrSpecial(pathname)) return NextResponse.next();
 
-  let token = null;
-  try {
-    token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-  } catch (err) {
-    console.warn("⚠️ Middleware getToken error:", err);
-  }
-
-  const isAuthenticated = !!token;
+  const isAuthenticated = !!req.auth;
   const isPublic = isPublicRoute(pathname);
 
-  if (isAuthenticated && (pathname === "/" || pathname === "/login")) {
+  if (isAuthenticated && (pathname === "/")) {
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
@@ -52,7 +45,7 @@ export async function middleware(req: NextRequest) {
   }
 
   return NextResponse.next();
-}
+});
 
 export const config = {
   matcher: ["/((?!_next|.*\\..*|favicon.ico|images|manifest.json|service-worker.js).*)"],
