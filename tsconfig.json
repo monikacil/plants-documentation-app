@@ -2,9 +2,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
-    "allowJs": true,
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "lib": [
@@ -23,12 +22,21 @@
         "name": "next"
       }
     ],
+    "types": [
+      "jest",
+      "node"
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",
@@ -41,9 +49,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "typeRoots": [
-    "./types",
-    "./node_modules/@types"
   ]
 }

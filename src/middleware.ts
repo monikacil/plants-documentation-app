@@ -2,35 +2,46 @@ import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const PUBLIC_ROUTES = ["/", "/reset-password", "/reset-password-token", "/verify-email"];
+const PUBLIC_ROUTES = [
+  "/",
+  "/login",
+  "/register",
+  "/reset-password",
+  "/reset-password-token",
+  "/verify-email",
+];
 
 function isPublicRoute(path: string): boolean {
-  return PUBLIC_ROUTES.some(route =>
-    path === route || path.startsWith(route + "/")
-  );
+  return PUBLIC_ROUTES.some((route) => path === route || path.startsWith(route + "/"));
 }
 
 function isStaticOrSpecial(path: string): boolean {
   return (
     path.startsWith("/.well-known") ||
-    /\.(js|css|png|jpg|jpeg|svg|ico|webmanifest|json)$/.test(path) ||
     path.startsWith("/_next") ||
-    path.startsWith("/api") ||
-    path.startsWith("/images")
+    path.startsWith("/images") ||
+    path.startsWith("/api/auth") ||
+    /\.(js|css|png|jpg|jpeg|svg|ico|webmanifest|json)$/.test(path)
   );
 }
 
 export async function middleware(req: NextRequest) {
-  const url = req.nextUrl;
-  const pathname = url.pathname;
+  const url = req.nextUrl.clone();
+  const { pathname } = url;
 
   if (isStaticOrSpecial(pathname)) return NextResponse.next();
 
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  let token = null;
+  try {
+    token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  } catch (err) {
+    console.warn("⚠️ Middleware getToken error:", err);
+  }
+
   const isAuthenticated = !!token;
   const isPublic = isPublicRoute(pathname);
 
-  if (isAuthenticated && pathname === "/") {
+  if (isAuthenticated && (pathname === "/" || pathname === "/login")) {
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }

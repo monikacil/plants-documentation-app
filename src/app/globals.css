@@ -1,9 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind reference;
 
 body {
-    font-size: 16px;
-    line-height: 20px;
+  font-size: 16px;
+  line-height: 20px;
 }

@@ -1,24 +1,34 @@
-import {model, models, Schema} from "mongoose";
+import { model, models, Schema } from "mongoose";
 
-type VerificationTokenDocument = {
-    _userId: Schema.Types.ObjectId,
-    token: string,
-    expires: Date
-}
+export type VerificationTokenDocument = {
+  userId: string;
+  token: string;
+  expires: Date;
+  createdAt?: Date;
+};
 
-const VerificationTokenSchema = new Schema<VerificationTokenDocument>({
-    _userId: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+const VerificationTokenSchema = new Schema<VerificationTokenDocument>(
+  {
+    userId: {
+      type: String,
+      ref: "User",
+      required: true,
+      index: true,
     },
-    token: String,
+    token: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     expires: {
-        type: Date,
-        required: true,
-        index: {expires: 0},
+      type: Date,
+      required: true,
+      index: { expires: 0 },
     },
-});
+  },
+  { timestamps: true }
+);
 
-const VerificationToken = models?.VerificationToken || model<VerificationTokenDocument>("VerificationToken", VerificationTokenSchema);
-export {VerificationToken};
+export const VerificationToken =
+  models?.VerificationToken ||
+  model<VerificationTokenDocument>("VerificationToken", VerificationTokenSchema);

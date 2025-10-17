@@ -1,30 +1,45 @@
-// jest.setup.ts
+/* eslint-disable no-console */
 import "@testing-library/jest-dom";
+import { afterAll, beforeAll, jest } from "@jest/globals";
 
-const originalError = console.error;
+const originalConsoleError = console.error;
+
 beforeAll(() => {
-  console.error = (...args) => {
-    if (/Warning:/.test(args[ 0 ])) {
+  console.error = (...args: unknown[]) => {
+    const first = args[0];
+    if (typeof first === "string" && first.startsWith("Warning:")) {
       return;
     }
-    originalError.call(console, ...args);
+    originalConsoleError(...args);
   };
 });
 
 afterAll(() => {
-  console.error = originalError;
+  console.error = originalConsoleError;
 });
+
+declare global {
+  interface Window {
+    matchMedia: (query: string) => MediaQueryList;
+  }
+}
 
 Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+  value: (query: string): MediaQueryList => {
+    const mql: MediaQueryList = {
+      media: query,
+      matches: false,
+      onchange: null,
+      addListener: (() => {
+      }) as MediaQueryList["addListener"],
+      removeListener: (() => {
+      }) as MediaQueryList["removeListener"],
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn().mockReturnValue(true),
+    } as unknown as MediaQueryList;
+
+    return mql;
+  },
 });

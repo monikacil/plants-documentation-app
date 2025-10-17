@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { initiatePasswordReset } from "@/app/actions/auth.ts";
+import { initiatePasswordReset } from "@/actions/auth.actions.ts";
 import { Input } from "@/app/components/ui/Input.tsx";
 import Form from "next/form";
 import { getFieldError } from "@/app/lib/getFieldError.ts";

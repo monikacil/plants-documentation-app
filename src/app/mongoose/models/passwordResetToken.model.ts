@@ -1,27 +1,34 @@
-import {model, models, Schema} from "mongoose";
+import { model, models, Schema } from "mongoose";
 
-type PasswordResetTokenDocument = {
-    _userId: Schema.Types.ObjectId,
-    token: string,
-    expires: Date
-}
+export type PasswordResetTokenDocument = {
+  userId: string;
+  token: string;
+  expires: Date;
+  createdAt?: Date;
+};
 
-const PasswordResetTokenSchema = new Schema<PasswordResetTokenDocument>({
-    _userId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "User"
+const PasswordResetTokenSchema = new Schema<PasswordResetTokenDocument>(
+  {
+    userId: {
+      type: String,
+      ref: "User",
+      required: true,
+      index: true,
     },
     token: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+      unique: true,
     },
     expires: {
-        type: Date,
-        required: true,
-        index: {expires: 0}
+      type: Date,
+      required: true,
+      index: { expires: 0 },
     },
-});
+  },
+  { timestamps: true }
+);
 
-const PasswordResetToken = models?.PasswordResetToken || model<PasswordResetTokenDocument>("PasswordResetToken", PasswordResetTokenSchema);
-export {PasswordResetToken};
+export const PasswordResetToken =
+  models?.PasswordResetToken ||
+  model<PasswordResetTokenDocument>("PasswordResetToken", PasswordResetTokenSchema);

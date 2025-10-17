@@ -1,130 +1,120 @@
-import {NextAuthConfig} from "next-auth";
-
+import { connectDb } from "@/app/mongoose/db";
+import { User } from "@/app/mongoose/models/user.model";
+import { Account } from "@/app/mongoose/models/account.model";
+import { ComparePassword } from "@/app/lib/bcrypt";
+import { CredentialsError, UserNotConfirmed } from "@/app/lib/authErrors";
+import { MongooseAdapter } from "@/app/mongoose/MongooseAdapter";
+import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
 
-import {User} from "@/app/mongoose/models/user.model.ts";
-import {Account} from "@/app/mongoose/models/account.model.ts";
-import {connectDb} from "@/app/mongoose/db.ts";
-
-import {CredentialsError, UserNotConfirmed} from "@/app/lib/authErrors.ts";
-import {ComparePassword} from "@/app/lib/bcrypt.ts";
-
-export const runtime = "nodejs";
+type CredentialsInput = {
+  email: string;
+  password: string;
+};
 
 export const authConfig = {
-    providers: [
-        Google({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        }),
-        Facebook({
-            clientId: process.env.FACEBOOK_CLIENT_ID!,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-        }),
-        Credentials({
-            name: "Credentials",
-            credentials: {
-                email: {label: "Email", type: "email"},
-                password: {label: "Password", type: "password"},
-            },
-            async authorize({email, password}) {
-                if (!email || !password) throw new CredentialsError();
-                await connectDb();
-                const user = await User.findOne({email}).select("+password");
+  adapter: MongooseAdapter(),
+  session: { strategy: "jwt" },
+  secret: process.env.NEXTAUTH_SECRET,
 
-                if (!user || !user.password) throw new CredentialsError();
+  providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    Facebook({
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    }),
+    Credentials({
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      authorize: async (credentials) => {
+        const { email, password } = credentials as CredentialsInput;
 
-                const isPasswordValid = await ComparePassword(password as string, user.password);
-                if (!isPasswordValid) {
-                    throw new CredentialsError();
-                }
-                if (!user.emailVerified) {
-                    throw new UserNotConfirmed();
-                }
+        if (!email || !password) {
+          throw new CredentialsError();
+        }
 
-                return {
-                    id: String(user._id),
-                    email: user.email,
-                    emailVerified: user.emailVerified ? new Date(user.emailVerified) : null,
-                    name: user.name,
-                };
-            }
-        })
-    ],
-    callbacks: {
-        signIn: async ({user, account}) => {
-            if (!account) {
-                return false;
-            }
+        await connectDb();
+        const user = await User.findOne({ email }).select("+password");
+        if (!user) throw new CredentialsError();
+        if (!user.password) throw new CredentialsError();
+        if (!user.emailVerified)
+          throw new UserNotConfirmed();
 
-            await connectDb();
-            let dbUser = await User.findOne({email: user.email});
+        const valid = await ComparePassword(password, user.password);
+        if (!valid) throw new CredentialsError();
 
-            if (!dbUser) {
-                try {
-                    dbUser = await User.create({
-                        email: user.email,
-                        name: user.name ?? "",
-                        emailVerified: new Date(),
-                    });
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                } catch (e) {
-                    return false;
-                }
-            }
+        return {
+          id: user._id!.toString(),
+          email: user.email,
+          name: user.name,
+          emailVerified: user.emailVerified,
+          image: user.image ?? null,
+        };
+      },
+    }),
+  ],
 
-            if (dbUser && !dbUser.emailVerified && account.provider === "credentials") {
-                return false;
-            }
-
-            if (dbUser) {
-                const linked = await Account.findOne({
-                    _userId: dbUser._id,
-                    provider: account.provider,
-                });
-
-                if (!linked) {
-                    await Account.create({
-                        _userId: dbUser._id,
-                        provider: account.provider,
-                        providerAccountId: account.providerAccountId,
-                        type: account.type,
-                        access_token: account.access_token,
-                        refresh_token: account.refresh_token,
-                        id_token: account.id_token,
-                        expires_at: account.expires_at,
-                        scope: account.scope,
-                        token_type: account.token_type,
-                    });
-                }
-            }
-            return true;
-        },
-        async jwt({token, user}) {
-            if (user?.id) {
-                token.id = user.id;
-                token.sub = user.id;
-                token.email = user.email;
-                if ("emailVerified" in user) {
-                    token.emailVerified = user.emailVerified ? new Date(user.emailVerified) : null;
-                }
-                token.name = user.name;
-            }
-            return token;
-        },
-        async session({session, token}) {
-            if (!session.user) session.user = {id: "", email: "", emailVerified: null};
-            session.user.id = token.sub as string;
-            session.user.email = token.email as string;
-            // @ts-expect-error TS is too strict here
-            session.user.emailVerified =
-                token.emailVerified && typeof token.emailVerified === "string"
-                    ? new Date(token.emailVerified)
-                    : token.emailVerified ?? null;
-            session.user.name = token.name as string;
-            return session;
-        },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        Object.assign(token, {
+          sub: user.id,
+          email: user.email,
+          name: user.name,
+          emailVerified: user.emailVerified ?? null,
+        });
+      }
+      return token;
     },
+
+    async session({ session, token }) {
+      if (token?.sub) {
+        Object.assign(session.user, {
+          id: token.sub,
+          email: token.email!,
+          name: token.name ?? null,
+          emailVerified: token.emailVerified ? new Date(token.emailVerified) : null,
+        });
+      }
+      return session;
+    },
+
+    async signIn({ user, account }) {
+      if (!account) return true;
+
+      await connectDb();
+
+      const existing = await Account.findOne({
+        provider: account.provider,
+        providerAccountId: account.providerAccountId,
+      });
+
+      if (!existing) {
+        await Account.create({
+          userId: user.id,
+          type: account.type,
+          provider: account.provider,
+          providerAccountId: account.providerAccountId,
+          refresh_token: account.refresh_token,
+          access_token: account.access_token,
+          id_token: account.id_token,
+          expires_at: account.expires_at,
+          token_type: account.token_type,
+          scope: account.scope,
+          session_state: account.session_state,
+        });
+      }
+
+      return true;
+    },
+  },
 } satisfies NextAuthConfig;
+
+export const runtime = "nodejs";

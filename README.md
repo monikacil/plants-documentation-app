@@ -48,7 +48,7 @@ To run the project locally:
    Create a `.env.local` file based on `.env.example` and fill in the required values:
 
    ```bash
-   cp .env.example .env.local
+   cp .env.local.example .env.local
    ```
 
 4. **Run the development server:**

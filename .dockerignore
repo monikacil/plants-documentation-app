@@ -1,6 +1,33 @@
+# dependencies
 node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# build output
 .next
+dist
+build
+coverage
+
+# environment files
 .env*
+!.env.example   # wyjątek, jeśli chcesz zachować szablon
+
+# vcs
+.git
+.gitignore
+
+# docker files
 Dockerfile
-run.sh
 docker-compose.yml
+
+# scripts & local tools
+run.sh
+scripts/
+
+# docs (opcjonalnie)
+README.md
+LICENSE
+*.md
