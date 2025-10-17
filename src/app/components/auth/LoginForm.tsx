@@ -5,12 +5,12 @@ import { signIn } from "next-auth/react";
 
 import { Input } from "@/app/components/ui/Input";
 import { Button } from "@/app/components/ui/Button";
-import { SocialLoginButtons } from "./SocialLoginButton.tsx";
 import { toastCustom } from "@/app/components/common/Toast.tsx";
 import { redirect } from "next/navigation";
 import { getFieldError } from "@/app/lib/getFieldError.ts";
 import { AuthFormState, loginSchema } from "@/app/lib/zod/zodAuth.ts";
 import { createFormResponse } from "@/app/lib/createFormResponse.ts";
+import { SocialButtons } from "@/app/components/auth/SocialButtons";
 
 
 export function LoginForm({ children }: { children: React.ReactNode }) {
@@ -84,7 +84,7 @@ export function LoginForm({ children }: { children: React.ReactNode }) {
           >
             Login
           </Button>
-          <SocialLoginButtons />
+          <SocialButtons />
         </div>
       </form>
     </>

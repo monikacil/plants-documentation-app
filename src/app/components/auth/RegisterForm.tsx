@@ -5,7 +5,7 @@ import { createUser } from "@/actions/auth.actions.ts";
 
 import { Input } from "@/app/components/ui/Input";
 import { Button } from "@/app/components/ui/Button";
-import { SocialLoginButtons } from "./SocialLoginButton.tsx";
+import { SocialButtons } from "./SocialButtons.tsx";
 import { getFieldError } from "@/app/lib/getFieldError.ts";
 import { toastCustom } from "@/app/components/common/Toast.tsx";
 import Form from "next/form";
@@ -74,7 +74,7 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
         >
           Register
         </Button>
-        <SocialLoginButtons />
+        <SocialButtons />
       </div>
     </Form>
   );

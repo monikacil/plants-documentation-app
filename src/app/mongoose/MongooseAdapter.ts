@@ -31,7 +31,7 @@ export function MongooseAdapter(): Adapter {
 
     async getUser(id) {
       await connectDb();
-      const user = await User.findById(id);
+      const user = await User.findById(id).catch(() => null);
       if (!user) return null;
 
       return {
@@ -63,7 +63,7 @@ export function MongooseAdapter(): Adapter {
       const account = await Account.findOne({ provider, providerAccountId });
       if (!account) return null;
 
-      const user = await User.findById(account.userId);
+      const user = await User.findOne({ _id: account.userId }).catch(() => null);
       if (!user) return null;
 
       return {
@@ -91,8 +91,9 @@ export function MongooseAdapter(): Adapter {
         }
       }
 
-      if (!account.userId)
+      if (!account.userId) {
         throw new Error("No userId to assign an account.");
+      }
 
       await Account.create({
         ...account,
@@ -107,7 +108,7 @@ export function MongooseAdapter(): Adapter {
 
     async deleteUser(userId) {
       await connectDb();
-      await User.deleteOne({ _id: userId });
+      await User.deleteOne({ _id: userId }).catch(() => null);
       await Account.deleteMany({ userId });
     },
   };

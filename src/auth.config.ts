@@ -1,13 +1,14 @@
 import { connectDb } from "@/app/mongoose/db";
 import { User } from "@/app/mongoose/models/user.model";
-import { Account } from "@/app/mongoose/models/account.model";
 import { ComparePassword } from "@/app/lib/bcrypt";
 import { CredentialsError, UserNotConfirmed } from "@/app/lib/authErrors";
 import { MongooseAdapter } from "@/app/mongoose/MongooseAdapter";
-import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
+
+import type { JWT } from "next-auth/jwt";
+import type { Session, User as UserType } from "next-auth";
 
 type CredentialsInput = {
   email: string;
@@ -62,7 +63,7 @@ export const authConfig = {
   ],
 
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT, user?: UserType }) {
       if (user) {
         Object.assign(token, {
           sub: user.id,
@@ -74,7 +75,7 @@ export const authConfig = {
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token }: { session: Session, token: JWT }) {
       if (token?.sub) {
         Object.assign(session.user, {
           id: token.sub,
@@ -85,36 +86,7 @@ export const authConfig = {
       }
       return session;
     },
-
-    async signIn({ user, account }) {
-      if (!account) return true;
-
-      await connectDb();
-
-      const existing = await Account.findOne({
-        provider: account.provider,
-        providerAccountId: account.providerAccountId,
-      });
-
-      if (!existing) {
-        await Account.create({
-          userId: user.id,
-          type: account.type,
-          provider: account.provider,
-          providerAccountId: account.providerAccountId,
-          refresh_token: account.refresh_token,
-          access_token: account.access_token,
-          id_token: account.id_token,
-          expires_at: account.expires_at,
-          token_type: account.token_type,
-          scope: account.scope,
-          session_state: account.session_state,
-        });
-      }
-
-      return true;
-    },
   },
-} satisfies NextAuthConfig;
+}
 
 export const runtime = "nodejs";

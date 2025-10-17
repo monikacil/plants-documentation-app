@@ -15,25 +15,27 @@ interface AuthProviderProps {
 export function AuthProvider({
                                children,
                                redirectTo = "/",
-                               loadingFallback = <Loading />,
+                               loadingFallback = <Loading key="auth-loading" />,
                                waitMs = 600,
                              }: AuthProviderProps) {
-  const { status, data } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const hasRedirected = useRef(false);
   const [waited, setWaited] = useState(false);
 
+  // Wait before redirecting unauthenticated users
   useEffect(() => {
-    let t: NodeJS.Timeout;
+    let timer: NodeJS.Timeout | undefined;
     if (status === "unauthenticated") {
       setWaited(false);
-      t = setTimeout(() => setWaited(true), waitMs);
+      timer = setTimeout(() => setWaited(true), waitMs);
     } else {
       setWaited(false);
     }
-    return () => clearTimeout(t);
+    return () => timer && clearTimeout(timer);
   }, [status, waitMs]);
 
+  // Redirect after wait
   useEffect(() => {
     if (status === "unauthenticated" && waited && !hasRedirected.current) {
       hasRedirected.current = true;
@@ -41,13 +43,10 @@ export function AuthProvider({
     }
   }, [status, waited, router, redirectTo]);
 
-  useEffect(() => {
-  }, [status, data]);
-
+  // Render logic
   if (status === "loading") return loadingFallback;
   if (status === "unauthenticated" && !waited) return loadingFallback;
   if (status === "unauthenticated" && waited) return null;
 
-  // authenticated
   return <>{ children }</>;
 }

@@ -11,9 +11,7 @@ const PasswordResetTokenSchema = new Schema<PasswordResetTokenDocument>(
   {
     userId: {
       type: String,
-      ref: "User",
-      required: true,
-      index: true,
+      required: true
     },
     token: {
       type: String,

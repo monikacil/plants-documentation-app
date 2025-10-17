@@ -1,8 +1,179 @@
+/* -------------------------------------
+   🌿 Tailwind layers
+------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------------
+   🌱 Root color variables (light/dark)
+   Matches tailwind.config.ts colors
+------------------------------------- */
+:root {
+  color-scheme: light dark;
+
+  /* Light mode colors */
+  --background-light: #F5F8F2;
+  --background-dark: #0D1B13;
+  --surface-light: #FFFFFF;
+  --surface-dark: #1B2D23;
+  --text-light: #1F2D1F;
+  --text-dark: #E8F5E9;
+  --accent-light: #4B8F61;
+  --accent-dark: #6FCF97;
+  --muted-light: #6B7D6B;
+  --muted-dark: #A8BDA8;
+  --border-light: #DDE7DE;
+  --border-dark: #2B4537;
+}
+
+/* -------------------------------------
+   🪴 Base global styles
+------------------------------------- */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-size: 16px;
-  line-height: 20px;
+  line-height: 1.6;
+  min-height: 100vh;
+  font-family: "Fredoka", system-ui, sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  transition: background-color 0.3s ease,
+  color 0.3s ease;
+}
+
+/* Automatically adapt to dark mode (media-based) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+  }
+}
+
+/* -------------------------------------
+   ✨ Typography
+------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: inherit;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+a {
+  color: var(--accent-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+/* -------------------------------------
+   🌿 Buttons, Inputs, Cards
+   These work with plantsUIPlugin defaults
+------------------------------------- */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+/* -------------------------------------
+   🌾 Accessibility focus styles
+------------------------------------- */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------
+   🍃 Scrollbars (subtle and nature-styled)
+------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--muted-light);
+  border-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    background: var(--surface-dark);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--muted-dark);
+  }
+}
+
+/* -------------------------------------
+   🌀 Animations (for spinner + fades)
+------------------------------------- */
+@keyframes spin-smooth {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-smooth {
+  animation: spin-smooth 0.9s linear infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out both;
+}
+
+/* -------------------------------------
+   🌸 Utility layer (can be extended)
+------------------------------------- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }

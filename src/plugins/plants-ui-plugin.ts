@@ -18,49 +18,77 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
 
   addComponents({
     ".btn": {
-      "@apply relative rounded-full font-semibold shadow text-white whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50": {},
+      "@apply relative rounded-full font-semibold shadow text-white whitespace-nowrap transition-all duration-200 disabled:pointer-events-none disabled:opacity-50": {},
     },
     ".btn-primary": {
-      "@apply bg-primary-light dark:bg-primary-dark/80 hover:bg-primary-light/90 dark:hover:bg-primary-dark/70": {},
+      "@apply bg-primary-light hover:bg-primary-light/90": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#6FCF97",
+        "&:hover": { backgroundColor: "#5DAE6C" },
+      },
     },
     ".btn-outline": {
-      "@apply border border-primary-light dark:border-primary-dark text-primary-light dark:text-primary-dark bg-transparent hover:bg-primary-light/70 hover:text-white dark:hover:bg-primary-dark dark:hover:text-black": {},
+      "@apply border border-primary-light text-primary-light bg-transparent hover:bg-primary-light/70 hover:text-white": {},
+      "@media (prefers-color-scheme: dark)": {
+        borderColor: "#6FCF97",
+        color: "#6FCF97",
+        "&:hover": {
+          backgroundColor: "#6FCF97",
+          color: "#000",
+        },
+      },
     },
     ".btn-danger": {
-      "@apply bg-error-light dark:bg-error-dark hover:opacity-90": {},
+      "@apply bg-error-light hover:opacity-90": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#FF6B6B",
+      },
     },
     ".btn-edit": {
-      "@apply bg-edit hover:bg-edit-dark": {},
+      "@apply bg-edit-light hover:opacity-90": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#3E8280",
+      },
     },
     ".btn-facebook": {
       "@apply bg-[#1877F2] hover:bg-[#145DBF]": {},
     },
     ".btn-google": {
-      "@apply bg-white border border-gray-300 text-black hover:bg-gray-300": {},
-    },
-    ".btn-link": {
-      "@apply md:shadow-none bg-transparent dark:bg-transparent text-edit-light dark:text-text-dark hover:underline": {},
+      "@apply bg-gray-100 border border-gray-300 text-black hover:bg-gray-300": {},
     },
     ".card": {
-      "@apply p-6 rounded-xl bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark shadow": {},
+      "@apply p-6 rounded-xl bg-card-light text-text-light shadow transition-colors": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#1F3429",
+        color: "#E8F5E9",
+      },
     },
     ".input": {
-      "@apply w-full px-3 py-2.5 md:px-4 md:py-2 text-base md:text-sm rounded-full border border-border-light bg-surface-light text-text-light placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark transition-colors": {},
-    },
-    ".input-invalid": {
-      "@apply bg-red-50 border-red-500 text-red-700 placeholder-red-400 focus:ring-red-500": {},
+      "@apply w-full px-4 py-2 text-base rounded-full border border-border-light bg-surface-light text-text-light placeholder-muted-light focus:outline-none focus:ring-2 focus:ring-primary-light transition-colors": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#1B2D23",
+        color: "#E8F5E9",
+        borderColor: "#2B4537",
+      },
     },
     ".alert-success": {
-      "@apply p-4 rounded-md bg-primary-light dark:bg-primary-dark text-white text-sm animate-fade-in": {},
+      "@apply p-4 rounded-md bg-primary-light text-white text-sm animate-fade-in": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#6FCF97",
+      },
     },
     ".alert-warning": {
-      "@apply p-4 rounded-md bg-warning-light dark:bg-warning-dark text-black text-sm animate-slide-up": {},
+      "@apply p-4 rounded-md bg-warning-light text-black text-sm animate-slide-up": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#FFD166",
+        color: "#000",
+      },
     },
     ".alert-error": {
-      "@apply p-4 rounded-md bg-error-light dark:bg-error-dark text-white text-sm animate-bounce-once": {},
-    },
-    ".error-message": {
-      "@apply text-sm text-red-600 mt-1": {},
+      "@apply p-4 rounded-md bg-error-light text-white text-sm animate-bounce-once": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#FF6B6B",
+      },
     },
   });
 
