@@ -7,8 +7,6 @@ import { Toaster } from "react-hot-toast";
 
 import { AppSessionProvider } from "@/app/AppSessionProvider";
 import { ServiceWorkerRegister } from "@/app/components/pwa/ServiceWorkerRegister";
-import { Footer } from "@/app/components/layout/Footer";
-import { Sidebar } from "@/app/components/layout/Sidebar";
 
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
@@ -57,15 +55,7 @@ export default async function RootLayout({ children }: {
     <body
       className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark min-h-screen overflow-x-hidden">
     <AppSessionProvider session={ session }>
-      <div className="flex min-h-screen w-full max-w-full overflow-hidden">
-        <Sidebar />
-        <div className="flex flex-col flex-1">
-          <main role="main" className="flex-1 w-full overflow-y-auto">
-            { children }
-          </main>
-          <Footer className="flex-none" />
-        </div>
-      </div>
+      { children }
     </AppSessionProvider>
     <Toaster toastOptions={ { duration: 4000 } } />
     <ServiceWorkerRegister />

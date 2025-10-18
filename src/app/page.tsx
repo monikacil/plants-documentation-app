@@ -1,34 +1,52 @@
 import Image from "next/image";
-
 import { AuthForm } from "@/app/components/auth/AuthForm";
 import { AddToHomeScreen } from "@/app/components/pwa/AddToHomeScreen";
 import { Logo } from "@/app/components/layout/Logo";
 
 export default function LandingPage() {
   return (
-    <main className="w-full flex-1 h-full">
+    <main
+      className="
+        flex items-center justify-center
+        min-h-[100dvh] w-full
+        overflow-hidden animate-fade-in
+      "
+    >
       <AddToHomeScreen />
+
       <section
-        className="flex flex-col md:flex-row items-center justify-center md:gap-10 w-full max-w-8xl mx-auto px-4 py-6 h-full">
-        <div className="flex flex-col md:gap-3 justify-center items-center md:w-1/2 text-center md:text-left">
-          <section className="max-w-lg text-2xl lg:text-4xl text-center">
-            <div className="flex justify-center my-5 md:mt-0">
-              <Logo size="xl" />
-            </div>
-            <p className="text-text-light dark:text-text-dark">Access to your plant documentation always at hand!</p>
-          </section>
-          <div className="w-full max-w-lg mx-auto px-4 py-8 flex flex-col gap-6">
+        className="
+          flex flex-col md:flex-row items-center justify-center
+          gap-10 md:gap-16
+          w-full max-w-7xl mx-auto px-6 md:px-10 py-10
+        "
+      >
+        {/* --- Left column: logo + text + form --- */ }
+        <div className="flex flex-col items-center text-center md:text-left md:w-1/2 space-y-6">
+          <div className="flex flex-col items-center space-y-4">
+            <Logo size="xl" />
+            <p className="text-xl text-center md:text-2xl font-medium max-w-md leading-relaxed">
+              Access your plant documentation anytime, anywhere 🌱
+            </p>
+          </div>
+
+          <div className="w-full max-w-md mt-6 md:mt-10">
             <AuthForm />
           </div>
         </div>
-        <div className="lg:m-auto md:w-1/2 flex justify-center">
+
+        {/* --- Right column: image --- */ }
+        <div className="flex justify-center md:justify-end md:w-1/2">
           <Image
             src="/images/landing-page-img.png"
             width={ 700 }
             height={ 600 }
             priority
-            alt="Landing page picture"
-            style={ { width: "100%", height: "auto" } }
+            alt="Plant documentation preview"
+            className="
+              w-full max-w-lg h-auto rounded-xl
+              object-contain drop-shadow-md
+            "
           />
         </div>
       </section>
