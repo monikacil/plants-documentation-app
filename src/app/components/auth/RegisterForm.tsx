@@ -65,7 +65,7 @@ export function RegisterForm({ children }: { children: React.ReactNode }) {
         />
       </div>
       { children }
-      <div className="flex flex-col gap-3 mt-5 space-y-2">
+      <div className="flex flex-col gap-3 mt-5">
         <Button
           type="submit"
           disabled={ isPending }

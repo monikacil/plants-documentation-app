@@ -12,7 +12,7 @@ import { VerificationToken } from "@/app/mongoose/models/verificationToken.model
 import { PasswordResetToken } from "@/app/mongoose/models/passwordResetToken.model.ts";
 
 // libs
-import { HashPassword } from "@/app/lib/bcrypt.ts";
+import { ComparePassword, HashPassword } from "@/app/lib/bcrypt.ts";
 import { sendResetPasswordEmail, sendVerificationEmail, } from "@/app/lib/mailer.ts";
 import { createFormResponse } from "@/app/lib/createFormResponse.ts";
 import { getErrorMessage } from "@/app/lib/utils/getErrorMessage.ts";
@@ -101,8 +101,7 @@ export async function logout() {
  * Initiates the password reset process
  */
 export async function initiatePasswordReset(_: unknown, formData: FormData) {
-  const email = formData.get("email")?.toString() || "";
-
+  const email = formData.get("email")?.toString().trim().toLowerCase() || "";
   const result = initResetPasswordSchema.safeParse({ email });
   if (!result.success) {
     return createFormResponse({
@@ -110,21 +109,28 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
       status: "invalid",
     });
   }
-
   try {
     await connectDb();
+
+    // 🧩 Minimal latency – to make it difficult to distinguish accounts (timing attack)
+    const start = Date.now();
     const user = await User.findOne({ email });
+    const elapsed = Date.now() - start;
+    const delay = Math.max(500 - elapsed, 0);
+    if (delay > 0) await new Promise((r) => setTimeout(r, delay));
+
     if (!user) {
+      // Safely returns the same message - it doesn't reveal whether the email exists
       return createFormResponse({
-        errorMessage: "No user with this email address found.",
-        status: "invalid",
+        status: "success",
       });
     }
-
+    // 🧹 Delete old tokens if any exist
     await PasswordResetToken.deleteMany({ userId: user._id.toString() });
 
+    // 🔐 Generate a new, unique token (256-bit)
     const token = crypto.randomBytes(32).toString("hex");
-    const expires = new Date(Date.now() + 1000 * 60 * 30);
+    const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 min
 
     await PasswordResetToken.create({
       userId: user._id.toString(),
@@ -132,6 +138,7 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
       expires,
     });
 
+    // ✉️ Send an email with a reset link
     await sendResetPasswordEmail(email, token);
 
     return createFormResponse({ status: "success" });
@@ -145,13 +152,28 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
 }
 
 /**
- * Sets a new password after token verification
+ * Verifies if a reset token is still valid
  */
-export async function resetPassword(token: string, newPassword: string) {
-  if (!token || !newPassword) {
-    throw new Error("Token and new password are required.");
+export async function verifyResetToken(token: string) {
+  await connectDb();
+
+  const record = await PasswordResetToken.findOne({ token });
+  if (!record) {
+    return { valid: false, reason: "Token not found or already used." };
   }
 
+  if (record.expires < new Date()) {
+    await PasswordResetToken.deleteOne({ token });
+    return { valid: false, reason: "Token expired." };
+  }
+
+  return { valid: true };
+}
+
+/**
+ * Sets a new password after token verification
+ */
+export async function resetPassword(token: string, newPassword: string, oldPassword?: string) {
   await connectDb();
 
   const resetToken = await PasswordResetToken.findOne({ token });
@@ -164,18 +186,25 @@ export async function resetPassword(token: string, newPassword: string) {
     throw new Error("Reset token expired.");
   }
 
-  const user = await User.findById(resetToken.userId);
+  const user = await User.findById(resetToken.userId).select("+password");
   if (!user) {
     await PasswordResetToken.deleteOne({ token });
     throw new Error("User not found.");
   }
 
-  user.password = await HashPassword(newPassword);
+  // ✅ jeśli user ma stare hasło, sprawdź je
+  if (user.password && oldPassword) {
+    const valid = await ComparePassword(oldPassword, user.password);
+    if (!valid) throw new Error("Current password is incorrect.");
+  }
 
-  await Promise.all([
-    user.save(),
-    PasswordResetToken.deleteOne({ token }),
-  ]);
+  if (newPassword.length < 6) {
+    throw new Error("Password must be at least 6 characters long.");
+  }
+
+  user.password = await HashPassword(newPassword);
+  await Promise.all([user.save(), PasswordResetToken.deleteOne({ token })]);
 
   return createFormResponse({ status: "password_reset" });
 }
+

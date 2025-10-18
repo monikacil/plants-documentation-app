@@ -19,7 +19,6 @@ export function InitResetPasswordForm({ onSuccess }: Props) {
   useEffect(() => {
     if (!state) return;
     if (state?.success) {
-      toastCustom("Reset password email sent", "success");
       setEmail("");
       onSuccess?.();
     }
@@ -39,7 +38,7 @@ export function InitResetPasswordForm({ onSuccess }: Props) {
         errors={ state && getFieldError(state, "email") }
         required
       />
-      <Button type="submit" disabled={ isPending } className="text-text-light">
+      <Button type="submit" disabled={ isPending }>
         Send reset password email
       </Button>
     </Form>

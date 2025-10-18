@@ -11,6 +11,7 @@ import { getFieldError } from "@/app/lib/getFieldError.ts";
 import { AuthFormState, loginSchema } from "@/app/lib/zod/zodAuth.ts";
 import { createFormResponse } from "@/app/lib/createFormResponse.ts";
 import { SocialButtons } from "@/app/components/auth/SocialButtons";
+import { cn } from "@/app/lib/utils/others.ts";
 
 
 export function LoginForm({ children }: { children: React.ReactNode }) {
@@ -75,12 +76,13 @@ export function LoginForm({ children }: { children: React.ReactNode }) {
           />
         </div>
         { children }
-        <div className="flex flex-col gap-3 mt-5 space-y-2">
+        <div className="flex flex-col gap-3 mt-5">
           <Button
             type="submit"
             disabled={ isLoading }
             isLoading={ isLoading }
             aria-label="Log in with Credentials"
+            className={ cn("tracking-wider") }
           >
             Login
           </Button>

@@ -23,8 +23,9 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
     ".btn-primary": {
       "@apply bg-primary-light hover:bg-primary-light/90": {},
       "@media (prefers-color-scheme: dark)": {
-        backgroundColor: "#6FCF97",
-        "&:hover": { backgroundColor: "#5DAE6C" },
+        backgroundColor: "#6fcf97",
+        color: "#1f2d1f",
+        "&:hover": { backgroundColor: "#5dae6c" },
       },
     },
     ".btn-outline": {
@@ -50,11 +51,23 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         backgroundColor: "#3E8280",
       },
     },
+    ".btn-link": {
+      "@apply inline-flex items-center justify-center w-full px-4 py-2 text-base font-semibold text-primary-light bg-primary-light/10 transition-all duration-200 ease-out hover:bg-primary-light/20 hover:text-primary-light": {},
+      "@media (prefers-color-scheme: dark)": {
+        "@apply text-primary-dark hover:text-primary-dark hover:bg-primary-dark/10 focus:ring-primary-dark": {},
+      },
+    },
     ".btn-facebook": {
-      "@apply bg-[#1877F2] hover:bg-[#145DBF]": {},
+      "@apply bg-[#1877F2] hover:bg-[#1877F2]/90 hover:shadow-lg text-white rounded-full transition-all duration-200 ease-out": {},
+      "@media (prefers-color-scheme: dark)": {
+        "@apply hover:bg-[#1877F2]/80": {},
+      },
     },
     ".btn-google": {
-      "@apply bg-gray-100 border border-gray-300 text-black hover:bg-gray-300": {},
+      "@apply bg-gray-50 hover:bg-gray-200 border border-gray-300 text-gray-800 rounded-full transition-all duration-200 ease-out": {},
+      "@media (prefers-color-scheme: dark)": {
+        "@apply bg-surface-dark border-border-dark text-white hover:bg-border-dark/60": {},
+      },
     },
     ".card": {
       "@apply p-6 rounded-xl bg-card-light text-text-light shadow transition-colors": {},

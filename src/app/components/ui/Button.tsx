@@ -10,8 +10,9 @@ import { Spinner } from "@/app/components/common/Spinner";
 const buttonVariants = cva(
   [
     "btn",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/70",
-    "transition-all duration-200 select-none",
+    "relative inline-flex items-center justify-center select-none",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light/70 focus-visible:ring-offset-2",
+    "transition-all duration-200 ease-out",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
   ].join(" "),
   {
@@ -26,10 +27,10 @@ const buttonVariants = cva(
         google: "btn-google",
       },
       size: {
-        default: "px-4 py-3 md:py-2 text-base",
-        sm: "px-3 py-2 text-sm",
+        default: "px-4 py-2 text-base",
+        sm: "px-3 py-1.5 text-sm",
         lg: "px-5 py-3 text-lg",
-        icon: "h-9 w-9 flex items-center justify-center rounded-full",
+        icon: "h-10 w-10 flex items-center justify-center rounded-full",
       },
     },
     defaultVariants: {
@@ -76,7 +77,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={ cn(
           buttonVariants({ variant, size }),
           fullWidth ? "w-full" : "w-fit",
-          "relative font-medium rounded-full",
           isDisabled && "opacity-70 cursor-not-allowed",
           className
         ) }
@@ -85,11 +85,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {/* Spinner overlay */ }
         { isLoading && (
           <span className="absolute inset-0 flex items-center justify-center">
-            <Spinner className="h-5 w-5 text-white" />
+            <Spinner
+              className={ cn(
+                "h-5 w-5",
+                variant === "google"
+                  ? "text-gray-800 dark:text-white"
+                  : "text-white"
+              ) }
+            />
           </span>
         ) }
 
-        {/* Content */ }
+        {/* Button content */ }
         <span
           className={ cn(
             "flex items-center justify-center transition-opacity duration-150",
