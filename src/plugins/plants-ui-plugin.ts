@@ -69,6 +69,45 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         "@apply bg-surface-dark border-border-dark text-white hover:bg-border-dark/60": {},
       },
     },
+    ".toast-base": {
+      "@apply flex items-center justify-center gap-3 px-6 py-3 rounded-2xl shadow-lg border min-w-[280px] max-w-md text-center font-medium animate-pop-in transition-all duration-300 ease-out": {},
+    },
+
+    ".toast-success": {
+      "@apply bg-primary-light text-white border-primary-light/60": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#6FCF97",
+        color: "#0D1B13",
+        borderColor: "rgba(111,207,151,0.6)",
+      },
+    },
+
+    ".toast-error": {
+      "@apply bg-error-light text-white border-error-light/60": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#FF6B6B",
+        color: "#0D1B13",
+        borderColor: "rgba(255,107,107,0.6)",
+      },
+    },
+
+    ".toast-info": {
+      "@apply bg-edit-light text-white border-edit-light/60": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#3E8280",
+        color: "#E8F5E9",
+        borderColor: "rgba(62,130,128,0.6)",
+      },
+    },
+
+    ".toast-warning": {
+      "@apply bg-warning-light text-black border-warning-light/60": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#FFD166",
+        color: "#0D1B13",
+        borderColor: "rgba(255,209,102,0.6)",
+      },
+    },
     ".card": {
       "@apply p-6 rounded-xl bg-card-light text-text-light shadow transition-colors": {},
       "@media (prefers-color-scheme: dark)": {

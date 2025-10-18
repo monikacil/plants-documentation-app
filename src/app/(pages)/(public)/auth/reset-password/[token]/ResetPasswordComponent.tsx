@@ -56,7 +56,7 @@ export default function ResetPasswordPage({ token, tokenStatus }: ResetPasswordP
       await resetPassword(token, newPassword, oldPassword);
       toastCustom("Password changed successfully 🌿", "success");
       setMessage("Password changed. Redirecting...");
-      setTimeout(() => router.push("/auth/login"), 2000);
+      setTimeout(() => router.push("/"), 2000);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong.";

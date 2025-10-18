@@ -104,10 +104,10 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
   const email = formData.get("email")?.toString().trim().toLowerCase() || "";
   const result = initResetPasswordSchema.safeParse({ email });
   if (!result.success) {
-    return createFormResponse({
-      error: result.error.flatten().fieldErrors,
+    return {
       status: "invalid",
-    });
+      message: "Email address is invalid.",
+    }
   }
   try {
     await connectDb();
@@ -121,9 +121,10 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
 
     if (!user) {
       // Safely returns the same message - it doesn't reveal whether the email exists
-      return createFormResponse({
+      return {
         status: "success",
-      });
+        message: "Reset password email sent."
+      };
     }
     // 🧹 Delete old tokens if any exist
     await PasswordResetToken.deleteMany({ userId: user._id.toString() });
@@ -140,14 +141,16 @@ export async function initiatePasswordReset(_: unknown, formData: FormData) {
 
     // ✉️ Send an email with a reset link
     await sendResetPasswordEmail(email, token);
-
-    return createFormResponse({ status: "success" });
+    return {
+      status: "success",
+      message: "Reset password email sent."
+    };
   } catch (e) {
     console.error("[INITIATE_RESET_ERROR]", e);
-    return createFormResponse({
-      errorMessage: getErrorMessage(e),
+    return {
       status: "server_error",
-    });
+      message: getErrorMessage(e),
+    };
   }
 }
 
@@ -192,7 +195,7 @@ export async function resetPassword(token: string, newPassword: string, oldPassw
     throw new Error("User not found.");
   }
 
-  // ✅ jeśli user ma stare hasło, sprawdź je
+  // ✅ if the user has an old password, check it
   if (user.password && oldPassword) {
     const valid = await ComparePassword(oldPassword, user.password);
     if (!valid) throw new Error("Current password is incorrect.");
@@ -205,6 +208,9 @@ export async function resetPassword(token: string, newPassword: string, oldPassw
   user.password = await HashPassword(newPassword);
   await Promise.all([user.save(), PasswordResetToken.deleteOne({ token })]);
 
-  return createFormResponse({ status: "password_reset" });
+  return {
+    status: "password_reset",
+    message: "Password reset successfully.",
+  };
 }
 

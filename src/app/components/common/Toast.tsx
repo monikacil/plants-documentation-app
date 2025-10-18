@@ -7,61 +7,38 @@ import {
   HiXMark,
 } from "react-icons/hi2";
 import { ReactNode } from "react";
+import { cn } from "@/app/lib/utils/others";
 
-type ToastTheme = "success" | "error" | "info" | "warning"
+type ToastTheme = "success" | "error" | "info" | "warning";
 
-const themeMap: Record<
-  ToastTheme,
-  {
-    icon: ReactNode
-    bg: string
-    text: string
-  }
-> = {
-  success: {
-    icon: <HiCheckCircle className="text-2xl"/>,
-    bg: "bg-green-500",
-    text: "text-white",
-  },
-  error: {
-    icon: <HiExclamationCircle className="text-2xl"/>,
-    bg: "bg-red-500",
-    text: "text-white",
-  },
-  info: {
-    icon: <HiInformationCircle className="text-2xl"/>,
-    bg: "bg-blue-500",
-    text: "text-white",
-  },
-  warning: {
-    icon: <HiExclamationTriangle className="text-2xl"/>,
-    bg: "bg-yellow-400",
-    text: "text-black",
-  },
+const icons: Record<ToastTheme, ReactNode> = {
+  success: <HiCheckCircle className="text-2xl text-white" />,
+  error: <HiExclamationCircle className="text-2xl text-white" />,
+  info: <HiInformationCircle className="text-2xl text-white" />,
+  warning: <HiExclamationTriangle className="text-2xl text-black" />,
 };
 
 export function toastCustom(message: string, theme: ToastTheme = "info") {
-  return toast.custom((t) => {
-    const { icon, bg, text } = themeMap[ theme ];
-
-    return (
-      <div
-        className={ `fixed left-1/2 top-[66vh] -translate-x-1/2 z-50 ${ bg } ${ text }
-          px-6 py-4 rounded-xl shadow-lg flex items-center justify-between gap-4
-          min-w-[320px] max-w-lg w-fit
-          transition-all duration-300 ${
-          t.visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        }` }
-      >
-        <span>{ icon }</span>
-        <p className="text-base flex-1 text-left">{ message }</p>
+  return toast.custom((t) => (
+    <div
+      className={ cn(
+        "fixed left-1/2 top-[85vh] -translate-x-1/2 z-50",
+        "flex flex-col items-center justify-center",
+        "transition-all duration-300 ease-out",
+        t.visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+      ) }
+    >
+      <div className={ cn("toast-base", `toast-${ theme }`) }>
+        <span className="flex items-center justify-center">{ icons[theme] }</span>
+        <p className="flex-1 text-center leading-snug m-0">{ message }</p>
         <button
           onClick={ () => toast.dismiss(t.id) }
-          className="text-xl font-bold hover:opacity-80 transition"
+          className="flex items-center justify-center text-lg font-semibold hover:opacity-80 transition-opacity"
+          aria-label="Close toast"
         >
-          <HiXMark/>
+          <HiXMark className="w-5 h-5" />
         </button>
       </div>
-    );
-  });
+    </div>
+  ));
 }
