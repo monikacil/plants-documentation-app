@@ -59,7 +59,7 @@ export default async function VerifyEmailPage({ params }: {
   if (!user.emailVerified) {
     user.emailVerified = new Date();
     await user.save();
-    await VerificationToken.deleteMany({ _userId: user._id });
+    await VerificationToken.deleteMany({ userId: user._id });
   }
 
   // --- ✅ Success ---

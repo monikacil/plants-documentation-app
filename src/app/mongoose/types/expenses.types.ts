@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 
 export type ExpenseDocument = {
-  _userId: Schema.Types.ObjectId;
+  userId: Schema.Types.ObjectId;
   products: string;
   price: string;
   shop: string;

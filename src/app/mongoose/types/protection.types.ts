@@ -1,5 +1,5 @@
 export type ProtectionDocument = {
-  _userId: string;
+  userId: string;
   date: Date;
   control: string;
   pests: string;
