@@ -17,6 +17,62 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
   });
 
   addComponents({
+    /* --- SIDEBAR --- */
+    ".sidebar": {
+      "@apply flex flex-col h-screen shadow-lg border-r border-border-light text-text-light bg-sidebar-light transition-all duration-300 ease-in-out": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "rgba(21,39,31,0.85)",
+        backdropFilter: "blur(12px)",
+        color: "#E8F5E9",
+        borderColor: "#2B4537",
+      },
+    },
+
+    ".sidebar-header": {
+      "@apply flex items-center justify-between p-5 mb-2 h-16": {},
+      "@media (prefers-color-scheme: dark)": {
+        borderColor: "#2B4537",
+      },
+    },
+
+    ".sidebar-link": {
+      "@apply flex items-center gap-3 h-10 px-3 py-2 text-base font-medium rounded-xl transition-all duration-200 ease-out text-text-light hover:bg-border-light": {},
+      "@media (prefers-color-scheme: dark)": {
+        color: "#E8F5E9",
+        "&:hover": {
+          color: "#6FCF97",
+          backgroundColor: "rgba(43,69,55,0.6)",
+        },
+      },
+    },
+
+    ".sidebar-link-active": {
+      "@apply bg-primary-light text-white shadow-md": {},
+      "@media (prefers-color-scheme: dark)": {
+        backgroundColor: "#6FCF97",
+        color: "#0D1B13",
+        boxShadow: "0 0 10px rgba(111,207,151,0.3)",
+      },
+    },
+
+    ".sidebar-toggle": {
+      "@apply hidden md:flex p-2 rounded-full hover:bg-border-light transition-colors duration-200": {},
+      "@media (prefers-color-scheme: dark)": {
+        "&:hover": { backgroundColor: "rgba(43,69,55,0.6)" },
+      },
+    },
+
+    /* --- SIDEBAR GRADIENT (ciemny motyw) --- */
+    ".sidebar-gradient-dark": {
+      "@media (prefers-color-scheme: dark)": {
+        backgroundImage:
+          "linear-gradient(to bottom, rgba(21,39,31,0.9), rgba(13,27,19,0.95))",
+        backdropFilter: "blur(14px)",
+        borderColor: "rgba(43,69,55,0.6)",
+      },
+    },
+
+    /* --- BUTTONS --- */
     ".btn": {
       "@apply relative rounded-full font-semibold shadow text-white whitespace-nowrap transition-all duration-200 disabled:pointer-events-none disabled:opacity-50": {},
     },
@@ -69,10 +125,11 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         "@apply bg-surface-dark border-border-dark text-white hover:bg-border-dark/60": {},
       },
     },
+
+    /* --- TOASTS --- */
     ".toast-base": {
       "@apply flex items-center justify-center gap-3 px-6 py-3 rounded-2xl shadow-lg border min-w-[280px] max-w-md text-center font-medium animate-pop-in transition-all duration-300 ease-out": {},
     },
-
     ".toast-success": {
       "@apply bg-primary-light text-white border-primary-light/60": {},
       "@media (prefers-color-scheme: dark)": {
@@ -81,7 +138,6 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "rgba(111,207,151,0.6)",
       },
     },
-
     ".toast-error": {
       "@apply bg-error-light text-white border-error-light/60": {},
       "@media (prefers-color-scheme: dark)": {
@@ -90,7 +146,6 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "rgba(255,107,107,0.6)",
       },
     },
-
     ".toast-info": {
       "@apply bg-edit-light text-white border-edit-light/60": {},
       "@media (prefers-color-scheme: dark)": {
@@ -99,7 +154,6 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "rgba(62,130,128,0.6)",
       },
     },
-
     ".toast-warning": {
       "@apply bg-warning-light text-black border-warning-light/60": {},
       "@media (prefers-color-scheme: dark)": {
@@ -108,6 +162,8 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "rgba(255,209,102,0.6)",
       },
     },
+
+    /* --- INPUTS & CARDS --- */
     ".card": {
       "@apply p-6 rounded-xl bg-card-light text-text-light shadow transition-colors": {},
       "@media (prefers-color-scheme: dark)": {
@@ -123,6 +179,8 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "#2B4537",
       },
     },
+
+    /* --- ALERTS --- */
     ".alert-success": {
       "@apply p-4 rounded-md bg-primary-light text-white text-sm animate-fade-in": {},
       "@media (prefers-color-scheme: dark)": {

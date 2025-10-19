@@ -53,7 +53,7 @@ export default async function RootLayout({ children }: {
   return (
     <html lang="en" suppressHydrationWarning className={ fredoka.variable }>
     <body
-      className="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark min-h-screen overflow-x-hidden">
+      className="min-h-screen overflow-x-hidden">
     <AppSessionProvider session={ session }>
       { children }
     </AppSessionProvider>
