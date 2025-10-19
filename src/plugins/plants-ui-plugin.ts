@@ -29,14 +29,14 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
     },
 
     ".sidebar-header": {
-      "@apply flex items-center justify-between p-5 mb-2 h-16": {},
+      "@apply flex items-center justify-between mb-2 h-16": {},
       "@media (prefers-color-scheme: dark)": {
         borderColor: "#2B4537",
       },
     },
 
     ".sidebar-link": {
-      "@apply flex items-center gap-3 h-10 px-3 py-2 text-base font-medium rounded-xl transition-all duration-200 ease-out text-text-light hover:bg-border-light": {},
+      "@apply flex items-center gap-4 h-10 px-3 py-2 text-base font-medium rounded-xl transition-all duration-200 ease-out text-text-light hover:bg-border-light": {},
       "@media (prefers-color-scheme: dark)": {
         color: "#E8F5E9",
         "&:hover": {
@@ -55,8 +55,18 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
       },
     },
 
+    /* --- COLLAPSED SIDEBAR LINK --- */
+    ".sidebar-link-collapsed": {
+      "@apply justify-center px-0 gap-0": {},
+      "@media (prefers-color-scheme: dark)": {
+        "&:hover": {
+          backgroundColor: "rgba(43,69,55,0.6)",
+        },
+      },
+    },
+
     ".sidebar-toggle": {
-      "@apply hidden md:flex p-2 rounded-full hover:bg-border-light transition-colors duration-200": {},
+      "@apply hidden md:flex p-3 mr-3 rounded-full hover:bg-border-light transition-colors duration-200": {},
       "@media (prefers-color-scheme: dark)": {
         "&:hover": { backgroundColor: "rgba(43,69,55,0.6)" },
       },

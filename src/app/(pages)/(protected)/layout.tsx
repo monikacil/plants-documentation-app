@@ -1,7 +1,7 @@
 "use client";
 
 import { AuthProvider } from "@/app/AuthProvider";
-import { Sidebar } from "@/app/components/layout/Sidebar";
+import { Sidebar } from "@/app/components/layout/Sidebar/Sidebar.tsx";
 import { Footer } from "@/app/components/layout/Footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
