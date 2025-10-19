@@ -212,6 +212,13 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
     },
   });
 
+  addBase({
+    "@keyframes leaf-sway": {
+      "0%, 100%": { transform: "rotate(0deg)" },
+      "50%": { transform: "rotate(4deg)" },
+    },
+  });
+
   addUtilities({
     ".animate-fade-in": {
       animation: "fade-in 0.4s ease-out both",
@@ -224,6 +231,9 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
     },
     ".animate-pulse-slow": {
       animation: "pulse 2s ease-in-out infinite",
+    },
+    ".animate-leaf-sway": {
+      animation: "leaf-sway 3s ease-in-out infinite",
     },
   });
 });
