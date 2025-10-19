@@ -15,7 +15,7 @@ type Props = {
 export function SidebarNav({ collapsed, pathname, onLinkClick, formAction }: Props) {
   return (
     <nav className="flex flex-1 flex-col justify-between overflow-y-auto px-2 pb-10">
-      <ul className="space-y-1">
+      <ul className="space-y-2">
         { navigation.map(({ label, href, icon }) => {
           const isActive = pathname.startsWith(href);
           return (
@@ -23,46 +23,43 @@ export function SidebarNav({ collapsed, pathname, onLinkClick, formAction }: Pro
               <Link
                 href={ href }
                 className={ clsx(
-                  "sidebar-link group",
-                  collapsed && "sidebar-link-collapsed",
+                  "sidebar-link group relative overflow-hidden px-3",
                   isActive && "sidebar-link-active"
                 ) }
                 aria-current={ isActive ? "page" : undefined }
                 onClick={ onLinkClick }
               >
+                <span className="sidebar-icon">{ icon }</span>
                 <span
                   className={ clsx(
-                    "transition-transform duration-300 group-hover:scale-125 text-xl",
-                    collapsed && "mx-auto"
+                    "sidebar-text",
+                    collapsed ? "sidebar-text-collapsed" : "sidebar-text-expanded"
                   ) }
                 >
-                  { icon }
+                  { label }
                 </span>
-                { !collapsed && <span className="truncate w-full">{ label }</span> }
               </Link>
             </li>
           );
         }) }
       </ul>
 
-      {/* Logout */ }
       <form action={ formAction }>
         <button
           type="submit"
-          className={ clsx(
-            "sidebar-link group mt-3 w-full",
-            collapsed && "sidebar-link-collapsed"
-          ) }
+          className="sidebar-link group relative overflow-hidden mt-3 w-full px-3"
         >
-          <span
-            className={ clsx(
-              "transition-transform duration-300 group-hover:scale-125 text-xl",
-              collapsed && "mx-auto"
-            ) }
-          >
+          <span className="sidebar-icon">
             <FaArrowRightToBracket />
           </span>
-          { !collapsed && <span className="truncate w-full text-left">Log Out</span> }
+          <span
+            className={ clsx(
+              "sidebar-text",
+              collapsed ? "sidebar-text-collapsed" : "sidebar-text-expanded"
+            ) }
+          >
+            Log Out
+          </span>
         </button>
       </form>
     </nav>

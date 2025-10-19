@@ -17,9 +17,8 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
   });
 
   addComponents({
-    /* --- SIDEBAR --- */
     ".sidebar": {
-      "@apply flex flex-col h-screen shadow-lg border-r border-border-light text-text-light bg-sidebar-light transition-all duration-300 ease-in-out": {},
+      "@apply flex flex-col h-screen border-r shadow-lg transition-all duration-300 ease-in-out bg-sidebar-light text-text-light": {},
       "@media (prefers-color-scheme: dark)": {
         backgroundColor: "rgba(21,39,31,0.85)",
         backdropFilter: "blur(12px)",
@@ -27,16 +26,28 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         borderColor: "#2B4537",
       },
     },
-
+    ".sidebar-gradient-dark": {
+      "@media (prefers-color-scheme: dark)": {
+        backgroundImage:
+          "linear-gradient(to bottom, rgba(21,39,31,0.9), rgba(13,27,19,0.95))",
+        backdropFilter: "blur(14px)",
+        borderColor: "rgba(43,69,55,0.6)",
+      },
+    },
+    ".sidebar-collapsed": {
+      "@apply w-16": {},
+    },
+    ".sidebar-expanded": {
+      "@apply w-80": {},
+    },
     ".sidebar-header": {
       "@apply flex items-center justify-between mb-2 h-16": {},
       "@media (prefers-color-scheme: dark)": {
         borderColor: "#2B4537",
       },
     },
-
     ".sidebar-link": {
-      "@apply flex items-center gap-4 h-10 px-3 py-2 text-base font-medium rounded-xl transition-all duration-200 ease-out text-text-light hover:bg-border-light": {},
+      "@apply flex items-center gap-5 h-10 px-3 py-2 text-base font-medium rounded-xl transition-all duration-200 ease-out text-text-light hover:bg-border-light": {},
       "@media (prefers-color-scheme: dark)": {
         color: "#E8F5E9",
         "&:hover": {
@@ -45,7 +56,6 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         },
       },
     },
-
     ".sidebar-link-active": {
       "@apply bg-primary-light text-white shadow-md": {},
       "@media (prefers-color-scheme: dark)": {
@@ -54,8 +64,18 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         boxShadow: "0 0 10px rgba(111,207,151,0.3)",
       },
     },
-
-    /* --- COLLAPSED SIDEBAR LINK --- */
+    ".sidebar-icon": {
+      "@apply text-xl transition-transform duration-300 group-hover:scale-125": {},
+    },
+    ".sidebar-text": {
+      "@apply truncate w-full text-left transition-all duration-300 ease-in-out origin-left": {},
+    },
+    ".sidebar-text-collapsed": {
+      "@apply opacity-0 translate-x-[-10px] w-0 overflow-hidden": {},
+    },
+    ".sidebar-text-expanded": {
+      "@apply opacity-100 translate-x-0 delay-150": {},
+    },
     ".sidebar-link-collapsed": {
       "@apply justify-center px-0 gap-0": {},
       "@media (prefers-color-scheme: dark)": {
@@ -64,21 +84,10 @@ export const plantsUIPlugin = plugin(({ addBase, addComponents, addUtilities }) 
         },
       },
     },
-
     ".sidebar-toggle": {
       "@apply hidden md:flex p-3 mr-3 rounded-full hover:bg-border-light transition-colors duration-200": {},
       "@media (prefers-color-scheme: dark)": {
         "&:hover": { backgroundColor: "rgba(43,69,55,0.6)" },
-      },
-    },
-
-    /* --- SIDEBAR GRADIENT (ciemny motyw) --- */
-    ".sidebar-gradient-dark": {
-      "@media (prefers-color-scheme: dark)": {
-        backgroundImage:
-          "linear-gradient(to bottom, rgba(21,39,31,0.9), rgba(13,27,19,0.95))",
-        backdropFilter: "blur(14px)",
-        borderColor: "rgba(43,69,55,0.6)",
       },
     },
 

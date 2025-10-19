@@ -52,8 +52,8 @@ export function Sidebar() {
       <aside
         ref={ sidebarRef }
         className={ clsx(
-          "sidebar sidebar-gradient-dark z-40 h-screen fixed md:static top-0 left-0 flex flex-col border-r shadow-lg transition-all duration-300 ease-in-out",
-          collapsed ? "w-16" : "w-80",
+          "sidebar sidebar-gradient-dark z-40 fixed md:static top-0 left-0 transition-all duration-300 ease-in-out",
+          collapsed ? "sidebar-collapsed" : "sidebar-expanded",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
           "md:relative md:translate-x-0"
         ) }

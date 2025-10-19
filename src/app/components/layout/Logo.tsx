@@ -31,7 +31,6 @@ export function Logo({ className, size = "md", animated = true }: Props) {
           "@media (prefers-color-scheme: dark):text-accent-dark",
           "@media (prefers-color-scheme: dark):drop-shadow-none",
           "transition-transform duration-500 ease-in-out",
-          "hover:rotate-[6deg] hover:scale-105",
           animated && "animate-pop-in"
         ) }
         aria-hidden="true"
