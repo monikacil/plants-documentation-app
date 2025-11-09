@@ -6,6 +6,7 @@ import { Fredoka } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import { AppSessionProvider } from "@/app/AppSessionProvider";
+import { AddToHomeScreen } from "@/app/components/pwa/AddToHomeScreen.tsx";
 
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: {
     <html lang="en" suppressHydrationWarning className={ fredoka.variable }>
     <body
       className="min-h-screen overflow-x-hidden">
+    <AddToHomeScreen />
     <AppSessionProvider session={ session }>
       { children }
     </AppSessionProvider>
