@@ -113,7 +113,7 @@ function Title({
 function LoginButton() {
   return (
     <Link
-      href="/public"
+      href="/"
       className="btn btn-primary mt-6 w-fit mx-auto px-6 py-2 text-white font-semibold transition-all"
     >
       Go to login

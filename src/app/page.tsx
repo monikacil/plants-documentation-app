@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { AuthForm } from "@/app/components/auth/AuthForm";
-import { AddToHomeScreen } from "@/app/components/pwa/AddToHomeScreen";
 import { Logo } from "@/app/components/layout/Logo";
 
 export default function LandingPage() {
@@ -12,8 +11,6 @@ export default function LandingPage() {
         overflow-hidden animate-fade-in
       "
     >
-      <AddToHomeScreen />
-
       <section
         className="
           flex flex-col md:flex-row items-center justify-center

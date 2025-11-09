@@ -4,10 +4,11 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Spinner } from "@/app/components/common/Spinner";
+import type { Route } from "next";
 
 interface AuthProviderProps {
   children: ReactNode;
-  redirectTo?: string;
+  redirectTo?: Route;
   waitMs?: number;
 }
 

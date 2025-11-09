@@ -4,8 +4,8 @@
   "description": "Application to manage plants documentation",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#F5F8F2",
+  "theme_color": "#4B8F61",
   "id": "PlantsDoc",
   "icons": [
     {

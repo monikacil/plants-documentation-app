@@ -3,20 +3,21 @@ import { User } from "@/app/mongoose/models/user.model";
 import { Account } from "@/app/mongoose/models/account.model";
 import { ComparePassword } from "@/app/lib/bcrypt";
 import { CredentialsError, UserNotConfirmed } from "@/app/lib/authErrors";
-import { MongooseAdapter } from "@/app/mongoose/MongooseAdapter";
+
 import Google from "next-auth/providers/google";
 import Facebook from "next-auth/providers/facebook";
 import Credentials from "next-auth/providers/credentials";
-import type { Session, User as UserType } from "next-auth";
-import type { Account as AccountType, Profile as ProfileType } from "@auth/core/types";
+
+import type { NextAuthConfig, Session, User as UserType } from "next-auth";
 import type { JWT } from "next-auth/jwt";
+import { MongooseAdapter } from "@/app/mongoose/MongooseAdapter.ts";
 
 type CredentialsInput = {
   email: string;
   password: string;
 };
 
-export const authConfig = {
+export const authConfig: NextAuthConfig = {
   adapter: MongooseAdapter(),
   session: { strategy: "jwt" },
   secret: process.env.NEXTAUTH_SECRET,
@@ -46,8 +47,7 @@ export const authConfig = {
         const user = await User.findOne({ email }).select("+password");
         if (!user) throw new CredentialsError();
         if (!user.password) throw new CredentialsError();
-        if (!user.emailVerified)
-          throw new UserNotConfirmed();
+        if (!user.emailVerified) throw new UserNotConfirmed();
 
         const valid = await ComparePassword(password, user.password);
         if (!valid) throw new CredentialsError();
@@ -64,15 +64,10 @@ export const authConfig = {
   ],
 
   callbacks: {
-    async signIn({ user, account, profile }: {
-      user: UserType;
-      account: AccountType | null;
-      profile?: ProfileType & { email_verified?: boolean };
-    }) {
+    async signIn({ user, account, profile }) {
       await connectDb();
 
       if (!account) return true;
-
       if (account.provider === "credentials") return true;
 
       const existingUser = await User.findOne({ email: user.email });
@@ -82,9 +77,7 @@ export const authConfig = {
           account.provider === "google" ? profile?.email_verified === true : account.provider === "facebook";
 
         if (!emailVerified) {
-          console.warn(
-            `[AUTH] Attempted to link unverified ${ account.provider } account for ${ user.email }`
-          );
+          console.warn(`[AUTH] Attempted to link unverified ${ account.provider } account for ${ user.email }`);
           throw new Error("Email from provider is not verified.");
         }
 
@@ -107,10 +100,6 @@ export const authConfig = {
             scope: account.scope,
             session_state: account.session_state,
           });
-
-          console.log(
-            `[AUTH] Linked ${ account.provider } account for user ${ user.email }`
-          );
         }
         return true;
       }

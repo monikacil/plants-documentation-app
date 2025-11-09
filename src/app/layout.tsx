@@ -6,7 +6,6 @@ import { Fredoka } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
 import { AppSessionProvider } from "@/app/AppSessionProvider";
-import { ServiceWorkerRegister } from "@/app/components/pwa/ServiceWorkerRegister";
 
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
@@ -58,7 +57,6 @@ export default async function RootLayout({ children }: {
       { children }
     </AppSessionProvider>
     <Toaster toastOptions={ { duration: 4000 } } />
-    <ServiceWorkerRegister />
     </body>
     </html>
   );

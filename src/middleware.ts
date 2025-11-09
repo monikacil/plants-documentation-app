@@ -1,6 +1,5 @@
-import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { auth } from "@/auth.edge";
 
 const PUBLIC_ROUTES = ["/", "/auth"];
 
@@ -20,8 +19,7 @@ function isStaticOrSpecial(path: string): boolean {
   );
 }
 
-export default auth(
-  (req: NextRequest & { auth: Awaited<ReturnType<typeof auth>> }) => {
+export default auth((req) => {
     const url = req.nextUrl.clone();
     const { pathname } = url;
 

@@ -44,7 +44,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./src/middleware.ts",
-    "next.config.js",
+    "next.config",
     "next.config.mjs"
   ],
   "exclude": [
