@@ -2,10 +2,10 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { initiatePasswordReset } from "@/actions/auth.actions";
-import { Input } from "@/app/components/ui/Input";
+import { Input } from "@/app/components/ui/input";
 import Form from "next/form";
 import { getFieldError } from "@/app/lib/getFieldError";
-import { Button } from "@/app/components/ui/Button";
+import { Button } from "@/app/components/ui/button";
 
 type Props = {
   onSuccessAction?: (msg: string) => void;

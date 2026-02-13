@@ -3,10 +3,10 @@ import { auth } from "@/auth";
 import "./globals.css";
 
 import { Fredoka } from "next/font/google";
-import { Toaster } from "react-hot-toast";
 
 import { AppSessionProvider } from "@/app/AppSessionProvider";
 import { AddToHomeScreen } from "@/app/components/pwa/AddToHomeScreen.tsx";
+import { Toaster } from "@/app/components/ui/sonner"
 
 const fredoka = Fredoka({
   weight: ["300", "400", "500", "600", "700"],
@@ -58,7 +58,7 @@ export default async function RootLayout({ children }: {
     <AppSessionProvider session={ session }>
       { children }
     </AppSessionProvider>
-    <Toaster toastOptions={ { duration: 4000 } } />
+    <Toaster />
     </body>
     </html>
   );

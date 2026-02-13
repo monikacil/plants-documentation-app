@@ -1,155 +1,106 @@
-/* -------------------------------------
-   🌿 Tailwind layers
-------------------------------------- */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* -------------------------------------
-   🌱 Root color variables (light/dark)
-   Matches tailwind.config.ts colors
-------------------------------------- */
 :root {
   color-scheme: light dark;
 
-  /* Light mode colors */
-  --background-light: #F5F8F2;
-  --background-dark: #0D1B13;
-  --surface-light: #FFFFFF;
-  --surface-dark: #1B2D23;
-  --text-light: #1F2D1F;
-  --text-dark: #E8F5E9;
-  --accent-light: #4B8F61;
-  --accent-dark: #6FCF97;
-  --muted-light: #6B7D6B;
-  --muted-dark: #A8BDA8;
-  --border-light: #DDE7DE;
-  --border-dark: #2B4537;
+  --background: 96 30% 95%; /* #F5F8F2 */
+  --foreground: 114 18% 15%; /* #1F2D1F */
+
+  --surface: 0 0% 100%; /* #FFFFFF */
+  --surface-foreground: 114 18% 15%;
+
+  --primary: 132 35% 52%; /* #5DAE6C */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 120 25% 92%; /* #E5F0E4 */
+  --secondary-foreground: 114 18% 15%;
+
+  --muted: 114 13% 45%; /* #6B7D6B */
+  --muted-foreground: 0 0% 100%;
+
+  --border: 120 20% 88%; /* #DDE7DE */
+  --input: 120 20% 88%;
+  --ring: 132 35% 52%;
+
+  --success: 122 39% 49%; /* #4CAF50 */
+  --success-foreground: 0 0% 100%;
+
+  --warning: 45 100% 45%; /* #E6A700 */
+  --warning-foreground: 114 18% 15%;
+
+  --destructive: 4 65% 58%; /* #D9534F */
+  --destructive-foreground: 0 0% 100%;
+
+  --info: 178 35% 45%; /* #4C9C9A */
+  --info-foreground: 0 0% 100%;
+
+  /* Fluid typography */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.2vw, 0.95rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.1rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.35rem + 0.6vw, 1.8rem);
+  --text-3xl: clamp(1.875rem, 1.6rem + 0.9vw, 2.4rem);
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.2vw, 3rem);
+  --text-5xl: clamp(3rem, 2.4rem + 2vw, 4rem);
+
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1440px;
+  --container-3xl: 1680px;
+
+  --icon-xs: 0.75rem; /* 12px */
+  --icon-sm: 1rem; /* 16px */
+  --icon-md: 1.25rem; /* 20px */
+  --icon-lg: 1.5rem; /* 24px */
+  --icon-xl: 2rem; /* 32px */
 }
 
-/* -------------------------------------
-   🪴 Base global styles
-------------------------------------- */
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-size: 16px;
-  line-height: 1.6;
-  min-height: 100vh;
-  font-family: "Fredoka", system-ui, sans-serif;
-  background-color: var(--background-light);
-  color: var(--text-light);
-  transition: background-color 0.3s ease,
-  color 0.3s ease;
-}
-
-/* Automatically adapt to dark mode (media-based) */
+/* 🌙 DARK MODE */
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--background-dark);
-    color: var(--text-dark);
+  :root {
+    --background: 150 30% 6%;
+    --foreground: 120 45% 94%;
+
+    --surface: 150 28% 12%;
+    --surface-foreground: 120 45% 94%;
+
+    --primary: 145 70% 65%;
+    --primary-foreground: 150 30% 6%;
+
+    --secondary: 150 25% 18%;
+    --secondary-foreground: 120 45% 94%;
+
+    --muted: 120 15% 35%;
+    --muted-foreground: 120 25% 75%;
+
+    --border: 150 25% 22%;
+    --input: 150 25% 22%;
+    --ring: 145 70% 65%;
+
+    --success: 140 60% 60%;
+    --success-foreground: 150 30% 6%;
+
+    --warning: 45 100% 65%;
+    --warning-foreground: 150 30% 6%;
+
+    --destructive: 0 80% 65%;
+    --destructive-foreground: 150 30% 6%;
+
+    --info: 175 55% 60%;
+    --info-foreground: 150 30% 6%;
   }
 }
 
-/* -------------------------------------
-   ✨ Typography
-------------------------------------- */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.25;
-  color: inherit;
-}
-
-p {
-  margin-bottom: 1rem;
-  color: inherit;
-}
-
-a {
-  color: var(--accent-light);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--accent-dark);
-}
-
-/* -------------------------------------
-   🌿 Buttons, Inputs, Cards
-   These work with plantsUIPlugin defaults
-------------------------------------- */
-button {
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-input, textarea, select {
-  font-family: inherit;
-  transition: all 0.2s ease;
-}
-
-/* -------------------------------------
-   🌾 Accessibility focus styles
-------------------------------------- */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--accent-light);
-  outline-offset: 2px;
-}
-
-/* -------------------------------------
-   🍃 Scrollbars (subtle and nature-styled)
-------------------------------------- */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--surface-light);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--muted-light);
-  border-radius: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: var(--surface-dark);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--muted-dark);
-  }
-}
-
-/* -------------------------------------
-   🌀 Animations (for spinner + fades)
-------------------------------------- */
 @keyframes spin-smooth {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
-}
-
-.animate-spin-smooth {
-  animation: spin-smooth 0.9s linear infinite;
 }
 
 @keyframes fade-in {
@@ -161,14 +112,15 @@ textarea:focus-visible {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.4s ease-out both;
-}
-
-/* -------------------------------------
-   🌸 Utility layer (can be extended)
-------------------------------------- */
 @layer utilities {
+  .animate-spin-smooth {
+    animation: spin-smooth 0.9s linear infinite;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out both;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -176,4 +128,156 @@ textarea:focus-visible {
   .text-pretty {
     text-wrap: pretty;
   }
+
+  .icon-xs {
+    width: var(--icon-xs);
+    height: var(--icon-xs);
+  }
+
+  .icon-sm {
+    width: var(--icon-sm);
+    height: var(--icon-sm);
+  }
+
+  .icon-md {
+    width: var(--icon-md);
+    height: var(--icon-md);
+  }
+
+  .icon-lg {
+    width: var(--icon-lg);
+    height: var(--icon-lg);
+  }
+
+  .icon-xl {
+    width: var(--icon-xl);
+    height: var(--icon-xl);
+  }
+
+  .icon-text {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+@layer base {
+  body {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    @apply font-sans leading-relaxed text-foreground bg-background;
+  }
+
+  h1 {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: var(--text-xl);
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  h6 {
+    font-size: var(--text-base);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  body {
+    font-size: var(--text-base);
+  }
+
+  small {
+    font-size: var(--text-sm);
+  }
+}
+
+/* =============================== */
+/* SONNER VARIABLE OVERRIDES */
+/* =============================== */
+
+[data-sonner-toast] {
+  --normal-bg: hsl(var(--background));
+  --normal-border: hsl(var(--border));
+  --normal-text: hsl(var(--foreground));
+}
+
+/* SUCCESS */
+[data-sonner-toast][data-type="success"] {
+  --normal-bg: hsl(var(--success) / 0.18);
+  --normal-border: hsl(var(--success) / 0.45);
+  --normal-text: hsl(var(--foreground));
+}
+
+/* ERROR */
+[data-sonner-toast][data-type="error"] {
+  --normal-bg: hsl(var(--destructive) / 0.18);
+  --normal-border: hsl(var(--destructive) / 0.45);
+  --normal-text: hsl(var(--foreground));
+}
+
+/* WARNING */
+[data-sonner-toast][data-type="warning"] {
+  --normal-bg: hsl(var(--warning) / 0.18);
+  --normal-border: hsl(var(--warning) / 0.45);
+  --normal-text: hsl(var(--foreground));
+}
+
+/* INFO */
+[data-sonner-toast][data-type="info"] {
+  --normal-bg: hsl(var(--info) / 0.18);
+  --normal-border: hsl(var(--info) / 0.45);
+  --normal-text: hsl(var(--foreground));
+}
+
+/* =============================== */
+/* SONNER CLOSE BUTTON */
+/* =============================== */
+
+[data-sonner-toast][data-styled="true"] [data-close-button] {
+  position: absolute !important;
+
+  /* right corner */
+  left: auto !important;
+  right: 0 !important;
+  top: 14px !important;
+
+  height: 20px;
+  width: 20px;
+  padding: 0;
+
+  border-radius: 6px !important;
+  background: transparent !important;
+  border: none !important;
+
+  color: hsl(var(--muted-foreground)) !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+[data-sonner-toast][data-styled="true"] [data-close-button]:hover {
+  background: hsl(var(--border) / 0.4) !important;
+  color: hsl(var(--foreground)) !important;
 }

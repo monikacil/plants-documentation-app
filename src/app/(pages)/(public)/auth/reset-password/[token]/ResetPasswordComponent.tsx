@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { resetPassword } from "@/actions/auth.actions";
-import { toastCustom } from "@/app/components/common/Toast";
 import { Spinner } from "@/app/components/common/Spinner";
-import { Button } from "@/app/components/ui/Button.tsx";
+import { Button } from "@/app/components/ui/button.tsx";
+import { toast } from "sonner";
 
 type ResetPasswordPageProps = {
   token: string;
@@ -44,7 +44,7 @@ export default function ResetPasswordPage({ token, tokenStatus }: ResetPasswordP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      toastCustom("New passwords do not match.", "error");
+      toast.error("New passwords do not match.");
       return;
     }
 
@@ -54,13 +54,13 @@ export default function ResetPasswordPage({ token, tokenStatus }: ResetPasswordP
     try {
       if (!token) throw new Error("Missing token");
       await resetPassword(token, newPassword, oldPassword);
-      toastCustom("Password changed successfully 🌿", "success");
+      toast.success("Password changed successfully 🌿");
       setMessage("Password changed. Redirecting...");
       setTimeout(() => router.push("/"), 2000);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Something went wrong.";
-      toastCustom(message, "error");
+      toast.error(message);
       setMessage(message);
     } finally {
       setLoading(false);

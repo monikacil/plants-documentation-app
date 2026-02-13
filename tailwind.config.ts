@@ -1,98 +1,77 @@
-import type { Config } from "tailwindcss";
-import { plantsUIPlugin } from "./src/plugins/plants-ui-plugin";
-import tailwindcssAnimate from "tailwindcss-animate";
+import type { Config } from "tailwindcss"
+import tailwindcssAnimate from "tailwindcss-animate"
 
 const config: Config = {
-  darkMode: "media", // ✅ system preference
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  darkMode: "media",
+  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+
   theme: {
     extend: {
-      keyframes: {
-        "fade-in": {
-          from: { opacity: "0" },
-          to: { opacity: "1" },
-        },
-        "pop-in": {
-          "0%": { transform: "scale(0.8)", opacity: "0" },
-          "80%": { transform: "scale(1.05)", opacity: "1" },
-          "100%": { transform: "scale(1)", opacity: "1" },
-        },
-        fadeInOut: {
-          "0%, 100%": { opacity: "0" },
-          "50%": { opacity: "1" },
-        },
-      },
-      animation: {
-        "spin-slow": "spin 2.8s linear infinite",
-        fade: "fadeInOut 1.2s ease-in-out",
-        "fade-in": "fade-in 0.7s ease-in-out both",
-        "pop-in": "pop-in 0.5s cubic-bezier(0.7,1.4,0.9,1) both",
-      },
       colors: {
-        background: {
-          light: "#F5F8F2",
-          dark: "#0D1B13",
-        },
-        surface: {
-          light: "#FFFFFF",
-          dark: "#1B2D23",
-        },
-        sidebar: {
-          light: "#E5F0E4",
-          dark: "#15271F",
-        },
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
+
         card: {
-          light: "#F1F5F0",
-          dark: "#1F3429",
+          DEFAULT: "hsl(var(--surface) / <alpha-value>)",
+          foreground: "hsl(var(--surface-foreground) / <alpha-value>)",
         },
-        border: {
-          light: "#DDE7DE",
-          dark: "#2B4537",
-        },
+
         primary: {
-          DEFAULT: "#3B7A57",
-          light: "#4B8F61",
-          dark: "#6FCF97",
+          DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+          foreground: "hsl(var(--primary-foreground) / <alpha-value>)",
         },
-        accent: {
-          DEFAULT: "#5DAE6C",
-          light: "#A7D7B2",
-          dark: "#81C784",
+
+        secondary: {
+          DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+          foreground: "hsl(var(--secondary-foreground) / <alpha-value>)",
         },
-        text: {
-          light: "#1F2D1F",
-          dark: "#E8F5E9",
-        },
+
         muted: {
-          light: "#6B7D6B",
-          dark: "#A8BDA8",
+          DEFAULT: "hsl(var(--muted) / <alpha-value>)",
+          foreground: "hsl(var(--muted-foreground) / <alpha-value>)",
         },
-        error: {
-          light: "#D9534F",
-          dark: "#FF6B6B",
+
+        border: "hsl(var(--border) / <alpha-value>)",
+        input: "hsl(var(--input) / <alpha-value>)",
+        ring: "hsl(var(--ring) / <alpha-value>)",
+
+        success: {
+          DEFAULT: "hsl(var(--success) / <alpha-value>)",
+          foreground: "hsl(var(--success-foreground) / <alpha-value>)",
         },
+
         warning: {
-          light: "#ECA400",
-          dark: "#FFD166",
+          DEFAULT: "hsl(var(--warning) / <alpha-value>)",
+          foreground: "hsl(var(--warning-foreground) / <alpha-value>)",
         },
-        edit: {
-          light: "#4C9C9A",
-          dark: "#3E8280",
+
+        destructive: {
+          DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
+          foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
+        },
+
+        info: {
+          DEFAULT: "hsl(var(--info) / <alpha-value>)",
+          foreground: "hsl(var(--info-foreground) / <alpha-value>)",
         },
       },
+
       maxWidth: {
-        "8xl": "95rem",
+        sm: "var(--container-sm)",
+        md: "var(--container-md)",
+        lg: "var(--container-lg)",
+        xl: "var(--container-xl)",
+        "2xl": "var(--container-2xl)",
+        "3xl": "var(--container-3xl)",
       },
+
       fontFamily: {
         sans: ['"Fredoka"', "sans-serif"],
       },
     },
   },
-  plugins: [plantsUIPlugin, tailwindcssAnimate],
-};
 
-export default config;
+  plugins: [tailwindcssAnimate],
+}
+
+export default config

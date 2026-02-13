@@ -1,94 +1,127 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
-
-import { Input } from "@/app/components/ui/Input";
-import { Button } from "@/app/components/ui/Button";
-import { toastCustom } from "@/app/components/common/Toast.tsx";
+import { useDebounce } from "use-debounce";
 import { redirect } from "next/navigation";
-import { getFieldError } from "@/app/lib/getFieldError.ts";
-import { AuthFormState, loginSchema } from "@/app/lib/zod/zodAuth.ts";
-import { createFormResponse } from "@/app/lib/createFormResponse.ts";
+
+import { Input } from "@/app/components/ui/input";
+import { Button } from "@/app/components/ui/button";
 import { SocialButtons } from "@/app/components/auth/SocialButtons";
-import { cn } from "@/app/lib/utils/others.ts";
+import { loginSchema } from "@/app/lib/zod/zodAuth";
+import { toast } from "sonner"
 
+export function LoginForm({ children }: { children?: React.ReactNode }) {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [debouncedForm] = useDebounce(form, 400);
 
-export function LoginForm({ children }: { children: React.ReactNode }) {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: ""
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<AuthFormState | undefined>(undefined);
 
-  const handleChange = <T extends keyof typeof form>(field: T, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+  const [liveErrors, setLiveErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Mark field touched
+  const markTouched = (field: "email" | "password") =>
+    setTouched((t) => ({ ...t, [field]: true }));
+
+  // Live validation AFTER blur
+  useEffect(() => {
+    const data = {
+      email: touched.email ? debouncedForm.email || undefined : undefined,
+      password: touched.password ? debouncedForm.password || undefined : undefined,
+    };
+
+    const result = loginSchema.safeParse(data);
+
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      setLiveErrors({
+        email: errors.email?.[0],
+        password: errors.password?.[0],
+      });
+    } else {
+      setLiveErrors({});
+    }
+  }, [debouncedForm, touched]);
+
+  const handleChange = (field: "email" | "password", value: string) => {
+    setForm((f) => ({ ...f, [field]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const zodValidation = loginSchema.safeParse({ email: form.email, password: form.password });
-    if (!zodValidation.success) {
-      const res = createFormResponse({
-        error: zodValidation.error.flatten().fieldErrors,
-        status: "invalid",
-      });
-      setError(res);
-      setIsLoading(false);
-      return;
-    }
 
     const result = await signIn("credentials", {
       email: form.email,
       password: form.password,
       redirect: false,
     });
+
     setIsLoading(false);
+
     if (result?.error) {
-      toastCustom("Invalid credentials. Please try again.", "error");
+      toast.error("Invalid credentials");
+      return;
     }
-    if (!result?.error) redirect("/dashboard");
+
+    redirect("/dashboard");
   };
 
   return (
-    <>
-      <form onSubmit={ handleSubmit } className="space-y-3 md:space-y-2">
-        <div className="space-y-3 md:space-y-2">
-          <Input
-            name="email"
-            placeholder="Email"
-            type="email"
-            errors={ error && getFieldError(error, "email") }
-            value={ form.email }
-            onChange={ (val) => handleChange("email", val) }
-          />
-          <Input
-            name="password"
-            placeholder="Password"
-            type="password"
-            errors={ error && getFieldError(error, "password") }
-            value={ form.password }
-            onChange={ (val) => handleChange("password", val) }
-          />
-        </div>
-        { children }
-        <div className="flex flex-col gap-3 mt-5">
-          <Button
-            type="submit"
-            disabled={ isLoading }
-            isLoading={ isLoading }
-            aria-label="Log in with Credentials"
-            className={ cn("tracking-wider") }
-          >
-            Login
-          </Button>
-          <SocialButtons />
-        </div>
-      </form>
-    </>
+    <form onSubmit={ handleSubmit } className="space-y-6">
+
+      <div className="flex flex-col gap-4">
+
+        <Input
+          type="email"
+          placeholder="Email"
+          value={ form.email }
+          errors={ touched.email ? liveErrors.email : undefined }
+          showSuccess={
+            touched.email &&
+            !!form.email &&
+            !liveErrors.email
+          }
+          onBlur={ () => markTouched("email") }
+          onChange={ (v) => handleChange("email", v) }
+        />
+
+        <Input
+          type="password"
+          placeholder="Password"
+          value={ form.password }
+          errors={ touched.password ? liveErrors.password : undefined }
+          showSuccess={
+            touched.password &&
+            !!form.password &&
+            !liveErrors.password
+          }
+          onBlur={ () => markTouched("password") }
+          onChange={ (v) => handleChange("password", v) }
+        />
+
+      </div>
+
+      { children }
+
+      <div className="flex flex-col gap-4">
+
+        <Button type="submit" isLoading={ isLoading }>
+          Login
+        </Button>
+
+        <SocialButtons />
+
+      </div>
+
+    </form>
   );
 }

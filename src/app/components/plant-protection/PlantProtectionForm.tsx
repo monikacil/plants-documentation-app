@@ -3,8 +3,8 @@
 import { useActionState, useState } from "react";
 import Form from "next/form";
 
-import { Button } from "../ui/Button";
-import { Input } from "../ui/Input";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
 // import { PlantProtectionFormType } from "@/app/mongoose/types/protection.types.ts";
 

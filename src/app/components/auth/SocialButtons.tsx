@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/app/components/ui/Button";
+import { Button } from "@/app/components/ui/button";
 import { cn } from "@/app/lib/utils/others";
 import { signIn } from "next-auth/react";
 import { socialProviders } from "@/app/configs/auth/socialProviders.config.tsx";
@@ -18,7 +18,7 @@ export function SocialButtons({
     await signIn(provider);
   };
   return (
-    <div className={ cn("flex flex-col gap-3 w-full", className) }>
+    <div className={ cn("flex flex-col gap-4 w-full", className) }>
       { socialProviders.map((provider) => (
         <Button
           key={ provider.id }

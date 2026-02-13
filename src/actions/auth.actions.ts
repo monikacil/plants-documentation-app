@@ -22,9 +22,11 @@ import { initResetPasswordSchema, registerSchema, } from "@/app/lib/zod/zodAuth.
  * User registration with email confirmation
  */
 export async function createUser(_: unknown, formData: FormData) {
+  console.log(1111)
   const email = formData.get("email")?.toString() || "";
   const password = formData.get("password")?.toString() || "";
   const name = formData.get("name")?.toString() || "";
+  console.log(name, email, password);
 
   const result = registerSchema.safeParse({ email, name, password });
   if (!result.success) {
@@ -33,6 +35,7 @@ export async function createUser(_: unknown, formData: FormData) {
       status: "invalid",
     });
   }
+  console.log(result)
 
   await connectDb();
 

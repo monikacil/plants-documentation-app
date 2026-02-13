@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/app/components/ui/Button";
+import { Button } from "@/app/components/ui/button";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms?: string[];
@@ -74,7 +74,6 @@ export function AddToHomeScreen() {
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
     window.addEventListener("appinstalled", handleInstalled);
 
-    // iOS Safari – pokazuj baner ręcznie
     if (env.isIOS && env.isSafari) {
       setDeferredPrompt(null);
       setVisible(true);
